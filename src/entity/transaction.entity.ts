@@ -1,10 +1,11 @@
-import { Column, CreateDateColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
 import { TransactionTypeEntity } from "./transaction-type.entity";
 
+Entity()
 export class TransactionEntity {
     @PrimaryColumn()
-    id?: number;
+    id: number;
 
     @ManyToOne(type => UserEntity)
     user: UserEntity;

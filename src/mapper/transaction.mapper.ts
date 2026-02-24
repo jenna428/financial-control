@@ -4,6 +4,7 @@ import { TransactionEntity } from "src/entity/transaction.entity";
 export class TransactionMapper {
     static toDto(transactionEntity: TransactionEntity): TransactionDto {
         const transactionDto: TransactionDto = {
+            id: transactionEntity.id,
             user: transactionEntity.user,
             transactionType: transactionEntity.transactionType,
             amount: transactionEntity.amount,
@@ -15,6 +16,7 @@ export class TransactionMapper {
 
     static toEntity(transactionDto: TransactionDto): TransactionEntity {
         const transactionEntity: TransactionEntity ={
+            id: transactionDto.id,
             user: transactionDto.user,
             transactionType: transactionDto.transactionType,
             amount: transactionDto.amount,
