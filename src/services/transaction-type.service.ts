@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { TransactionTypeDto } from "src/dto/transaction-type.dto";
 import { TransactionTypeEntity } from "src/entity/transaction-type.entity";
@@ -20,6 +20,16 @@ export class TransactionTypeService{
 
     async delete(transactionTypeId: number){
         // await this.checkUserHasPermissionInTrasactionType(transactionTypeId, userId);
+        const transType = await this.transactionTypeRepository.findOne({
+            relations: ['user'],
+            where: {
+                id: transactionTypeId
+            }
+        })
+
+        if (!transType) {
+            throw new HttpException('Tipo de Transação não encontrada!', HttpStatus.NOT_FOUND)
+        }
         await this.transactionTypeRepository.delete(transactionTypeId);
     }
 
@@ -31,12 +41,12 @@ export class TransactionTypeService{
             }
         })
 
-        /*if (!transType) {
-            // throw execption('tipo de transaçao nao encontrada');
+        if (!transType) {
+            throw new HttpException('Tipo de Transação não encontrada!', HttpStatus.NOT_FOUND)
         }
 
-        if (transType?.user?.id !== userId ) {
-            // throw execption('Voce nao tem permissao para alterar essa transiçao');
+        /*if (transType?.user?.id !== userId ) {
+            
         }*/
 
         transType.name = transactionTypeDto.name;

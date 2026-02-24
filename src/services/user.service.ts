@@ -47,6 +47,15 @@ export class UserService {
     }
 
     async delete(userId: number){
+        const user = await this.userRepository.findOne({
+            where: {
+                id: userId
+            }
+        })
+
+        if(!user){
+            throw new HttpException('Usuário não Encontrado!', HttpStatus.NOT_FOUND)
+        }
         this.userRepository.delete(userId)
     }
 
@@ -57,7 +66,9 @@ export class UserService {
             }
         })
 
-        //TODO: verificar ser user nao é null
+        if(!user){
+            throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND)
+        }
 
         const hash = await bcrypt.hash(userDto.password, GeralConfig.SALTROUND)
 
