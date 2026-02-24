@@ -5,6 +5,7 @@ export class UserMapper{
 
     static toDto(userEntity: UserEntity): UserDto {
         const userDto: UserDto = {
+            id: userEntity.id,
             name: userEntity.name,
             email: userEntity.email,
             password: userEntity.password
@@ -15,6 +16,7 @@ export class UserMapper{
 
     static toEntity(userDto: UserDto): UserEntity {
         const userEntity: UserEntity = {
+            id: userDto.id,
             name: userDto.name,
             email: userDto.email,
             password: userDto.password
