@@ -5,21 +5,15 @@
 $color: mat.get-color-from-palette(theme.$primary-palette, A700);
 $contrast: mat.get-contrast-color-from-palette(theme.$primary-palette, 700);
 
-.login{
+.register{
     background-color: rgb(252, 250, 250)
 }
-
-.login-button {
+.register-button {
     background-color: $color !important;
     color: mat.get-contrast-color-from-palette(theme.$primary-palette, 700) !important;
     font-family: "Betania Patmos", cursive;
-    //font-family: theme.$font-family;
 }
 
-.login-button:hover {
+.register-button:hover {
     background-color: mat.get-color-from-palette(theme.$primary-palette, 700) !important;
-}
-
-.register-button {
-    font-family: "Betania Patmos", cursive;
 }

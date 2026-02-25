@@ -1,5 +1,8 @@
 <div class="d-flex justify-content-center align-items-center h-100">
-    <div class="">
+    <mat-toolbar class="position-absolute top-0 start-0">
+        <span class="m-2">Controle Financeiro</span>
+    </mat-toolbar>
+    <div class="login p-5 rounded-3">
         <h1 class="d-flex justify-content-center mb-3">LOGIN</h1>
         <div>
             <mat-form-field appearance="fill" class="w-100">
@@ -17,10 +20,10 @@
             </mat-form-field>
         </div>
         <div>
-            <button mat-flat-button class="login-button w-100">ENTRAR</button>
+            <button mat-flat-button class="login-button w-100 mb-2">ENTRAR</button>
         </div>
         <div>
-            <button mat-stroked-button class="register-button w-100 mt-2">CADASTRAR-SE</button>
+            <button mat-stroked-button class="register-button w-100" (click)="toRegister()">CADASTRAR-SE</button>
         </div>
     </div>
 </div>

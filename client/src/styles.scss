@@ -9,6 +9,9 @@ $client-typography: mat.define-typography-config(
   $font-family: theme.$font-family
 );
 
+p{
+  font-family: 'Courier New', Courier, monospace
+}
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
@@ -45,5 +48,5 @@ $client-theme: mat.define-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100%;}
 body { margin: 0; font-family: "Betania Patmos", cursive; }

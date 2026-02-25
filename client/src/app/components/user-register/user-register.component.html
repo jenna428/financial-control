@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-center align-items-center h-100">
+    <mat-toolbar class="position-absolute top-0 start-0">
+            <button mat-icon-button (click)="toLogin()">
+                <span class=" d-flex justify-content-center align-items-center material-symbols-outlined">
+                arrow_back_ios
+                </span>
+            </button>
+    </mat-toolbar>
+    <div class="register p-5 rounded-3">
+        <form [formGroup]="form", (ngSubmit)="submit()">
+            <h1 class="d-flex justify-content-center mb-3">CADASTRO</h1>
+                <div>
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Usuário</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Senha</mat-label>
+                        <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Confirmar Senha</mat-label>
+                        <input matInput formControlName="confirmPassword" [type]="hide ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <button mat-flat-button class="register-button w-100">CADASTRAR</button>
+            </div>
+        </form>
+    </div>
+</div>

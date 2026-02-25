@@ -31,11 +31,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { UserRegisterComponent } from './components/user-register/user-register.component';
+import { A11yModule } from "@angular/cdk/a11y";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    UserRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ReactiveFormsModule,
     MatIconModule,
     MatSlideToggleModule,
-  ],
+    A11yModule
+],
   providers: [
     provideAnimationsAsync()
   ],
