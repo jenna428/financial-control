@@ -1,0 +1,25 @@
+@use '@angular/material' as mat;
+@use '../../../theme' as theme;
+
+
+$color: mat.get-color-from-palette(theme.$primary-palette, A700);
+$contrast: mat.get-contrast-color-from-palette(theme.$primary-palette, 700);
+
+.login{
+    background-color: mat.get-color-from-palette(theme.$primary-palette, 50);
+}
+
+.login-button {
+    background-color: $color !important;
+    color: mat.get-contrast-color-from-palette(theme.$primary-palette, 700) !important;
+    font-family: "Betania Patmos", cursive;
+    //font-family: theme.$font-family;
+}
+
+.login-button:hover {
+    background-color: mat.get-color-from-palette(theme.$primary-palette, 700) !important;
+}
+
+.register-button {
+    font-family: "Betania Patmos", cursive;
+}
