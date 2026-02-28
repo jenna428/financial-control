@@ -4,28 +4,19 @@
 @use '@angular/material' as mat;
 @use './theme' as theme;
 // Plus imports for other components in your app.
+@include mat.core();
 
-$client-typography: mat.define-typography-config(
-  $font-family: theme.$font-family
-);
-
-p{
-  font-family: 'Courier New', Courier, monospace
-}
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat.core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $client-primary: mat.define-palette(theme.$primary-palette, 700);
-$client-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$client-accent: mat.define-palette(theme.$secondary-palette, A200, A100, A400);
 $client-warn: mat.define-palette(mat.$red-palette);
 
-// $color: mat.get-color-from-palette(theme.$primary-palette, 700);
-// $contrast: mat.get-contrast-color-from-palette(theme.$primary-palette, 700);
 
 // The warn palette is optional (defaults to red).
 
@@ -37,7 +28,7 @@ $client-theme: mat.define-light-theme((
     accent: $client-accent,
     warn: $client-warn,
   ),
-  typography: $client-typography,
+  //typography: $client-typography,
   density: 0
 ));
 
@@ -46,7 +37,30 @@ $client-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($client-theme);
 
+
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%;}
-body { margin: 0; font-family: "Betania Patmos", cursive; }
+html, body {
+  height: 100%;
+}
+body { 
+  margin: 0;
+  background-color: theme.$off-white;
+}
+h1{
+  font-family: theme.$font-primary !important;
+}
+
+mat-label{
+  font-family: theme.$font-secondary;
+  font-size: 0.8em;
+}
+
+button{
+  font-family: theme.$font-button !important;
+}
+
+mat-toolbar{
+  background-color: mat.get-color-from-palette(theme.$primary-palette, 700)!important;
+  color: mat.get-contrast-color-from-palette(theme.$primary-palette, 700) !important;
+}

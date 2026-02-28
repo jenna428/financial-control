@@ -72,7 +72,7 @@ import { A11yModule } from "@angular/cdk/a11y";
     MatIconModule,
     MatSlideToggleModule,
     A11yModule
-],
+  ],
   providers: [
     provideAnimationsAsync()
   ],

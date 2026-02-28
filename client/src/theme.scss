@@ -1,23 +1,24 @@
+@use '@angular/material' as mat;
 
 $primary-palette: (
-  50:  #FFFDE7,
-  100: #FFF9C4,
-  200: #FFF59D,
-  300: #FFF176,
-  400: #FFEE58,
-  500: #FFEB3B,
-  600: #FDD835,
-  700: #BAA000,
-  800: #FBC02D,
-  900: #F9A825,
-  A100: #FFFF8D,
-  A200: #FFFF00,
-  A400: #FFEA00,
-  A700: #FFD600,
+  50:  #EAF0F5,
+  100: #D4E1EB,
+  200: #AFC7D5,
+  300: #8AAEC0,
+  400: #668BA8,
+  500: #3F668D,
+  600: #355A7A,
+  700: #344955,
+  800: #2A3A47,
+  900: #1F2B38,
+  A100: #A8C4E0,
+  A200: #7FAED5,
+  A400: #5597CA,
+  A700: #2D7FBF,
   contrast: (
-    50:  #FFF,
-    100: #FFF,
-    200: #FFF,
+    50:  #000,
+    100: #000,
+    200: #000,
     300: #FFF,
     400: #FFF,
     500: #FFF,
@@ -25,11 +26,50 @@ $primary-palette: (
     700: #FFF,
     800: #FFF,
     900: #FFF,
-    A100: #FFF,
-    A200: #FFF,
+    A100: #000,
+    A200: #000,
     A400: #FFF,
     A700: #FFF
   )
 );
 
-$font-family: 'Nunito, sans-serif'
+$secondary-palette: (
+  50:  #FFF4E6,
+  100: #FFE8CC,
+  200: #FFD199,
+  300: #FFBA66,
+  400: #FFA94D,
+  500: #F9AA33,
+  600: #E8961E,
+  700: #D9820F,
+  800: #C76F00,
+  900: #A85C00,
+  A100: #FFE0B2,
+  A200: #FFCC80,
+  A400: #FFB74D,
+  A700: #FF9800,
+  contrast: (
+    50:  #000,
+    100: #000,
+    200: #000,
+    300: #000,
+    400: #000,
+    500: #000,
+    600: #000,
+    700: #FFF,
+    800: #FFF,
+    900: #FFF,
+    A100: #000,
+    A200: #000,
+    A400: #000,
+    A700: #000
+  )
+);
+
+$font-primary: 'Nunito', sans-serif;
+$font-secondary: 'Barlow', sans-serif;
+$font-button: 'Fredoka', sans-serif;
+
+
+$off-white: #F5F5F5;
+

@@ -14,8 +14,9 @@ export class UserService{
     ){}
 
     async save(useDto: UserRegisterDto, password: String){
-        if(useDto.password == password){
+        if (useDto.password == password){
             await this.http.post(environment.api_url + 'user', useDto)
+            this.router.navigate(['/login'])
         }
     }
 }

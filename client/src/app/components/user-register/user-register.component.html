@@ -1,18 +1,20 @@
 <div class="d-flex justify-content-center align-items-center h-100">
-    <mat-toolbar class="position-absolute top-0 start-0">
-            <button mat-icon-button (click)="toLogin()">
-                <span class=" d-flex justify-content-center align-items-center material-symbols-outlined">
+    <mat-toolbar class="shadow position-absolute top-0">
+        <button class="position-absolute start-2" mat-icon-button (click)="toLogin()">
+                <span class="d-flex justify-content-center align-items-center material-symbols-outlined">
                 arrow_back_ios
                 </span>
             </button>
+        <span class="mx-auto"><h1>Pecunia</h1></span>
     </mat-toolbar>
-    <div class="register p-5 rounded-3">
+    <div class="p-5 rounded-3 shadow">
         <form [formGroup]="form", (ngSubmit)="submit()">
-            <h1 class="d-flex justify-content-center mb-3">CADASTRO</h1>
+            <h1 class="d-flex justify-content-center mb-3">Cadastro</h1>
                 <div>
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Usuário</mat-label>
                         <input matInput formControlName="name">
+                        <mat-error>{{getError(this.form.get('name')?.errors)}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div>
@@ -28,6 +30,7 @@
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
+                        <mat-error>{{getError(this.form.get('password')?.errors)}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div>
@@ -37,10 +40,12 @@
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
+                        <mat-error>{{getError(this.form.get('confirmPassword')?.errors)}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div>
-                    <button mat-flat-button class="register-button w-100">CADASTRAR</button>
+
+                <button mat-flat-button class="register-button mt-3 w-100" color="primary" type="submit" [disabled]="!isFormValid">Cadastrar</button>
             </div>
         </form>
     </div>
