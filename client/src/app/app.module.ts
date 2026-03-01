@@ -33,12 +33,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { A11yModule } from "@angular/cdk/a11y";
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    SidenavComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

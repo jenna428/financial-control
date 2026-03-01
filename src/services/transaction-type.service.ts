@@ -30,14 +30,18 @@ export class TransactionTypeService{
         if (!transType) {
             throw new HttpException('Tipo de Transação não encontrada!', HttpStatus.NOT_FOUND)
         }
+        
         await this.transactionTypeRepository.delete(transactionTypeId);
     }
 
-    async update(transactionTypeDto: TransactionTypeDto){ //, userId: number <- precisa pegar/passar como parametro o id do usuario da requisição
+    async update(transactionTypeDto: TransactionTypeDto, userId: number){ //, userId: number <- precisa pegar/passar como parametro o id do usuario da requisição
         const transType = await this.transactionTypeRepository.findOne({
             relations: ['user'],
             where: {
-                id: transactionTypeDto.id
+                id: transactionTypeDto.id,
+                // user: {
+                //     id: userId
+                // }
             }
         })
 
@@ -45,9 +49,9 @@ export class TransactionTypeService{
             throw new HttpException('Tipo de Transação não encontrada!', HttpStatus.NOT_FOUND)
         }
 
-        /*if (transType?.user?.id !== userId ) {
-            
-        }*/
+        if (transType.user?.id !== userId ) {
+            throw new HttpException('Requisição não autorizada!', HttpStatus.UNAUTHORIZED)    
+        }
 
         transType.name = transactionTypeDto.name;
         transType.isFixed = transactionTypeDto.isFixed;

@@ -5,14 +5,16 @@ import { UserMapper } from "src/mapper/user.mapper";
 import { UserRepository } from "src/repository/user.repository";
 import * as bcrypt from 'bcrypt';
 import { GeralConfig } from "src/config/geral.config";
-import { LoginUserDto } from "src/dto/loginUserDto.dto";
+import { LoginDto } from "src/dto/login.dto";
 import { UserDto } from "src/dto/user.dto";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(UserEntity)
         private readonly userRepository: UserRepository,
+        private readonly authService: AuthService
     ){}
 
     async create(userDto: UserDto){
@@ -28,9 +30,9 @@ export class UserService {
         await this.userRepository.save(user);
     }
 
-    async login(login: LoginUserDto){
+    async login(login: LoginDto): Promise<string> {
         const user = await this.userRepository.findOne({
-            where: {name: login.name}
+            where: {name: login.username}
         });
 
         if(!user){
@@ -39,11 +41,13 @@ export class UserService {
 
         const hash = await bcrypt.hash(login.password, GeralConfig.SALTROUND);
         
-        const isLogged = bcrypt.compare(user.password, hash);
+        const isLogged = bcrypt.compare(hash, user.password);
 
         if(!isLogged){
             throw new HttpException('Usuário ou senha incorretos!', HttpStatus.NOT_FOUND)
         }
+
+        return this.authService.createToken(user.id);
     }
 
     async delete(userId: number){

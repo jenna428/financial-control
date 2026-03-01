@@ -1,13 +1,31 @@
 import { Injectable } from "@angular/core";
 import axios, { AxiosInstance } from "axios";
+import { CookieService } from "ngx-cookie-service";
+import { environment } from "../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
     private api: AxiosInstance;
 
     constructor(
+        private cookie: CookieService
     ){
-        this.api = axios.create()
+        this.api = axios.create();
+
+        this.setupInterceptors();
+    }
+    
+    private setupInterceptors() {
+        this.api.interceptors.request.use((config) => {
+            const token = this.cookie.get(environment.token_cookie_key);
+
+            if (token) {
+                config.headers = config.headers;
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+
+            return config;
+        });
     }
 
     get<T>(url: string, config?: any) {
