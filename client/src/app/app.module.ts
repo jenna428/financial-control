@@ -32,16 +32,20 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
-import { A11yModule } from "@angular/cdk/a11y";
+import { LayoutComponent } from './components/layout/layout.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { A11yModule } from "@angular/cdk/a11y";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     UserRegisterComponent,
+    LayoutComponent,
     SidenavComponent,
+    TopNavComponent,
     DashboardComponent
   ],
   imports: [
@@ -76,7 +80,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatIconModule,
     MatSlideToggleModule,
     A11yModule
-  ],
+],
   providers: [
     provideAnimationsAsync()
   ],

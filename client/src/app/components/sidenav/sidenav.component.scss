@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+@use '../../../theme' as theme;
+
+.side-nav-container{
+    width: 250px;
+    height: 100vh;
+    background-color: mat.get-color-from-palette(theme.$primary-palette, 100);
+    padding: 20px;
+    padding-top: 0px;
+}
+

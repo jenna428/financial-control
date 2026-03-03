@@ -64,3 +64,7 @@ mat-toolbar{
   background-color: mat.get-color-from-palette(theme.$primary-palette, 700)!important;
   color: mat.get-contrast-color-from-palette(theme.$primary-palette, 700) !important;
 }
+
+mat-icon{
+  font-family: 'Material Symbols Outlined';
+}

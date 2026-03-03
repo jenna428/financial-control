@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+@use '../../../theme' as theme;
+
+.top-nav-container{
+    background-color: mat.get-color-from-palette(theme.$primary-palette, 200);
+    width: 100%;
+    height: 50px;
+    
+}
+
+.header{
+    color: mat.get-contrast-color-from-palette(theme.$primary-palette, 700);
+    font-family: theme.$font-title !important;
+
+}
+
+mat-icon {
+  color: mat.get-contrast-color-from-palette(theme.$primary-palette, 700);
+}
