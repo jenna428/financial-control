@@ -2,7 +2,7 @@
 @use '../../../theme' as theme;
 
 .top-nav-container{
-    background-color: mat.get-color-from-palette(theme.$primary-palette, 200);
+    background-color: mat.get-color-from-palette(theme.$primary-palette, 700);
     width: 100%;
     height: 50px;
     
@@ -16,4 +16,9 @@
 
 mat-icon {
   color: mat.get-contrast-color-from-palette(theme.$primary-palette, 700);
+}
+
+button{
+    width: 35px !important;
+    height: 35px !important;
 }

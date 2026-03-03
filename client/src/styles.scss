@@ -51,6 +51,13 @@ h1{
   font-family: theme.$font-primary !important;
 }
 
+h3{
+  font-family: theme.$font-primary;
+  font-size: 0.8em;
+  color: mat.get-contrast-color-from-palette(theme.$primary-palette, 200);
+  margin: 0px;
+}
+
 mat-label{
   font-family: theme.$font-secondary;
   font-size: 0.8em;
@@ -68,3 +75,13 @@ mat-toolbar{
 mat-icon{
   font-family: 'Material Symbols Outlined';
 }
+
+mat-list-item{
+  padding: 0px !important;
+}
+
+mat-list{
+  padding: 0px !important;
+}
+
+

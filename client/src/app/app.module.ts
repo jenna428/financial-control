@@ -36,7 +36,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { A11yModule } from "@angular/cdk/a11y";
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -79,7 +79,7 @@ import { A11yModule } from "@angular/cdk/a11y";
     ReactiveFormsModule,
     MatIconModule,
     MatSlideToggleModule,
-    A11yModule
+    MatListModule
 ],
   providers: [
     provideAnimationsAsync()
