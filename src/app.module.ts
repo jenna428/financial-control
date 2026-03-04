@@ -6,6 +6,7 @@ import { FixedTransactionModule } from './module/fixed-transaction.module';
 import { TransactionModule } from './module/transaction.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { VariableExpenditureModule } from './module/variable-expenditure.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { PassportModule } from '@nestjs/passport';
     PassportModule,
     UserModule,
     FixedTransactionModule,
-    TransactionModule
+    TransactionModule,
+    VariableExpenditureModule
   ],
   controllers: [],
   providers: [JwtStrategy],
