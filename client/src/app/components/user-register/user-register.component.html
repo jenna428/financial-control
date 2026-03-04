@@ -28,7 +28,7 @@
                         <mat-label>Senha</mat-label>
                         <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            <mat-icon class="d-flex align-items-center">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
                         <mat-error>{{getError(this.form.get('password')?.errors)}}</mat-error>
                     </mat-form-field>
@@ -38,7 +38,7 @@
                         <mat-label>Confirmar Senha</mat-label>
                         <input matInput formControlName="confirmPassword" [type]="hide ? 'password' : 'text'">
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            <mat-icon class="d-flex align-items-center">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
                         <mat-error>{{getError(this.form.get('confirmPassword')?.errors)}}</mat-error>
                     </mat-form-field>

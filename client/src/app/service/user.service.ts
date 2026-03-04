@@ -19,7 +19,7 @@ export class UserService{
         private cookieService: CookieService
     ){}
 
-    async save(useDto: UserRegisterDto, password: String){
+    async save(useDto: UserRegisterDto, password: string){
         if (useDto.password == password){
             await this.http.post(this.baseUrl, useDto)
             this.router.navigate(['/login'])

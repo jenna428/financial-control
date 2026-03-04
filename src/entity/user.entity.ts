@@ -6,13 +6,13 @@ export class UserEntity{
     id: number;
 
     @Column()
-    name: String;
+    name: string;
 
     @Column()
-    email: String;
+    email: string;
 
     @Column()
-    password: String;
+    password: string;
 
     @CreateDateColumn({ type: 'datetime' })
     createDate?: Date;

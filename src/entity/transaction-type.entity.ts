@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
-import { TransictionType } from "src/enums/enums";
+import { Category } from "src/enums/enums";
 
 @Entity()
 export class TransactionTypeEntity {
@@ -11,10 +11,10 @@ export class TransactionTypeEntity {
     user: UserEntity;
 
     @Column()
-    name: String;
+    name: string;
 
     @Column()
-    type: TransictionType;
+    category: Category;
 
     @Column()
     isFixed: boolean;

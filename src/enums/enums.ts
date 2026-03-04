@@ -1,4 +1,4 @@
-export enum TransictionType {
+export enum Category {
     INCOME = 'INCOME',
     EXPENDITURE = 'EXPENDITURE'
 }

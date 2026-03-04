@@ -17,7 +17,7 @@ export class TransactionEntity {
     amount: number;
 
     @Column()
-    description: String;
+    description: string;
 
     @Column()
     transactionDate: Date;

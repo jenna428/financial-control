@@ -6,6 +6,6 @@ export interface TransactionDto {
     user: UserDto,
     transactionType: TransactionTypeDto,
     amount: number,
-    description: String,
+    description: string,
     transactionDate: Date
 }

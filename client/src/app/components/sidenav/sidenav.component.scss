@@ -4,13 +4,15 @@
 .side-nav-container{
     width: 280px;
     height: 100vh;
-    background-color: mat.get-color-from-palette(theme.$primary-palette, 100);
+    background-color: theme.$menu-background;
     padding: 20px;
     padding-top: 30px;
 }
 
 h3{
+    color: mat.get-color-from-palette(theme.$secondary-palette, 600);
     font-weight: bold;
+    user-select: none;
 }
 
 button{

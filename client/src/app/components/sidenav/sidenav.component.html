@@ -1,5 +1,5 @@
 <div class="side-nav-container">
-    <h3>Home</h3>
+    <h3 class="pb-2 pt-2">Home</h3>
     <mat-list>
         <mat-list-item class="d-flex ">
             <button mat-button class="w-100 rounded-5 d-flex justify-content-start" (click)="nav('/dashboard')">
@@ -8,7 +8,7 @@
             </button>
         </mat-list-item>
     </mat-list>
-    <h3>Receitas</h3>
+    <h3 class="pb-2 pt-2">Receitas</h3>
     <mat-list>
         <mat-list-item>
             <button mat-button class="w-100 rounded-5 d-flex justify-content-start">
@@ -17,7 +17,7 @@
             </button>
         </mat-list-item>
     </mat-list>
-    <h3>Despesas</h3>
+    <h3 class="pb-2 pt-2">Despesas</h3>
     <mat-list>
         <mat-list-item>
             <button mat-button class="w-100 rounded-5 d-flex justify-content-start">
@@ -32,11 +32,13 @@
             </button>
         </mat-list-item>
     </mat-list>
-    <h3>Histórico</h3>
+    <h3 class="pb-2 pt-2">Histórico</h3>
     <mat-list>
-        <button mat-button class="w-100 rounded-5 d-flex justify-content-start">
-            <mat-icon class="lh-1">history</mat-icon>
-            Acessar Histórico Financeiro
-        </button>
+        <mat-list-item>
+            <button mat-button class="w-100 rounded-5 d-flex justify-content-start">
+                <mat-icon class="lh-1">history</mat-icon>
+                Acessar Histórico Financeiro
+            </button>
+        </mat-list-item>
     </mat-list>
 </div>
