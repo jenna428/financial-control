@@ -18,7 +18,7 @@ export class TransactionService{
 
     async delete(transactionId: number){
         const transaction = await this.transactionRepository.findOne({
-            relations: ['user'],
+            relations: ['user', 'expenditure'],
             where: {
                 id: transactionId
             }
@@ -33,7 +33,7 @@ export class TransactionService{
 
     async update(transactionDto: TransactionDto){ //, userId: number <- precisa pegar/passar como parametro o id do usuario da requisição
             const transaction = await this.transactionRepository.findOne({
-                relations: ['user'],
+                relations: ['user', 'expenditure'],
                 where: {
                     id: transactionDto.id
                 }
@@ -49,6 +49,7 @@ export class TransactionService{
     
             transaction.amount = transactionDto.amount,
             transaction.description = transactionDto.description,
+            transaction.expenditure = transactionDto.expenditure,
             transaction.transactionDate = transactionDto.transactionDate
 
     

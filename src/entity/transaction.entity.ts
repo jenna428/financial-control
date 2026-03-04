@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
+import { VariableExpenditureEntity } from "./variable-expenditure.entity";
 
 Entity()
 export class TransactionEntity {
@@ -8,6 +9,9 @@ export class TransactionEntity {
 
     @ManyToOne(type => UserEntity)
     user: UserEntity;
+
+    @ManyToOne(type => VariableExpenditureEntity)
+    expenditure: VariableExpenditureEntity;
 
     @Column()
     amount: number;
