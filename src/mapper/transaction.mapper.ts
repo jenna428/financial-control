@@ -6,7 +6,6 @@ export class TransactionMapper {
         const transactionDto: TransactionDto = {
             id: transactionEntity.id,
             user: transactionEntity.user,
-            transactionType: transactionEntity.transactionType,
             amount: transactionEntity.amount,
             description: transactionEntity.description,
             transactionDate: transactionEntity.transactionDate
@@ -18,7 +17,6 @@ export class TransactionMapper {
         const transactionEntity: TransactionEntity ={
             id: transactionDto.id,
             user: transactionDto.user,
-            transactionType: transactionDto.transactionType,
             amount: transactionDto.amount,
             description: transactionDto.description,
             transactionDate: transactionDto.transactionDate

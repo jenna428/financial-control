@@ -1,6 +1,5 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
-import { TransactionTypeEntity } from "./transaction-type.entity";
 
 Entity()
 export class TransactionEntity {
@@ -9,9 +8,6 @@ export class TransactionEntity {
 
     @ManyToOne(type => UserEntity)
     user: UserEntity;
-    
-    @ManyToOne(type => TransactionTypeEntity)
-    transactionType: TransactionTypeEntity;
 
     @Column()
     amount: number;

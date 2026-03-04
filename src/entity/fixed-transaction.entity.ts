@@ -3,9 +3,12 @@ import { UserEntity } from "./user.entity";
 import { Category } from "src/enums/enums";
 
 @Entity()
-export class TransactionTypeEntity {
+export class FixedTransactionEntity {
     @PrimaryColumn()
     id: number;
+
+    @CreateDateColumn({ type: 'datetime' })
+    createDate?: Date;
 
     @ManyToOne(type => UserEntity)
     user: UserEntity;
@@ -17,8 +20,8 @@ export class TransactionTypeEntity {
     category: Category;
 
     @Column()
-    isFixed: boolean;
+    isActive: boolean;
 
-    @CreateDateColumn({ type: 'datetime' })
-    createDate?: Date;
+    @Column()
+    transactionDate: Date;
 }

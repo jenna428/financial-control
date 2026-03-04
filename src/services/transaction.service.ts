@@ -49,7 +49,6 @@ export class TransactionService{
     
             transaction.amount = transactionDto.amount,
             transaction.description = transactionDto.description,
-            transaction.transactionType = transactionDto.transactionType,
             transaction.transactionDate = transactionDto.transactionDate
 
     

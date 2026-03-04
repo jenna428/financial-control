@@ -1,10 +1,11 @@
 import { Category } from "src/enums/enums";
 import { UserDto } from "./user.dto";
 
-export interface TransactionTypeDto{
+export interface FixedTransactionDto{
     id: number,
     user: UserDto,
     name: string,
     category: Category,
-    isFixed: boolean
+    isActive: boolean,
+    transactionData: Date
 }
