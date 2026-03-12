@@ -11,9 +11,4 @@ export class SidenavComponent {
   constructor(
     private router: Router
   ){}
-
-  nav(rota: string){
-
-    this.router.navigate(['pecunia' + rota]);
-  }
 }

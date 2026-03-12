@@ -32,9 +32,9 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/register'])
   }
 
-  submit(){
+  async submit(){
     const loginDto: LoginDto = this.form.getRawValue();
 
-    this.userService.login(loginDto);
+    await this.userService.login(loginDto);
   }
 }

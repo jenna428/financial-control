@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { IncomeCreateComponent } from './components/income-create/income-create.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent
+      },
+      {
+        path: 'income',
+        component: IncomeCreateComponent
       }
     ]
   }

@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-center">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="shadow m-5 p-5 rounded-5 row">
+        <h1 class="text-start mb-4">{{action}}</h1>
+
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field class="col-6">
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="amount">
+                <span matTextPrefix>R$&nbsp;</span>
+            </mat-form-field>
+            <mat-form-field class="col-6">
+                <mat-label>Data da Transação</mat-label>
+                <input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="transDate">
+    
+                <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="row d-flex justify-content-between mt-4">
+            <button class="col-3" type="submit" mat-flat-button color="primary">{{primaryButton}}</button>
+            <button class="col-3" (click)="secondaryAction()" type="button" mat-button color="primary">{{secondaryButton}}</button>
+        </div>
+    </form>
+</div>

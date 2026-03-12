@@ -2,8 +2,10 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FixedTransactionDto } from "src/dto/fixed-transaction.dto";
 import { FixedTransactionEntity } from "src/entity/fixed-transaction.entity";
+import { Category } from "src/enums/enums";
 import { FixedTransactionMapper } from "src/mapper/fixed-transaction.mapper";
 import { FixedTransactionRepository } from "src/repository/fixed-transaction.repository";
+import { FindManyOptions } from "typeorm";
 
 @Injectable()
 export class FixedTransactionService{
@@ -14,8 +16,10 @@ export class FixedTransactionService{
     )
     {}
 
-    async create(fixedTransactionDto: FixedTransactionDto){
-        await this.fixedTransactionRepository.save(FixedTransactionMapper.toEntity(fixedTransactionDto));
+    async create(fixedTransactionDto: FixedTransactionDto, userId: number){
+        const trans = FixedTransactionMapper.toEntity(fixedTransactionDto, userId);
+        await this.fixedTransactionRepository.save(trans);
+        
     }
 
     async delete(fixedTransactionId: number){
@@ -54,12 +58,32 @@ export class FixedTransactionService{
         }
 
         transType.name = fixedTransactionDto.name;
+        transType.amount = fixedTransactionDto.amount,
         transType.isActive = fixedTransactionDto.isActive;
         transType.category = fixedTransactionDto.category;
 
         await this.fixedTransactionRepository.save(transType);
     }
 
+   async findByCategory(category: Category, userId: number): Promise<FixedTransactionDto[]>{
+        const option: FindManyOptions = {
+            relations: ['user'],
+            where:[
+                {
+                    category: category
+                },
+                {
+                    user: {
+                        id: userId
+                    }
+                }
+            ]
+        }
+        const incomes = await this.fixedTransactionRepository.find(option);
+
+        const incomesDto: FixedTransactionDto[] = incomes.map(FixedTransactionMapper.toDto);
+        return incomesDto;
+    }
     /*private async checkUserHasPermissionInTrasactionType(transactionTypeId: number, userId: number) {
         const transType = await this.transactionTypeRepository.findOne({
             relations: ['user'],

@@ -8,6 +8,7 @@ export class FixedTransactionMapper{
             id: fixedTransactionEntity.id,
             user: fixedTransactionEntity.user,
             name: fixedTransactionEntity.name,
+            amount: fixedTransactionEntity.amount,
             category: fixedTransactionEntity.category,
             isActive: fixedTransactionEntity.isActive,
             transactionData: fixedTransactionEntity.transactionDate
@@ -15,11 +16,12 @@ export class FixedTransactionMapper{
         return fixedTransactionDto;
     }
 
-    static toEntity(fixedTransactionDto: FixedTransactionDto) : FixedTransactionEntity {
+    static toEntity(fixedTransactionDto: FixedTransactionDto, userId: number) : FixedTransactionEntity {
         const fixedTransactionEntity: FixedTransactionEntity = {
-            id: fixedTransactionDto.id,
-            user: fixedTransactionDto.user,
+            id: fixedTransactionDto.id ?? null,
+            userId: userId,
             name: fixedTransactionDto.name,
+            amount: fixedTransactionDto.amount,
             category: fixedTransactionDto.category,
             isActive: fixedTransactionDto.isActive,
             transactionDate: fixedTransactionDto.transactionData

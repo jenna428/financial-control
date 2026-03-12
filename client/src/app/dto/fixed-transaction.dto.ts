@@ -1,9 +1,6 @@
-import { Category } from "src/enums/enums";
-import { UserDto } from "./user.dto";
+import { Category } from "../classes/enums/enums";
 
 export interface FixedTransactionDto{
-    id: number,
-    user: UserDto,
     name: string,
     amount: number,
     category: Category,

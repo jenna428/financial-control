@@ -1,0 +1,14 @@
+<div class="d-flex flex-column">
+    <app-fixed-transaction-form
+        [form]="form" 
+        [action]="action" 
+        [primaryButton]="pButton" 
+        [secondaryButton]="sButton" 
+        (submitForm)="submit()" 
+        class="row">
+    </app-fixed-transaction-form>
+
+    <app-fixed-transaction-table
+        [category]="category">
+    </app-fixed-transaction-table>
+</div>

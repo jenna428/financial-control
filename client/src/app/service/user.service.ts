@@ -28,8 +28,10 @@ export class UserService{
 
     async login(loginDto: LoginDto){
         const token = (await this.http.post<string>(this.baseUrl + '/login', loginDto)).data;
-
         this.cookieService.set(environment.token_cookie_key, token);
+        if(this.cookieService.check(environment.token_cookie_key)){
+            this.router.navigate(['/pecunia/dashboard'])
+        }
     }
 
     logout(){
