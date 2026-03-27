@@ -38,6 +38,14 @@ export class FixedTransactionService{
         await this.fixedTransactionRepository.delete(fixedTransactionId);
     }
 
+    async findOneById(fixedTransactionId: number): Promise<FixedTransactionDto> {
+        const fixedTransaction = await this.fixedTransactionRepository.findOne({
+            where: {id: fixedTransactionId}
+        })
+    
+        return FixedTransactionMapper.toDto(fixedTransaction); 
+    }
+
     async update(fixedTransactionDto: FixedTransactionDto, userId: number){ //, userId: number <- precisa pegar/passar como parametro o id do usuario da requisição
         const transType = await this.fixedTransactionRepository.findOne({
             relations: ['user'],
@@ -68,21 +76,17 @@ export class FixedTransactionService{
    async findByCategory(category: Category, userId: number): Promise<FixedTransactionDto[]>{
         const option: FindManyOptions = {
             relations: ['user'],
-            where:[
-                {
-                    category: category
-                },
-                {
+            where:{
+                    category: category,
                     user: {
                         id: userId
                     }
-                }
-            ]
+            }
         }
-        const incomes = await this.fixedTransactionRepository.find(option);
+        const transactions = await this.fixedTransactionRepository.find(option);
 
-        const incomesDto: FixedTransactionDto[] = incomes.map(FixedTransactionMapper.toDto);
-        return incomesDto;
+        const transactionsDto: FixedTransactionDto[] = transactions.map(FixedTransactionMapper.toDto);
+        return transactionsDto;
     }
     /*private async checkUserHasPermissionInTrasactionType(transactionTypeId: number, userId: number) {
         const transType = await this.transactionTypeRepository.findOne({

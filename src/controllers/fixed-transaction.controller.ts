@@ -11,10 +11,17 @@ export class FixedTransactionController {
     ){}
 
     @UseGuards(JwtGuard)
-    @Get('/')
+    @Get('/:category')
     async findByCategory(@Request() req, @Param('category') category: Category): Promise<FixedTransactionDto[]>{
         const transactions = await this.fixedTransactionService.findByCategory(category, req.user.id);
         return transactions;
+    }
+
+    @UseGuards(JwtGuard)
+    @Get('/:id')
+    async findOneById(@Param('id') id: number): Promise <FixedTransactionDto> {
+        const fixedTransaction = await this.fixedTransactionService.findOneById(id)
+        return fixedTransaction;
     }
 
     @UseGuards(JwtGuard)

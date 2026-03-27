@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Category } from '../../classes/enums/enums';
 
 @Component({
   selector: 'app-sidenav',
@@ -7,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent {
+  Category = Category;
 
   constructor(
     private router: Router

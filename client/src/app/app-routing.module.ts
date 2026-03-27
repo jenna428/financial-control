@@ -4,7 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { IncomeCreateComponent } from './components/income-create/income-create.component';
+import { FixedTransactionCreateComponent } from './components/fixed-transaction-create/fixed-transaction-create.component';
 
 const routes: Routes = [
   {
@@ -29,9 +29,22 @@ const routes: Routes = [
         component: DashboardComponent
       },
       {
-        path: 'income',
-        component: IncomeCreateComponent
-      }
+        path: 'fixed-transaction',
+        children: [
+          {
+            path: ':category',
+            component: FixedTransactionCreateComponent
+          },
+        ]
+      },
+      // {
+      //   path: 'income',
+      //   component: FixedTransactionCreateComponent
+      // },
+      // {
+      //   path: 'expenditure',
+      //   component: ExpenditureCreateComponent
+      // }
     ]
   }
 ];

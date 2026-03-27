@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
-    <form [formGroup]="form" (ngSubmit)="submit()" class="shadow m-5 p-5 rounded-5 row">
-        <h1 class="text-start mb-4">{{action}}</h1>
+    <form [formGroup]="form" (ngSubmit)="submit()" class=" m-5 p-5 row">
+        <h1 class="text-start mb-4">{{title}}</h1>
 
         <div class="row">
             <mat-form-field>
@@ -26,7 +26,7 @@
 
         <div class="row d-flex justify-content-between mt-4">
             <button class="col-3" type="submit" mat-flat-button color="primary">{{primaryButton}}</button>
-            <button class="col-3" (click)="secondaryAction()" type="button" mat-button color="primary">{{secondaryButton}}</button>
+            <button class="col-3" (click)="secondaryAction()" type="button" mat-button color="primary">{{secondButton}}</button>
         </div>
     </form>
 </div>

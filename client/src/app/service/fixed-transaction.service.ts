@@ -9,7 +9,7 @@ import { Category } from "../classes/enums/enums";
 })
 export class FixedTransactionService{
 
-    private readonly baseUrl = environment.api_url + 'fixed-transaction';
+    private readonly baseUrl = environment.api_url + 'fixed-transaction/';
 
     constructor(
         private readonly http: HttpService
@@ -19,8 +19,12 @@ export class FixedTransactionService{
         await this.http.post(this.baseUrl, fixedTransactionDto)
     }
 
+    async update(fixedTransactionDto: FixedTransactionDto){
+        await this.http.put(this.baseUrl, fixedTransactionDto)
+    }
+
     async findByCategory(category: Category): Promise <FixedTransactionDto[]> {
-    const transactions = await this.http.get<FixedTransactionDto[]>(this.baseUrl);
+    const transactions = await this.http.get<FixedTransactionDto[]>(this.baseUrl + category);
     return transactions.data;
   }
 }

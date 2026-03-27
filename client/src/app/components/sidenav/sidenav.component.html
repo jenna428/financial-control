@@ -11,7 +11,7 @@
     <h3 class="pb-2 pt-2">Receitas</h3>
     <mat-list>
         <mat-list-item>
-            <button mat-button class="w-100 rounded-5 d-flex justify-content-start" routerLink="/pecunia/income">
+            <button mat-button class="w-100 rounded-5 d-flex justify-content-start" [routerLink]="'fixed-transaction/' + Category.INCOME">
                 <mat-icon class="lh-1">payments</mat-icon>
                 Adicionar Receita
             </button>
@@ -20,7 +20,7 @@
     <h3 class="pb-2 pt-2">Despesas</h3>
     <mat-list>
         <mat-list-item>
-            <button mat-button class="w-100 rounded-5 d-flex justify-content-start">
+            <button mat-button class="w-100 rounded-5 d-flex justify-content-start" [routerLink]="'fixed-transaction/' + Category.EXPENDITURE">
                 <mat-icon class="lh-1">checkbook</mat-icon>
                 Adicionar Despesa Fixa
             </button>
