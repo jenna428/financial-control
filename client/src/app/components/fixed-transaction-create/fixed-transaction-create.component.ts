@@ -35,15 +35,15 @@ export class FixedTransactionCreateComponent implements OnInit{
 
     this.title = this.category === Category.INCOME 
       ? 'Adicionar Receita'
-      : 'Adicionar Despesa';
+      : 'Adicionar Despesa Fixa';
 
     await this.load();  
   }
 
   async load(){
     if(this.category){
-        this.dataSource = await this.fixedTransactionService.findByCategory(this.category);
-      }
+      this.dataSource = await this.fixedTransactionService.findByCategory(this.category);
+    }
   }
   
   openUpdateDialog(transaction: FixedTransactionDto) {

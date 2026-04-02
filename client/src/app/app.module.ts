@@ -41,9 +41,11 @@ import {MatListModule} from '@angular/material/list';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { FixedTransactionFormComponent } from './components/fixed-transaction-form/fixed-transaction-form.component';
-import { FixedTransactionTableComponent } from './components/fixed-transaction-table/fixed-transaction-table.component';
 import { FixedTransactionUpdateComponent } from './components/fixed-transaction-update/fixed-transaction-update.component';
 import { FixedTransactionCreateComponent } from './components/fixed-transaction-create/fixed-transaction-create.component';
+import { VariableExpenditureCreateComponent } from './components/variable-expenditure-create/variable-expenditure-create.component';
+import { VariableExpenditureUpdateComponent } from './components/variable-expenditure-update/variable-expenditure-update.component';
+import { VariableExpenditureFormComponent } from './components/variable-expenditure-form/variable-expenditure-form.component';
 
 
 registerLocaleData(localePt);
@@ -59,8 +61,10 @@ registerLocaleData(localePt);
     DashboardComponent,
     FixedTransactionFormComponent,
     FixedTransactionCreateComponent,
-    FixedTransactionTableComponent,
-    FixedTransactionUpdateComponent
+    FixedTransactionUpdateComponent,
+    VariableExpenditureCreateComponent,
+    VariableExpenditureUpdateComponent,
+    VariableExpenditureFormComponent
 
   ],
   imports: [

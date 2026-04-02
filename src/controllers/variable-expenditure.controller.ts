@@ -1,10 +1,9 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Req, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
 import type { VariableExpenditureDto } from "src/dto/variable-expenditure.dto";
 import { JwtGuard } from "src/guards/jwt.guard";
 import { VariableExpenditureService } from "src/services/variable-expenditure.service";
 
-
-@Controller('api/transaction-type')
+@Controller('api/variable-expenditure')
 export class VariableExpenditureController {
     constructor(
         private readonly variableExpenditureService: VariableExpenditureService
@@ -12,8 +11,16 @@ export class VariableExpenditureController {
 
     @UseGuards(JwtGuard)
     @Post('/')
-    async save(@Body() transactionDto: VariableExpenditureDto){
-        await this.variableExpenditureService.create(transactionDto)
+    async save(@Request() req, @Body() transactionDto: VariableExpenditureDto){
+        await this.variableExpenditureService.create(transactionDto, req.user.id)
+    }
+
+    @UseGuards(JwtGuard)
+    @Get('/')
+    async findAll(): Promise<VariableExpenditureDto[]> {
+        const variableExpenditure = await this.variableExpenditureService.findAll();
+
+        return variableExpenditure;
     }
 
     @UseGuards(JwtGuard)

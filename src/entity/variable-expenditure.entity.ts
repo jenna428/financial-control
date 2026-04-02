@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
 
 @Entity()
@@ -6,8 +6,12 @@ export class VariableExpenditureEntity{
     @PrimaryColumn()
     id: number;
 
-    @ManyToOne(type => UserEntity)
-    user: UserEntity;
+    @Column()
+    userId: number;
+
+    @ManyToOne(() => UserEntity)
+    @JoinColumn({ name: 'userId' })
+    user?: UserEntity;
 
     @Column()
     name: string

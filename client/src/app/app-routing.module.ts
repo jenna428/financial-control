@@ -5,6 +5,7 @@ import { UserRegisterComponent } from './components/user-register/user-register.
 import { LayoutComponent } from './components/layout/layout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FixedTransactionCreateComponent } from './components/fixed-transaction-create/fixed-transaction-create.component';
+import { VariableExpenditureCreateComponent } from './components/variable-expenditure-create/variable-expenditure-create.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
             component: FixedTransactionCreateComponent
           },
         ]
+      },
+      {
+        path: 'variable-expenditure',
+        component: VariableExpenditureCreateComponent
       },
       // {
       //   path: 'income',

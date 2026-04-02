@@ -15,7 +15,7 @@ export class TopNavComponent {
   ){}
 
   logout(){
-    this.userService.logout
+    this.userService.logout();
     this.router.navigate(['/login'])
   }
 

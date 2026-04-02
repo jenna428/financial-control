@@ -14,8 +14,16 @@ export class VariableExpenditureService{
     )
     {}
 
-    async create(variableExpenditureDto: VariableExpenditureDto){
-        await this.variableExpenditureRepository.save(VariableExpenditureMapper.toEntity(variableExpenditureDto));
+    async create(variableExpenditureDto: VariableExpenditureDto,  userId: number){
+        await this.variableExpenditureRepository.save(VariableExpenditureMapper.toEntity(variableExpenditureDto, userId));
+    }
+
+    async findAll(): Promise<VariableExpenditureDto[]>{
+        const variableExpenditures = await this.variableExpenditureRepository.find();
+
+        const variableExpendituresDto: VariableExpenditureDto[] = variableExpenditures.map(VariableExpenditureMapper.toDto);
+
+        return variableExpendituresDto;
     }
 
     async delete(variableExpenditureId: number){ //, userId: number <- precisa pegar/passar como parametro o id do usuario da requisição
@@ -49,7 +57,7 @@ export class VariableExpenditureService{
         }
 
         if (transType.user?.id !== userId ) {
-            throw new HttpException('Requisição não autorizada!', HttpStatus.UNAUTHORIZED)    
+            throw new HttpException('Requisição não autorizada!', HttpStatus.UNAUTHORIZED) 
         }
 
         transType.name = variableExpenditureDto.name;

@@ -13,10 +13,10 @@ export class VariableExpenditureMapper{
         return variableExpenditureDto;
     }
 
-    static toEntity(variableExpenditureDto: VariableExpenditureDto) : VariableExpenditureEntity {
+    static toEntity(variableExpenditureDto: VariableExpenditureDto, userId: number) : VariableExpenditureEntity {
         const variableExpenditureEntity: VariableExpenditureEntity = {
             id: variableExpenditureDto.id,
-            user: variableExpenditureDto.user,
+            userId: userId,
             name: variableExpenditureDto.name,
             isActive: variableExpenditureDto.isActive,
         }

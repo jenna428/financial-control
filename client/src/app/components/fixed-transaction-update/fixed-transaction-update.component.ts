@@ -11,20 +11,23 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrl: './fixed-transaction-update.component.scss'
 })
 export class FixedTransactionUpdateComponent {
-    
+  title: string;
+  category: Category;
+  action: string;
+
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: FixedTransactionDto,
   ){}
 
   async ngOnInit() {
-
+    this.action = 'update';
+    this.category = this.data.category;
+    this.title = this.category === Category.INCOME 
+      ? 'Editar Receita'
+      : 'Editar Despesa';
   }
 
-  action = 'update';
-  category = this.data.category;
-  title = this.category === Category.INCOME 
-    ? 'Editar Receita'
-    : 'Editar Despesa';
+  
 
 }

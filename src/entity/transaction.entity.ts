@@ -10,8 +10,8 @@ export class TransactionEntity {
     @ManyToOne(type => UserEntity)
     user: UserEntity;
 
-    @ManyToOne(type => VariableExpenditureEntity)
-    expenditure: VariableExpenditureEntity;
+    //@ManyToOne(type => VariableExpenditureEntity)
+    //expenditure: VariableExpenditureEntity;
 
     @Column()
     amount: number;
