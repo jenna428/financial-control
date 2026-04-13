@@ -46,6 +46,9 @@ import { FixedTransactionCreateComponent } from './components/fixed-transaction-
 import { VariableExpenditureCreateComponent } from './components/variable-expenditure-create/variable-expenditure-create.component';
 import { VariableExpenditureUpdateComponent } from './components/variable-expenditure-update/variable-expenditure-update.component';
 import { VariableExpenditureFormComponent } from './components/variable-expenditure-form/variable-expenditure-form.component';
+import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
+import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
+import { TransactionUpdateComponent } from './components/transaction-update/transaction-update.component';
 
 
 registerLocaleData(localePt);
@@ -64,7 +67,10 @@ registerLocaleData(localePt);
     FixedTransactionUpdateComponent,
     VariableExpenditureCreateComponent,
     VariableExpenditureUpdateComponent,
-    VariableExpenditureFormComponent
+    VariableExpenditureFormComponent,
+    TransactionFormComponent,
+    TransactionCreateComponent,
+    TransactionUpdateComponent
 
   ],
   imports: [

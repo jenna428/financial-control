@@ -43,12 +43,9 @@ export class VariableExpenditureService{
 
     async update(variableExpenditureDto: VariableExpenditureDto, userId: number){ //, userId: number <- precisa pegar/passar como parametro o id do usuario da requisição
         const transType = await this.variableExpenditureRepository.findOne({
-            relations: ['user'],
             where: {
                 id: variableExpenditureDto.id,
-                // user: {
-                //     id: userId
-                // }
+                userId: userId
             }
         })
 

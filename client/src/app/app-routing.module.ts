@@ -6,6 +6,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FixedTransactionCreateComponent } from './components/fixed-transaction-create/fixed-transaction-create.component';
 import { VariableExpenditureCreateComponent } from './components/variable-expenditure-create/variable-expenditure-create.component';
+import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
         path: 'variable-expenditure',
         component: VariableExpenditureCreateComponent
       },
+      {
+        path: 'transaction',
+        component: TransactionCreateComponent
+      }
       // {
       //   path: 'income',
       //   component: FixedTransactionCreateComponent

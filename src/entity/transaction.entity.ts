@@ -1,17 +1,25 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
 import { VariableExpenditureEntity } from "./variable-expenditure.entity";
 
-Entity()
+@Entity()
 export class TransactionEntity {
     @PrimaryColumn()
     id: number;
 
-    @ManyToOne(type => UserEntity)
-    user: UserEntity;
+    @Column()
+    userId: number;
 
-    //@ManyToOne(type => VariableExpenditureEntity)
-    //expenditure: VariableExpenditureEntity;
+    @ManyToOne(type => UserEntity)
+    @JoinColumn({ name: 'userId' })
+    user?: UserEntity;
+
+    @Column()
+    expenditureId: number;
+
+    @ManyToOne(type => VariableExpenditureEntity)
+    @JoinColumn({ name: 'expenditureId' })
+    expenditure?: VariableExpenditureEntity;
 
     @Column()
     amount: number;

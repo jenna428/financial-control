@@ -1,27 +1,27 @@
 import { TransactionDto } from "src/dto/transaction.dto";
 import { TransactionEntity } from "src/entity/transaction.entity";
+import { VariableExpenditureMapper } from "./variable-expenditure.mapper";
 
 export class TransactionMapper {
     static toDto(transactionEntity: TransactionEntity): TransactionDto {
         const transactionDto: TransactionDto = {
             id: transactionEntity.id,
-            user: transactionEntity.user,
-            //expenditure: transactionEntity.expenditure,
+            expenditure: VariableExpenditureMapper.toDto(transactionEntity.expenditure),
             amount: transactionEntity.amount,
             description: transactionEntity.description,
-            transactionDate: transactionEntity.transactionDate
+            transDate: transactionEntity.transactionDate
         }
         return transactionDto
     }
 
-    static toEntity(transactionDto: TransactionDto): TransactionEntity {
+    static toEntity(transactionDto: TransactionDto, userId: number): TransactionEntity {
         const transactionEntity: TransactionEntity ={
             id: transactionDto.id,
-            user: transactionDto.user,
-            //expenditure: transactionDto.expenditure,
+            userId: userId,
+            expenditureId: transactionDto.expenditure.id,
             amount: transactionDto.amount,
             description: transactionDto.description,
-            transactionDate: transactionDto.transactionDate
+            transactionDate: transactionDto.transDate
         }
         return transactionEntity;
     }

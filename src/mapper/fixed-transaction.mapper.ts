@@ -6,7 +6,6 @@ export class FixedTransactionMapper{
     static toDto(fixedTransactionEntity: FixedTransactionEntity): FixedTransactionDto{
         const fixedTransactionDto: FixedTransactionDto = {
             id: fixedTransactionEntity.id,
-            user: fixedTransactionEntity.user,
             name: fixedTransactionEntity.name,
             amount: fixedTransactionEntity.amount,
             category: fixedTransactionEntity.category,

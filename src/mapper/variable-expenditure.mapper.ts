@@ -6,7 +6,6 @@ export class VariableExpenditureMapper{
     static toDto(variableExpenditureEntity: VariableExpenditureEntity): VariableExpenditureDto{
         const variableExpenditureDto: VariableExpenditureDto = {
             id: variableExpenditureEntity.id,
-            user: variableExpenditureEntity.user,
             name: variableExpenditureEntity.name,
             isActive: variableExpenditureEntity.isActive,
         }

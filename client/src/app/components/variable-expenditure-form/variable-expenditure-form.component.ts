@@ -30,59 +30,61 @@ export class VariableExpenditureFormComponent {
   secondButton: string;
   title: string;
 
-   ngOnInit(): void {
-      if(this.action == 'create'){
-
-        this.form = this.fb.group({
-          name: ['']
-        });
-
-        this.title = 'Adicionar'
-        this.primaryButton = 'Adicionar';
-        this.secondButton = 'Limpar';
-
-        return;
-      }
+  async ngOnInit(): Promise<void> {
+    if(this.action == 'create'){
 
       this.form = this.fb.group({
-        name: [this.data.name],
+        name: ['']
       });
 
-      this.title = 'Editar'
-      this.primaryButton = 'Salvar';
-      this.secondButton = 'Cancelar'
-    
-      console.log(this.action)
+      this.title = 'Adicionar'
+      this.primaryButton = 'Adicionar';
+      this.secondButton = 'Limpar';
+
+      return;
     }
+
+    this.form = this.fb.group({
+      name: [this.data.name],
+    });
+
+    this.title = 'Editar'
+    this.primaryButton = 'Salvar';
+    this.secondButton = 'Cancelar'
   
-    async submit(){
-      if(this.action == 'create'){
-          const variableExpenditureDto: VariableExpenditureDto = {
-          name: this.form.get('name').value,
-          isActive: true
-        }
-        await this.variableExpenditureService.save(variableExpenditureDto);
-
-        this.onSubmit.emit();
+    console.log(this.action)
+  }
+  
+  async submit(){
+    if(this.action == 'create'){
+        const variableExpenditureDto: VariableExpenditureDto = {
+        name: this.form.get('name').value,
+        isActive: true
       }
-      if(this.action == 'update'){
-          const variableExpenditureDto: VariableExpenditureDto = {
-          name: this.form.get('name').value,
-          isActive: true
-        }
+      await this.variableExpenditureService.save(variableExpenditureDto);
 
-        variableExpenditureDto.id = this.data.id;
-
-        await this.variableExpenditureService.update(variableExpenditureDto);
-        this.dialogRef.close();
-      }
-      
+      this.onSubmit.emit();
     }
 
-    secondaryAction(){
+    if(this.action == 'update'){
+        const variableExpenditureDto: VariableExpenditureDto = {
+        name: this.form.get('name').value,
+        isActive: true
+      }
+
+      variableExpenditureDto.id = this.data.id;
+
+      await this.variableExpenditureService.update(variableExpenditureDto);
+      this.dialogRef.close();
+    }
+    
+  }
+
+  secondaryAction(){
     if (this.action == 'create'){
       this.form.reset();
     }
+    
     if(this.action == 'update'){
       this.dialogRef.close();
     }

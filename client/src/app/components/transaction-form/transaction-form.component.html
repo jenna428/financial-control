@@ -1,0 +1,45 @@
+<div class="d-flex justify-content-center">
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()" class=" m-5 p-5 row">
+        <h1 class="text-start mb-4">{{title}} Gasto</h1>
+
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Despesa Variável</mat-label>
+                <mat-select matNativeControl formControlName="expenditure">
+                    <mat-option *ngFor="let expenditure of expenditures" [value]="expenditure">{{ expenditure.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="amount">
+                <span matTextPrefix>R$&nbsp;</span>
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Descrição</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Data da Transação</mat-label>
+                <input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="transDate">
+    
+                <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="row d-flex justify-content-between mt-4">
+            <button class="col-3" type="submit" mat-flat-button color="primary">{{primaryButton}}</button>
+            <button class="col-3" (click)="secondaryAction()" type="button" mat-button color="primary">{{secondButton}}</button>
+        </div>
+    </form>
+
+</div>

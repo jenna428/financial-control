@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
 import type { TransactionDto } from "src/dto/transaction.dto";
 import { JwtGuard } from "src/guards/jwt.guard";
 import { TransactionService } from "src/services/transaction.service";
@@ -11,19 +11,25 @@ export class TransactionController {
 
     @UseGuards(JwtGuard)
     @Post('/')
-    async save(@Body() transactionDto: TransactionDto){
-        await this.transactionService.create(transactionDto)
+    async save(@Body() transactionDto: TransactionDto, @Request() req){
+        await this.transactionService.create(transactionDto, req.user.id)
     }
 
     @UseGuards(JwtGuard)
+    @Get('/')
+    async findAll(@Request() req): Promise<TransactionDto[]> {
+        return await this.transactionService.findAllByUserId(req.user.id); 
+    }
+
+    /*@UseGuards(JwtGuard)
     @Delete('/:id')
     async delete(@Param('id') id: number){
         await this.transactionService.delete(id)
-    }
+    }*/
 
     @UseGuards(JwtGuard)
     @Put('/')
-    async update(@Body() transactionDto: TransactionDto){
-        await this.transactionService.update(transactionDto)
+    async update(@Body() transactionDto: TransactionDto, @Request() req){
+        await this.transactionService.update(transactionDto, req.user.id)
     }
 }

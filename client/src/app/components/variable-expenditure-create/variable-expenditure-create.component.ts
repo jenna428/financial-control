@@ -14,6 +14,7 @@ export class VariableExpenditureCreateComponent implements OnInit {
 
   dataSource: VariableExpenditureDto[] = [];
   displayedColumns: string[] = ['name'];
+  
   constructor(
     private readonly variableExpenditureService: VariableExpenditureService,
     private dialog: MatDialog

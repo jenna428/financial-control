@@ -3,7 +3,6 @@ import { UserDto } from "./user.dto";
 
 export interface FixedTransactionDto{
     id: number,
-    user: UserDto,
     name: string,
     amount: number,
     category: Category,

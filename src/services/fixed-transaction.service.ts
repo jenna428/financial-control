@@ -75,12 +75,9 @@ export class FixedTransactionService{
 
    async findByCategory(category: Category, userId: number): Promise<FixedTransactionDto[]>{
         const option: FindManyOptions = {
-            relations: ['user'],
-            where:{
-                    category: category,
-                    user: {
-                        id: userId
-                    }
+            where: {
+                category: category,
+                userId: userId
             }
         }
         const transactions = await this.fixedTransactionRepository.find(option);
