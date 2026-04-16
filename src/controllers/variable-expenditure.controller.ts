@@ -17,16 +17,23 @@ export class VariableExpenditureController {
 
     @UseGuards(JwtGuard)
     @Get('/')
-    async findAll(): Promise<VariableExpenditureDto[]> {
-        const variableExpenditure = await this.variableExpenditureService.findAll();
+    async findAll(@Request() req): Promise<VariableExpenditureDto[]> {
+        const variableExpenditure = await this.variableExpenditureService.findAll(req.user.id);
 
         return variableExpenditure;
     }
 
     @UseGuards(JwtGuard)
+    @Get('/disabled')
+    async findDisabledTransactions(@Request() req): Promise<VariableExpenditureDto[]>{
+        const transactions = await this.variableExpenditureService.findDisabledTransactions(req.user.id);
+        return transactions;
+    }
+
+    @UseGuards(JwtGuard)
     @Delete('/:id')
-    async delete(@Param('id') id: number){
-        await this.variableExpenditureService.delete(id)
+    async delete(@Param('id') id: number, @Request() req){
+        await this.variableExpenditureService.delete(id, req.user.id)
     }
 
     @UseGuards(JwtGuard)
@@ -35,4 +42,9 @@ export class VariableExpenditureController {
         await this.variableExpenditureService.update(transactionDto, req.user.id)
     }
 
+    @UseGuards(JwtGuard)
+    @Put('/:id')
+    async isActive(@Request() req, @Param('id') id: number){
+        await this.variableExpenditureService.isActive(id, req.user.id);
+    }  
 }

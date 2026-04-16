@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionDto } from '../../dto/transaction.dto';
 import { TransactionService } from '../../service/transaction.service';
-import { TransactionUpdateComponent } from '../transaction-update/transaction-update.component';
+import { DialogTransactionUpdateComponent } from '../dialogs/dialog-transaction-update/dialog-transaction-update.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
 
@@ -29,7 +29,7 @@ export class TransactionCreateComponent implements OnInit{
   }
 
   async openUpdateDialog(transaction: TransactionDto){
-    const dialogRef = this.dialog.open(TransactionUpdateComponent, {
+    const dialogRef = this.dialog.open(DialogTransactionUpdateComponent, {
       data: transaction
     });
 

@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { VariableExpenditureDto } from '../../dto/variable-expenditure.dto';
 import { VariableExpenditureService } from '../../service/variable-expentidure.service';
 import { MatDialog } from '@angular/material/dialog';
-import { VariableExpenditureUpdateComponent } from '../variable-expenditure-update/variable-expenditure-update.component';
+import { ToggleEnabledService } from '../../service/toggle-enabled.service';
+import { DialogVariableExpenditureUpdateComponent } from '../dialogs/dialog-variable-expenditure-update/dialog-variable-expenditure-update.component';
 
 @Component({
   selector: 'app-variable-expenditure-create',
@@ -17,7 +18,8 @@ export class VariableExpenditureCreateComponent implements OnInit {
   
   constructor(
     private readonly variableExpenditureService: VariableExpenditureService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toggleEnabledService: ToggleEnabledService,
   ){}
 
   form: FormGroup;
@@ -30,8 +32,13 @@ export class VariableExpenditureCreateComponent implements OnInit {
     this.dataSource = await this.variableExpenditureService.findAll();
   }
 
+  async isActive(id: number){
+    await this.toggleEnabledService.isActive(id, false);
+    await this.load()
+  }
+
   async openUpdateDialog(transaction: VariableExpenditureDto){
-    const dialogRef = this.dialog.open(VariableExpenditureUpdateComponent, {
+    const dialogRef = this.dialog.open(DialogVariableExpenditureUpdateComponent, {
       data: transaction
     });
 

@@ -22,12 +22,13 @@ export class FixedTransactionService{
         
     }
 
-    async delete(fixedTransactionId: number){
+    async delete(fixedTransactionId: number, userId: number){
         // await this.checkUserHasPermissionInTrasactionType(fixedTransactionId, userId);
         const transType = await this.fixedTransactionRepository.findOne({
             relations: ['user'],
             where: {
-                id: fixedTransactionId
+                id: fixedTransactionId,
+                userId: userId
             }
         })
 
@@ -73,10 +74,45 @@ export class FixedTransactionService{
         await this.fixedTransactionRepository.save(transType);
     }
 
+    async isActive(transId: number, userId: number){
+        const trans = await this.fixedTransactionRepository.findOne({
+            relations: ['user'],
+            where: {
+                id: transId,
+            }
+        })
+
+        if (!trans) {
+            throw new HttpException('Tipo de Transação não encontrada!', HttpStatus.NOT_FOUND)
+        }
+
+        if (trans.user?.id !== userId ) {
+            throw new HttpException('Requisição não autorizada!', HttpStatus.UNAUTHORIZED)    
+        }
+
+        trans.isActive = !trans.isActive;
+
+        await this.fixedTransactionRepository.save(trans);
+    }
+
    async findByCategory(category: Category, userId: number): Promise<FixedTransactionDto[]>{
         const option: FindManyOptions = {
             where: {
                 category: category,
+                userId: userId,
+                isActive: true
+            }
+        }
+        const transactions = await this.fixedTransactionRepository.find(option);
+
+        const transactionsDto: FixedTransactionDto[] = transactions.map(FixedTransactionMapper.toDto);
+        return transactionsDto;
+    }
+
+    async findDisabledTransactions( userId: number ): Promise<FixedTransactionDto[]>{
+        const option: FindManyOptions = {
+            where: {
+                isActive: false,
                 userId: userId
             }
         }

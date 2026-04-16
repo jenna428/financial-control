@@ -1,0 +1,51 @@
+import { Component, OnInit } from '@angular/core';
+import { FixedTransactionService } from '../../service/fixed-transaction.service';
+import { VariableExpenditureService } from '../../service/variable-expentidure.service';
+import type { FixedTransactionDto } from '../../dto/fixed-transaction.dto';
+import { ToggleEnabledService } from '../../service/toggle-enabled.service';
+import { ToggleEnabledDto } from '../../dto/toggle-enabled.dto';
+import { Category } from '../../classes/enums/enums';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
+
+@Component({
+  selector: 'app-disabled-transactions',
+  templateUrl: './disabled-transactions.component.html',
+  styleUrl: './disabled-transactions.component.scss'
+})
+export class DisabledTransactionsComponent implements OnInit{
+  dataSource: ToggleEnabledDto[] = [];
+  displayedColumns: string[] = ['name', 'category', 'type'];
+  Category = Category;
+
+  constructor(
+    private readonly toggleEnabledService: ToggleEnabledService,
+    private readonly dialog: MatDialog
+  ){}
+
+  async ngOnInit() {
+    this.load();
+  }
+
+  async load(){
+    this.dataSource = await this.toggleEnabledService.findDisabledTransactions();
+  }
+
+  async isActive(id: number, isFixed: boolean){
+    await this.toggleEnabledService.isActive(id, isFixed);
+    await this.load();
+  }
+
+  openDeleteDialog(transaction: ToggleEnabledDto) {
+    const dialogRef = this.dialog.open(DialogDeleteTransactionComponent, {
+      data: transaction,
+      width: '400px',
+      height: '180px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.load();
+    });
+  }
+
+}

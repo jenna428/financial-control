@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Optional, Output } from '@angular/core';
 import { VariableExpenditureDto } from '../../dto/variable-expenditure.dto';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { TransactionUpdateComponent } from '../transaction-update/transaction-update.component';
+import { DialogTransactionUpdateComponent } from '../dialogs/dialog-transaction-update/dialog-transaction-update.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import type { TransactionDto } from '../../dto/transaction.dto';
 import { VariableExpenditureService } from '../../service/variable-expentidure.service';
@@ -28,7 +28,7 @@ export class TransactionFormComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly variableExpenditureService: VariableExpenditureService,
     private readonly transactionService: TransactionService,
-    @Optional() private readonly dialogRef: MatDialogRef <TransactionUpdateComponent>,
+    @Optional() private readonly dialogRef: MatDialogRef <DialogTransactionUpdateComponent>,
   ){}
 
   title: string;

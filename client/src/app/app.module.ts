@@ -41,14 +41,15 @@ import {MatListModule} from '@angular/material/list';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { FixedTransactionFormComponent } from './components/fixed-transaction-form/fixed-transaction-form.component';
-import { FixedTransactionUpdateComponent } from './components/fixed-transaction-update/fixed-transaction-update.component';
 import { FixedTransactionCreateComponent } from './components/fixed-transaction-create/fixed-transaction-create.component';
 import { VariableExpenditureCreateComponent } from './components/variable-expenditure-create/variable-expenditure-create.component';
-import { VariableExpenditureUpdateComponent } from './components/variable-expenditure-update/variable-expenditure-update.component';
 import { VariableExpenditureFormComponent } from './components/variable-expenditure-form/variable-expenditure-form.component';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
 import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
-import { TransactionUpdateComponent } from './components/transaction-update/transaction-update.component';
+import { DialogTransactionUpdateComponent } from './components/dialogs/dialog-transaction-update/dialog-transaction-update.component';
+import { DisabledTransactionsComponent } from './components/disabled-transactions/disabled-transactions.component';
+import { DialogFixedTransactionUpdateComponent } from './components/dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
+import { DialogVariableExpenditureUpdateComponent } from './components/dialogs/dialog-variable-expenditure-update/dialog-variable-expenditure-update.component';
 
 
 registerLocaleData(localePt);
@@ -64,13 +65,15 @@ registerLocaleData(localePt);
     DashboardComponent,
     FixedTransactionFormComponent,
     FixedTransactionCreateComponent,
-    FixedTransactionUpdateComponent,
+    DialogFixedTransactionUpdateComponent,
     VariableExpenditureCreateComponent,
-    VariableExpenditureUpdateComponent,
+    DialogVariableExpenditureUpdateComponent,
     VariableExpenditureFormComponent,
     TransactionFormComponent,
     TransactionCreateComponent,
-    TransactionUpdateComponent
+    DialogTransactionUpdateComponent,
+    DisabledTransactionsComponent,
+    DisabledTransactionsComponent
 
   ],
   imports: [

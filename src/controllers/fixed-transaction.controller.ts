@@ -18,11 +18,18 @@ export class FixedTransactionController {
     }
 
     @UseGuards(JwtGuard)
+    @Get('/')
+    async findDisabledTransactions(@Request() req): Promise<FixedTransactionDto[]>{
+        const transactions = await this.fixedTransactionService.findDisabledTransactions(req.user.id);
+        return transactions;
+    }
+
+    /*@UseGuards(JwtGuard)
     @Get('/:id')
     async findOneById(@Param('id') id: number): Promise <FixedTransactionDto> {
         const fixedTransaction = await this.fixedTransactionService.findOneById(id)
         return fixedTransaction;
-    }
+    }*/
 
     @UseGuards(JwtGuard)
     @Post('/')
@@ -32,8 +39,8 @@ export class FixedTransactionController {
 
     @UseGuards(JwtGuard)
     @Delete('/:id')
-    async delete(@Param('id') id: number){
-        await this.fixedTransactionService.delete(id)
+    async delete(@Param('id') id: number, @Request() req){
+        await this.fixedTransactionService.delete(id, req.user.id)
     }
 
     @UseGuards(JwtGuard)
@@ -42,4 +49,9 @@ export class FixedTransactionController {
         await this.fixedTransactionService.update(transactionDto, req.user.id)
     }
 
+    @UseGuards(JwtGuard)
+    @Put('/:id')
+    async isActive(@Request() req, @Param('id') id: number){
+        await this.fixedTransactionService.isActive(id, req.user.id);
+    }   
 }

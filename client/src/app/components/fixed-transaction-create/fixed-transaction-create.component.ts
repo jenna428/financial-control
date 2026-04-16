@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../../classes/enums/enums';
 import { FixedTransactionDto } from '../../dto/fixed-transaction.dto';
 import { FixedTransactionService } from '../../service/fixed-transaction.service';
-import { FixedTransactionUpdateComponent } from '../fixed-transaction-update/fixed-transaction-update.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { ToggleEnabledService } from '../../service/toggle-enabled.service';
+import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 
 @Component({
   selector: 'app-fixed-transaction-create',
@@ -20,6 +21,7 @@ export class FixedTransactionCreateComponent implements OnInit{
 
   constructor(
     private fixedTransactionService: FixedTransactionService,
+    private toggleEnabledService: ToggleEnabledService,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ){}
@@ -45,9 +47,14 @@ export class FixedTransactionCreateComponent implements OnInit{
       this.dataSource = await this.fixedTransactionService.findByCategory(this.category);
     }
   }
+
+  async isActive(id: number){
+    await this.toggleEnabledService.isActive(id, true);
+    await this.load()
+  }
   
   openUpdateDialog(transaction: FixedTransactionDto) {
-    const dialogRef = this.dialog.open(FixedTransactionUpdateComponent, {
+    const dialogRef = this.dialog.open(DialogFixedTransactionUpdateComponent, {
       data: transaction
     });
 

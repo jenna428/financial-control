@@ -21,12 +21,15 @@ export class VariableExpenditureService{
 
     async findAll(): Promise <VariableExpenditureDto[]> {
         const transactions = await this.http.get<VariableExpenditureDto[]>(this.baseUrl);
-        // console.log(transactions);
         return transactions.data;
         
     }
 
     async update(variableExpenditureDto: VariableExpenditureDto){
         await this.http.put(this.baseUrl, variableExpenditureDto)
+    }
+
+    async delete(id: number){
+        await this.http.delete(this.baseUrl + id)
     }
 }

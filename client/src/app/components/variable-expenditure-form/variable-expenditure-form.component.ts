@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Optional, Output } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms';
 import type { VariableExpenditureDto } from '../../dto/variable-expenditure.dto';
 import { VariableExpenditureService } from '../../service/variable-expentidure.service';
-import { VariableExpenditureUpdateComponent } from '../variable-expenditure-update/variable-expenditure-update.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { DialogVariableExpenditureUpdateComponent } from '../dialogs/dialog-variable-expenditure-update/dialog-variable-expenditure-update.component';
 
 @Component({
   selector: 'app-variable-expenditure-form',
@@ -20,7 +20,7 @@ export class VariableExpenditureFormComponent {
   constructor(
     private readonly fb: FormBuilder,
     private readonly variableExpenditureService: VariableExpenditureService,
-    @Optional() private readonly dialogRef: MatDialogRef <VariableExpenditureUpdateComponent>,
+    @Optional() private readonly dialogRef: MatDialogRef <DialogVariableExpenditureUpdateComponent>,
   ){}
 
   @Input() action: string = '';
@@ -52,7 +52,6 @@ export class VariableExpenditureFormComponent {
     this.primaryButton = 'Salvar';
     this.secondButton = 'Cancelar'
   
-    console.log(this.action)
   }
   
   async submit(){

@@ -23,8 +23,20 @@ export class FixedTransactionService{
         await this.http.put(this.baseUrl, fixedTransactionDto)
     }
 
+    async delete(id: number){
+        await this.http.delete(this.baseUrl + id)
+    }
+    /*async isActive(id: number){
+        await this.http.put(this.baseUrl + id);
+    }*/
+
+    /*async findDisabledTransactions(): Promise <FixedTransactionDto[]>{
+        const transactions = await this.http.get<FixedTransactionDto[]>(this.baseUrl);
+        return transactions.data;
+    }*/
+
     async findByCategory(category: Category): Promise <FixedTransactionDto[]> {
-    const transactions = await this.http.get<FixedTransactionDto[]>(this.baseUrl + category);
-    return transactions.data;
-  }
+        const transactions = await this.http.get<FixedTransactionDto[]>(this.baseUrl + category);
+        return transactions.data;
+    }
 }

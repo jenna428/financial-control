@@ -5,7 +5,7 @@ import { Category } from '../../classes/enums/enums';
 import type { FixedTransactionDto } from '../../dto/fixed-transaction.dto';
 import { FixedTransactionService } from '../../service/fixed-transaction.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FixedTransactionUpdateComponent } from '../fixed-transaction-update/fixed-transaction-update.component';
+import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 
 @Component({
   selector: 'app-fixed-transaction-form',
@@ -24,7 +24,7 @@ export class FixedTransactionFormComponent implements OnInit {
     private readonly router: Router,
     private fb: FormBuilder,
     private fixedTransactionService: FixedTransactionService,
-    @Optional() private readonly dialogRef: MatDialogRef <FixedTransactionUpdateComponent>,
+    @Optional() private readonly dialogRef: MatDialogRef <DialogFixedTransactionUpdateComponent>,
   ){}
 
   form: FormGroup;
@@ -122,8 +122,6 @@ export class FixedTransactionFormComponent implements OnInit {
       this.dialogRef.close()
     }
   }
-
-
 
   secondaryAction(){
     if (this.action == 'create'){
