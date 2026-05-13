@@ -24,13 +24,6 @@ export class FixedTransactionController {
         return transactions;
     }
 
-    /*@UseGuards(JwtGuard)
-    @Get('/:id')
-    async findOneById(@Param('id') id: number): Promise <FixedTransactionDto> {
-        const fixedTransaction = await this.fixedTransactionService.findOneById(id)
-        return fixedTransaction;
-    }*/
-
     @UseGuards(JwtGuard)
     @Post('/')
     async save(@Request() req, @Body() transactionDto: FixedTransactionDto){

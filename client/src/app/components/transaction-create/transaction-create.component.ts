@@ -3,7 +3,7 @@ import { TransactionDto } from '../../dto/transaction.dto';
 import { TransactionService } from '../../service/transaction.service';
 import { DialogTransactionUpdateComponent } from '../dialogs/dialog-transaction-update/dialog-transaction-update.component';
 import { MatDialog } from '@angular/material/dialog';
-import { FormGroup } from '@angular/forms';
+import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
 
 @Component({
   selector: 'app-transaction-create',
@@ -31,6 +31,18 @@ export class TransactionCreateComponent implements OnInit{
   async openUpdateDialog(transaction: TransactionDto){
     const dialogRef = this.dialog.open(DialogTransactionUpdateComponent, {
       data: transaction
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.load();
+    });
+  }
+
+  openDeleteDialog(transaction: TransactionDto) {
+    const dialogRef = this.dialog.open(DialogDeleteTransactionComponent, {
+      data: transaction,
+      width: '400px',
+      height: '180px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -46,7 +46,7 @@ export class VariableExpenditureService{
             return transactionsDto;
         }
 
-    async delete(variableExpenditureId: number, userId: number){ //, userId: number <- precisa pegar/passar como parametro o id do usuario da requisição
+    async delete(variableExpenditureId: number, userId: number){
         const transType = await this.variableExpenditureRepository.findOne({
             relations: ['user'],
             where: {
@@ -83,7 +83,7 @@ export class VariableExpenditureService{
         await this.variableExpenditureRepository.save(trans);
     }
 
-    async update(variableExpenditureDto: VariableExpenditureDto, userId: number){ //, userId: number <- precisa pegar/passar como parametro o id do usuario da requisição
+    async update(variableExpenditureDto: VariableExpenditureDto, userId: number){
         const transType = await this.variableExpenditureRepository.findOne({
             where: {
                 id: variableExpenditureDto.id

@@ -16,16 +16,16 @@ export class TransactionController {
     }
 
     @UseGuards(JwtGuard)
+    @Delete('/:id')
+    async delete(@Param('id') id: number, @Request() req){
+        await this.transactionService.delete(id, req.user.id)
+    }
+
+    @UseGuards(JwtGuard)
     @Get('/')
     async findAll(@Request() req): Promise<TransactionDto[]> {
         return await this.transactionService.findAllByUserId(req.user.id); 
     }
-
-    /*@UseGuards(JwtGuard)
-    @Delete('/:id')
-    async delete(@Param('id') id: number){
-        await this.transactionService.delete(id)
-    }*/
 
     @UseGuards(JwtGuard)
     @Put('/')

@@ -1,7 +1,6 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post } from "@nestjs/common";
 import type { LoginDto } from "src/dto/login.dto";
 import type { UserDto } from "src/dto/user.dto";
-import { JwtGuard } from "src/guards/jwt.guard";
 import { UserService } from "src/services/user.service";
 
 @Controller('api/user')

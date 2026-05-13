@@ -1,8 +1,9 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import type { ToggleEnabledDto } from '../../../dto/toggle-enabled.dto';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FixedTransactionService } from '../../../service/fixed-transaction.service';
 import { VariableExpenditureService } from '../../../service/variable-expentidure.service';
+import { TransactionService } from '../../../service/transaction.service';
 
 @Component({
   selector: 'app-dialog-delete-transaction',
@@ -15,7 +16,8 @@ export class DialogDeleteTransactionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: ToggleEnabledDto,
     private dialogRef: MatDialogRef<DialogDeleteTransactionComponent>,
     private readonly fixedTransactionService: FixedTransactionService,
-    private readonly variableTransactionService: VariableExpenditureService
+    private readonly variableTransactionService: VariableExpenditureService,
+    private readonly transactionService: TransactionService
   ){}
 
   ngOnInit(): void {
@@ -23,10 +25,14 @@ export class DialogDeleteTransactionComponent implements OnInit {
   }
 
   deletar(){
-    if(this.data.isFixed){
+    if(this.data.isFixed == true){
       this.fixedTransactionService.delete(this.data.id)
-    }else{
+    }
+    if(this.data.isFixed == false){
       this.variableTransactionService.delete(this.data.id)
+    }
+    if(this.data.isFixed == null){
+      this.transactionService.delete(this.data.id)
     }
     this.dialogRef.close()
   }

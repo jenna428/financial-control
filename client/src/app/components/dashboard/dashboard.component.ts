@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FixedTransactionDto } from '../../dto/fixed-transaction.dto';
 
 @Component({
   selector: 'app-dashboard',

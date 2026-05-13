@@ -24,6 +24,10 @@ export class TransactionService{
         
     }
 
+    async delete(id: number){
+        await this.http.delete(this.baseUrl + id)
+    }
+
     async update(transactionDto: TransactionDto){
         await this.http.put(this.baseUrl, transactionDto)
     }

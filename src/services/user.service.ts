@@ -1,7 +1,6 @@
-import { Body, HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UserEntity } from "src/entity/user.entity";
-import { UserMapper } from "src/mapper/user.mapper";
 import { UserRepository } from "src/repository/user.repository";
 import * as bcrypt from 'bcrypt';
 import { GeralConfig } from "src/config/geral.config";
@@ -63,7 +62,7 @@ export class UserService {
         this.userRepository.delete(userId)
     }
 
-    async update( userDto: UserDto){//, userId: number <- precisa pegar/passar como parametro o id do usuario da requisição
+    async update( userDto: UserDto){
         const user = await this.userRepository.findOne({
             where: {
                 id: userDto.id

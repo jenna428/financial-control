@@ -47,14 +47,11 @@ export class FixedTransactionService{
         return FixedTransactionMapper.toDto(fixedTransaction); 
     }
 
-    async update(fixedTransactionDto: FixedTransactionDto, userId: number){ //, userId: number <- precisa pegar/passar como parametro o id do usuario da requisição
+    async update(fixedTransactionDto: FixedTransactionDto, userId: number){
         const transType = await this.fixedTransactionRepository.findOne({
             relations: ['user'],
             where: {
                 id: fixedTransactionDto.id,
-                // user: {
-                //     id: userId
-                // }
             }
         })
 
@@ -121,6 +118,7 @@ export class FixedTransactionService{
         const transactionsDto: FixedTransactionDto[] = transactions.map(FixedTransactionMapper.toDto);
         return transactionsDto;
     }
+    
     /*private async checkUserHasPermissionInTrasactionType(transactionTypeId: number, userId: number) {
         const transType = await this.transactionTypeRepository.findOne({
             relations: ['user'],

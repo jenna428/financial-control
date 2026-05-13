@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FixedTransactionService } from '../../service/fixed-transaction.service';
-import { VariableExpenditureService } from '../../service/variable-expentidure.service';
-import type { FixedTransactionDto } from '../../dto/fixed-transaction.dto';
 import { ToggleEnabledService } from '../../service/toggle-enabled.service';
 import { ToggleEnabledDto } from '../../dto/toggle-enabled.dto';
 import { Category } from '../../classes/enums/enums';

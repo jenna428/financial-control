@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpService } from "./http.service";
 import { environment } from "../../environments/environment";
 import { VariableExpenditureDto } from "../dto/variable-expenditure.dto";
-import { Category } from "../classes/enums/enums";
 
 @Injectable({
     providedIn: 'root'

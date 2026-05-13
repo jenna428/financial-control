@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Category } from '../../../classes/enums/enums';
 import type { FixedTransactionDto } from '../../../dto/fixed-transaction.dto';
@@ -26,7 +25,5 @@ export class DialogFixedTransactionUpdateComponent {
       ? 'Editar Receita'
       : 'Editar Despesa';
   }
-
-  
 
 }

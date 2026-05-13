@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Optional, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Category } from '../../classes/enums/enums';
 import type { FixedTransactionDto } from '../../dto/fixed-transaction.dto';
 import { FixedTransactionService } from '../../service/fixed-transaction.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 
 @Component({
