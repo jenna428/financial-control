@@ -16,7 +16,7 @@ export class UserService{
     constructor(
         private router: Router,
         private readonly http: HttpService,
-        private cookieService: CookieService
+        private cookieService: CookieService,
     ){}
 
     async save(useDto: UserRegisterDto, password: string){
@@ -28,9 +28,11 @@ export class UserService{
 
     async login(loginDto: LoginDto){
         const token = (await this.http.post<string>(this.baseUrl + '/login', loginDto)).data;
+
         this.cookieService.set(environment.token_cookie_key, token);
+
         if(this.cookieService.check(environment.token_cookie_key)){
-            this.router.navigate(['/pecunia/dashboard'])
+            this.router.navigate(['pecunia', 'dashboard'])
         }
     }
 

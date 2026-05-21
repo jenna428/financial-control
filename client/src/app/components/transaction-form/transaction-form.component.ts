@@ -6,6 +6,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import type { TransactionDto } from '../../dto/transaction.dto';
 import { VariableExpenditureService } from '../../service/variable-expentidure.service';
 import { TransactionService } from '../../service/transaction.service';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -29,6 +30,7 @@ export class TransactionFormComponent implements OnInit {
     private readonly variableExpenditureService: VariableExpenditureService,
     private readonly transactionService: TransactionService,
     @Optional() private readonly dialogRef: MatDialogRef <DialogTransactionUpdateComponent>,
+    private readonly messageService: MessageService
   ){}
 
   title: string;
@@ -73,7 +75,9 @@ export class TransactionFormComponent implements OnInit {
         transDate: this.form.get('transDate')?.value
       }
       
-      await this.transactionService.save(transactionDto);
+      await this.transactionService.save(transactionDto).then(() => {
+        this.messageService.showSuccess('Transação Adicionada!')  
+      });
 
       this.onSubmit.emit();
       return;

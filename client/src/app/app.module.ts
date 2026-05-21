@@ -50,6 +50,9 @@ import { DialogTransactionUpdateComponent } from './components/dialogs/dialog-tr
 import { DisabledTransactionsComponent } from './components/disabled-transactions/disabled-transactions.component';
 import { DialogFixedTransactionUpdateComponent } from './components/dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 import { DialogVariableExpenditureUpdateComponent } from './components/dialogs/dialog-variable-expenditure-update/dialog-variable-expenditure-update.component';
+import { MessageComponent } from './components/message/message.component';
+import { MessageContainerComponent } from './components/message-container/message-container.component';
+import { MessagePipe } from './pipes/message.pipe';
 
 
 registerLocaleData(localePt);
@@ -73,7 +76,10 @@ registerLocaleData(localePt);
     TransactionCreateComponent,
     DialogTransactionUpdateComponent,
     DisabledTransactionsComponent,
-    DisabledTransactionsComponent
+    DisabledTransactionsComponent,
+    MessageComponent,
+    MessageContainerComponent,
+    MessagePipe
 
   ],
   imports: [

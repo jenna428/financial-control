@@ -1,0 +1,9 @@
+<div class="container d-flex justify-content-between p-2" [ngClass]="message.type" (animationend)="onAnimationEnd($event)">
+    <div class="text overflow-hidden fs-6">
+        <mat-icon class="fs-5">{{message.type | message }}</mat-icon>
+        {{message.text}}
+    </div>
+    <div>
+        <mat-icon class="fs-6" (click)="close()">close</mat-icon>
+    </div>
+</div>

@@ -37,10 +37,8 @@ export class UserService {
         if(!user){
             throw new HttpException('Usuário ou senha incorretos!', HttpStatus.NOT_FOUND)
         }
-
-        const hash = await bcrypt.hash(login.password, GeralConfig.SALTROUND);
         
-        const isLogged = bcrypt.compare(hash, user.password);
+        const isLogged = await bcrypt.compare(login.password, user.password);
 
         if(!isLogged){
             throw new HttpException('Usuário ou senha incorretos!', HttpStatus.NOT_FOUND)

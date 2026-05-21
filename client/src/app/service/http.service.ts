@@ -2,13 +2,15 @@ import { Injectable } from "@angular/core";
 import axios, { AxiosInstance } from "axios";
 import { CookieService } from "ngx-cookie-service";
 import { environment } from "../../environments/environment";
+import { MessageService } from "./message.service";
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
     private api: AxiosInstance;
 
     constructor(
-        private cookie: CookieService
+        private cookie: CookieService,
+        private messageService: MessageService
     ){
         this.api = axios.create();
 
@@ -25,6 +27,14 @@ export class HttpService {
             }
 
             return config;
+        });
+
+        this.api.interceptors.response.use(response => response, error => {
+            if (error.response) {
+                this.messageService.showError(error.response.data.message);
+            }
+
+            return Promise.reject(error);
         });
     }
 
