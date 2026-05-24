@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToggleEnabledService } from '../../service/toggle-enabled.service';
-import { ToggleEnabledDto } from '../../dto/toggle-enabled.dto';
+import { TransactionTableDto } from '../../dto/transaction-table.dto';
 import { Category } from '../../classes/enums/enums';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
@@ -11,7 +11,7 @@ import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-trans
   styleUrl: './disabled-transactions.component.scss'
 })
 export class DisabledTransactionsComponent implements OnInit{
-  dataSource: ToggleEnabledDto[] = [];
+  dataSource: TransactionTableDto[] = [];
   displayedColumns: string[] = ['name', 'category', 'type'];
   Category = Category;
 
@@ -33,7 +33,7 @@ export class DisabledTransactionsComponent implements OnInit{
     await this.load();
   }
 
-  openDeleteDialog(transaction: ToggleEnabledDto) {
+  openDeleteDialog(transaction: TransactionTableDto) {
     const dialogRef = this.dialog.open(DialogDeleteTransactionComponent, {
       data: transaction,
       width: '400px',

@@ -5,7 +5,7 @@ import { FixedTransactionEntity } from "src/entity/fixed-transaction.entity";
 import { Category } from "src/enums/enums";
 import { FixedTransactionMapper } from "src/mapper/fixed-transaction.mapper";
 import { FixedTransactionRepository } from "src/repository/fixed-transaction.repository";
-import { FindManyOptions } from "typeorm";
+import { Between, FindManyOptions } from "typeorm";
 
 @Injectable()
 export class FixedTransactionService{
@@ -117,6 +117,15 @@ export class FixedTransactionService{
 
         const transactionsDto: FixedTransactionDto[] = transactions.map(FixedTransactionMapper.toDto);
         return transactionsDto;
+    }
+
+    async findAllByUserIdAndPeriod(userId: number, beginDate: Date, endDate: Date): Promise<FixedTransactionEntity[]>{
+        return await this.fixedTransactionRepository.find({
+            where: {
+                userId: userId,
+                transactionDate: Between(beginDate, endDate)
+            }
+        });
     }
     
     /*private async checkUserHasPermissionInTrasactionType(transactionTypeId: number, userId: number) {

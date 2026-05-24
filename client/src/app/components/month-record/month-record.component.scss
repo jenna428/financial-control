@@ -1,0 +1,29 @@
+@use '@angular/material' as mat;
+@use '../../../theme' as theme;
+
+h1{
+    font-size: 1.5em;
+}
+
+.page{
+    padding-top: 96px;
+}
+
+.formSearch{
+    width: 250px;
+    margin: 0px;
+}
+
+.search{
+    background-color: white;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.search:focus-within {
+  box-shadow: 0 0 0 2px  mat.get-color-from-palette(theme.$primary-palette, );
+  border-color:  mat.get-color-from-palette(theme.$primary-palette, 100);
+}

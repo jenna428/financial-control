@@ -4,7 +4,7 @@ import { VariableExpenditureDto } from "src/dto/variable-expenditure.dto";
 import { VariableExpenditureEntity } from "src/entity/variable-expenditure.entity";
 import { VariableExpenditureMapper } from "src/mapper/variable-expenditure.mapper";
 import { VariableExpenditureRepository } from "src/repository/variable-expenditure.repository";
-import { FindManyOptions } from "typeorm";
+import { Between, FindManyOptions } from "typeorm";
 
 @Injectable()
 export class VariableExpenditureService{

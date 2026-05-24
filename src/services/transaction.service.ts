@@ -5,6 +5,7 @@ import { TransactionEntity } from "src/entity/transaction.entity";
 import { TransactionMapper } from "src/mapper/transaction.mapper";
 import { TransactionRepository } from "src/repository/transaction.repository";
 import { Transaction2Repository } from "src/repository/transaction2.repository";
+import { Between } from "typeorm";
 
 @Injectable()
 export class TransactionService{
@@ -70,4 +71,13 @@ export class TransactionService{
         return transactionsDto;
     }
 
+    async findAllByUserIdAndPeriod(userId: number, beginDate: Date, endDate: Date): Promise<TransactionEntity[]>{
+        return await this.transactionRepository.find({
+            relations: ['expenditure'],
+            where: {
+                userId: userId,
+                transactionDate: Between(beginDate, endDate)
+            }
+        });
+    }
 }

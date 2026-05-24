@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
 import { VariableExpenditureEntity } from "./variable-expenditure.entity";
 
@@ -28,5 +28,6 @@ export class TransactionEntity {
     description: string;
 
     @Column()
+    @Index()
     transactionDate: Date;
 }

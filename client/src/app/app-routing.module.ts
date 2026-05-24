@@ -8,6 +8,8 @@ import { FixedTransactionCreateComponent } from './components/fixed-transaction-
 import { VariableExpenditureCreateComponent } from './components/variable-expenditure-create/variable-expenditure-create.component';
 import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
 import { DisabledTransactionsComponent } from './components/disabled-transactions/disabled-transactions.component';
+import { RecordComponent } from './components/record/record.component';
+import { MonthRecordComponent } from './components/month-record/month-record.component';
 
 const routes: Routes = [
   {
@@ -51,15 +53,15 @@ const routes: Routes = [
       {
         path: 'disabled-transactions',
         component: DisabledTransactionsComponent
+      },
+      {
+        path: 'record',
+        component: RecordComponent
+      },
+      {
+        path: 'record-month/:year/:month',
+        component: MonthRecordComponent
       }
-      // {
-      //   path: 'income',
-      //   component: FixedTransactionCreateComponent
-      // },
-      // {
-      //   path: 'expenditure',
-      //   component: ExpenditureCreateComponent
-      // }
     ]
   }
 ];

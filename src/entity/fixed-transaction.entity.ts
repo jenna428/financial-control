@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { UserEntity } from "./user.entity";
 import { Category } from "src/enums/enums";
 
@@ -6,9 +6,6 @@ import { Category } from "src/enums/enums";
 export class FixedTransactionEntity {
     @PrimaryColumn()
     id?: number;
-
-    @CreateDateColumn({ type: 'datetime' })
-    createDate?: Date;
 
     @Column()
     userId: number;
@@ -30,5 +27,6 @@ export class FixedTransactionEntity {
     isActive: boolean;
 
     @Column()
+    @Index()
     transactionDate: Date;
 }

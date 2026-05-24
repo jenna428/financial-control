@@ -53,6 +53,9 @@ import { DialogVariableExpenditureUpdateComponent } from './components/dialogs/d
 import { MessageComponent } from './components/message/message.component';
 import { MessageContainerComponent } from './components/message-container/message-container.component';
 import { MessagePipe } from './pipes/message.pipe';
+import { RecordComponent } from './components/record/record.component';
+import { MonthRecordComponent } from './components/month-record/month-record.component';
+import { MonthName } from './pipes/month.pipe';
 
 
 registerLocaleData(localePt);
@@ -79,7 +82,10 @@ registerLocaleData(localePt);
     DisabledTransactionsComponent,
     MessageComponent,
     MessageContainerComponent,
-    MessagePipe
+    MessagePipe,
+    MonthName,
+    RecordComponent,
+    MonthRecordComponent
 
   ],
   imports: [

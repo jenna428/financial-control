@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import type { ToggleEnabledDto } from '../../../dto/toggle-enabled.dto';
+import type { TransactionTableDto } from '../../../dto/transaction-table.dto';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FixedTransactionService } from '../../../service/fixed-transaction.service';
 import { VariableExpenditureService } from '../../../service/variable-expentidure.service';
@@ -13,7 +13,7 @@ import { TransactionService } from '../../../service/transaction.service';
 export class DialogDeleteTransactionComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ToggleEnabledDto,
+    @Inject(MAT_DIALOG_DATA) public data: TransactionTableDto,
     private dialogRef: MatDialogRef<DialogDeleteTransactionComponent>,
     private readonly fixedTransactionService: FixedTransactionService,
     private readonly variableTransactionService: VariableExpenditureService,
