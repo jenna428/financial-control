@@ -57,7 +57,8 @@ import { RecordComponent } from './components/record/record.component';
 import { MonthRecordComponent } from './components/month-record/month-record.component';
 import { MonthName } from './pipes/month.pipe';
 import { DialogDeleteTransactionComponent } from './components/dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
-
+import { NgxCurrencyDirective } from "ngx-currency";
+import { CurrencyPipe } from './pipes/currency.pipe';
 
 registerLocaleData(localePt);
 
@@ -84,6 +85,7 @@ registerLocaleData(localePt);
     MessageComponent,
     MessageContainerComponent,
     MessagePipe,
+    CurrencyPipe,
     MonthName,
     RecordComponent,
     MonthRecordComponent,
@@ -120,7 +122,8 @@ registerLocaleData(localePt);
     ReactiveFormsModule,
     MatIconModule,
     MatSlideToggleModule,
-    MatListModule
+    MatListModule,
+    NgxCurrencyDirective
 ],
   providers: [
     provideAnimationsAsync(),

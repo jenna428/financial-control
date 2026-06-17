@@ -12,8 +12,10 @@
         <div class="row">
             <mat-form-field class="col-6">
                 <mat-label>Valor</mat-label>
-                <input matInput formControlName="amount">
-                <span matTextPrefix>R$&nbsp;</span>
+                <input matInput 
+                    currencyMask 
+                    formControlName="amount" 
+                    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
             </mat-form-field>
             <mat-form-field class="col-6">
                 <mat-label>Data da Transação</mat-label>
