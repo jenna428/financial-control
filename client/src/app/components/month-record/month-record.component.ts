@@ -29,6 +29,7 @@ export class MonthRecordComponent implements OnInit{
   month: number;
   category: string;
   Category = Category;
+  isFixed: boolean | null = null;
 
   displayedColumns: string[] = ['date', 'name', 'category', 'type', 'amount'];
   dataSource: TransactionTableDto[] = [];
@@ -48,7 +49,7 @@ export class MonthRecordComponent implements OnInit{
     .pipe(
       debounceTime(300), // espera 300ms depois da última tecla
       distinctUntilChanged(), // evita requisições se o valor não mudou
-      switchMap(search => this.recordService.filterSearch(this.category, search, this.year, this.month)) // chama o serviço
+      switchMap(search => this.recordService.filterSearch(this.category, this.isFixed, search, this.year, this.month)) // chama o serviço
     )
     .subscribe((result: TransactionTableDto[]) => {
       this.dataSource = result;
@@ -57,21 +58,34 @@ export class MonthRecordComponent implements OnInit{
 
   async submit() {
     const search = this.formSearch?.get('search')?.value;
-    this.dataSource = await this.recordService.filterSearch(this.category, search, this.year, this.month);
+    this.dataSource = await this.recordService.filterSearch(this.category, this.isFixed, search, this.year, this.month);
   }
 
   async load(){
+    this.isFixed = null;
     this.dataSource = await this.recordService.findOneByMonth(this.year, this.month);
     this.category = null;
   }
 
   async loadIncomes(){
-    this.dataSource = await this.recordService.filterCategory(Category.INCOME, this.year, this.month)
+    const search = '';
+    this.isFixed = null;
+    this.dataSource = await this.recordService.filterSearch(Category.INCOME, this.isFixed, search, this.year, this.month)
     this.category = Category.INCOME;
   }
 
   async loadExpenditures(){
-    this.dataSource = await this.recordService.filterCategory(Category.EXPENDITURE, this.year, this.month)
+    const search = '';
+    this.isFixed = null;
+    console.log(this.isFixed)
+    this.dataSource = await this.recordService.filterSearch(Category.EXPENDITURE, this.isFixed, search, this.year, this.month)
     this.category = Category.EXPENDITURE;
+  }
+
+  async filterExpendituresByType(isFixed: boolean){
+    const search = ''
+    this.isFixed = isFixed;
+    console.log(isFixed)
+    this.dataSource = await this.recordService.filterSearch(Category.EXPENDITURE, isFixed, search, this.year, this.month)
   }
 }

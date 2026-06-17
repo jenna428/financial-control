@@ -1,4 +1,5 @@
-import { Controller, Get, Param, UseGuards, Request } from "@nestjs/common";
+import { Controller, Get, Param, UseGuards, Request, Query } from "@nestjs/common";
+import type { TransactionQuery } from "src/classes/transaction-query";
 import { RecordDto } from "src/dto/record.dto";
 import { TransactionTableDto } from "src/dto/transactions-table.dto";
 import { Category } from "src/enums/enums";
@@ -13,7 +14,7 @@ export class RecordController {
     ){}
 
     @UseGuards(JwtGuard)
-    @Get('/:year')
+    @Get('/year/:year')
     async findAll(@Request() req, @Param('year') year: number): Promise<RecordDto[]>{
         return await this.recordService.listRecordsByUserIdAndYear(req.user.id, year);
     }
@@ -25,14 +26,15 @@ export class RecordController {
     }
 
     @UseGuards(JwtGuard)
-    @Get('/category/:category/:year/:month/')
-    async filterCategory(@Request() req, @Param('category') category: string, @Param('year') year: number, @Param('month') month: number): Promise<TransactionTableDto[]>{
-        return await this.recordService.listTransactionsByUserIdMonthAndCategory(category, year, month, req.user.id)
+    @Get('/category')
+    async filterCategory(@Request() req, @Query() query: TransactionQuery): Promise<TransactionTableDto[]>{
+        return await this.recordService.listTransactionsByUserIdMonthAndCategory(query.category, query.isFixed, query.year, query.month, req.user.id)
     }
 
     @UseGuards(JwtGuard)
-    @Get('/:category/:search/:year/:month/')
-    async filterCategorySearch(@Request() req, @Param('category') category: string, @Param('search') search: string, @Param('year') year: number, @Param('month') month: number): Promise<TransactionTableDto[]>{
-        return await this.recordService.filterSearchByUserId(category, search, year, month, req.user.id)
+    @Get('/filter')
+    async filterCategorySearch(@Request() req, @Query() query: any): Promise<TransactionTableDto[]>{
+        console.log("Query", query);
+        return await this.recordService.filterSearchByUserId(query.category, query.isFixed, query.search, query.year, query.month, req.user.id)
     }
 }

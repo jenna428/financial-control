@@ -13,7 +13,7 @@ import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-trans
 export class TransactionCreateComponent implements OnInit{
 
   dataSource: TransactionDto[] = [];
-  displayedColumns: string[] = ['amount', 'description', 'despesa','data'];
+  displayedColumns: string[] = ['date', 'despesa', 'description', 'amount'];
 
   constructor(
     private readonly transactionService: TransactionService,

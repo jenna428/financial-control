@@ -1,11 +1,11 @@
-<div class="d-flex justify-content-center align-items-center">
-    <div class="mt-3">
-        <h2 class="mb-3">
-            Tem certeza que deseja deletar a transação {{data.name}}?
+<div class="dialog d-flex justify-content-center align-items-center">
+    <div class="">
+        <h2 class="mb-5">
+            Tem certeza que deseja deletar<br>a transação {{data.name}}?
         </h2>
-        <div class="d-flex justify-content-between m-3">
+        <div class="d-flex justify-content-between mt-5">
             <button mat-button color="warn" (click)="deletar()">Deletar</button>
-            <button mat-button color="primary" mat-dialog-close>Cancelar</button>
+            <button mat-button color="primary" (click)="cancel()">Cancelar</button>
         </div>
     </div>
 </div>

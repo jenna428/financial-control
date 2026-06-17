@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class RecordComponent implements OnInit {
 
-  displayedColumns: string[] = ['data', 'totI', 'totE', 'finalB'];
+  displayedColumns: string[] = ['date', 'totI', 'totE', 'finalB'];
   dataSource: RecordDto[] = [];
   currentYear: number = new Date().getFullYear();
 

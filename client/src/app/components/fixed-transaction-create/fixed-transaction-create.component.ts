@@ -14,7 +14,7 @@ import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-t
 })
 export class FixedTransactionCreateComponent implements OnInit{
   dataSource: FixedTransactionDto[] = [];
-  displayedColumns: string[] = ['name', 'amount'];
+  displayedColumns: string[] = ['date', 'name', 'amount'];
 
   title: string;
   category: Category;

@@ -56,6 +56,7 @@ import { MessagePipe } from './pipes/message.pipe';
 import { RecordComponent } from './components/record/record.component';
 import { MonthRecordComponent } from './components/month-record/month-record.component';
 import { MonthName } from './pipes/month.pipe';
+import { DialogDeleteTransactionComponent } from './components/dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
 
 
 registerLocaleData(localePt);
@@ -85,8 +86,8 @@ registerLocaleData(localePt);
     MessagePipe,
     MonthName,
     RecordComponent,
-    MonthRecordComponent
-
+    MonthRecordComponent,
+    DialogDeleteTransactionComponent,
   ],
   imports: [
     BrowserModule,

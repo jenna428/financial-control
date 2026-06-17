@@ -57,7 +57,7 @@ export class FixedTransactionFormComponent implements OnInit {
       this.form = this.fb.group({
         name: [this.data.name],
         amount: [this.data.amount],
-        transDate: [this.data.transactionData]
+        transDate: [this.data.transactionDate]
       });
 
       this.primaryButton = 'Salvar';
@@ -73,7 +73,7 @@ export class FixedTransactionFormComponent implements OnInit {
           amount: this.form.get('amount').value,
           category: Category.INCOME,
           isActive: true,
-          transactionData: this.form.get('transDate').value
+          transactionDate: this.form.get('transDate').value
         }
         await this.fixedTransactionService.save(incomeDto)
       }
@@ -83,7 +83,7 @@ export class FixedTransactionFormComponent implements OnInit {
           amount: this.form.get('amount').value,
           category: Category.EXPENDITURE,
           isActive: true,
-          transactionData: this.form.get('transDate').value
+          transactionDate: this.form.get('transDate').value
         }
         await this.fixedTransactionService.save(expenditureDto)
       }
@@ -98,7 +98,7 @@ export class FixedTransactionFormComponent implements OnInit {
           amount: this.form.get('amount').value,
           category: Category.INCOME,
           isActive: true,
-          transactionData: this.form.get('transDate').value
+          transactionDate: this.form.get('transDate').value
         }
 
         incomeDto.id = this.data.id;
@@ -111,7 +111,7 @@ export class FixedTransactionFormComponent implements OnInit {
           amount: this.form.get('amount').value,
           category: Category.EXPENDITURE,
           isActive: true,
-          transactionData: this.form.get('transDate').value
+          transactionDate: this.form.get('transDate').value
         }
 
         expenditureDto.id = this.data.id;

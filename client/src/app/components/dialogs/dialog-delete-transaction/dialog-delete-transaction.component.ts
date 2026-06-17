@@ -36,4 +36,8 @@ export class DialogDeleteTransactionComponent implements OnInit {
     }
     this.dialogRef.close()
   }
+  
+  cancel(){
+    this.dialogRef.close()
+  }
 }

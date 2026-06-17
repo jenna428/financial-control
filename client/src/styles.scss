@@ -49,12 +49,21 @@ body {
 }
 h1{
   font-family: theme.$font-primary !important;
+  font-size: 1.5em;
 }
 
 h3{
   font-family: theme.$font-primary;
   font-size: 0.8em;
   margin: 0px;
+}
+
+form{
+  width: 600px;
+}
+
+.page{
+  padding-top: 96px;
 }
 
 mat-label{

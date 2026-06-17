@@ -1,11 +1,11 @@
 <div class="page d-flex flex-column">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mb-5 pb-5">
         <h1>
             {{month | month}} / {{year}}
         </h1>
     </div>
 
-    <div class="mt-5 ms-5 ps-5 d-flex align-items-end">
+    <div class="ms-5 ps-5 d-flex align-items-end">
         <form [formGroup]="formSearch" (ngSubmit)="submit()" class="formSearch" role="search">
             <div class="search d-flex rounded">
                 <input class="border-0 m-2 col" formControlName="search" type="search" placeholder="Busca" aria-label="Search">
@@ -20,10 +20,14 @@
             <button mat-flat-button color="primary" (click)="load()">Todos</button>
             <button mat-flat-button color="primary" (click)="loadIncomes()">Receitas</button>
             <button mat-flat-button color="primary" (click)="loadExpenditures()">Despesas</button>
+            <div class="d-flex gap-2" *ngIf="category === Category.EXPENDITURE">
+                <button mat-flat-button color="secondary" (click)="filterExpendituresByType(true)">Fixas</button>
+                <button mat-flat-button color="secondary" (click)="filterExpendituresByType(false)">Variaveis</button>
+            </div>
         </div>
     </div>
 
-    <div class="row ms-5 p-5">
+    <div class="row ms-5 me-5 p-5">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
             <ng-container matColumnDef="date">

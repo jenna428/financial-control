@@ -2,18 +2,17 @@
 @use '../../../theme' as theme;
 
 .container{
-    pointer-events: all;
-    background-color: mat.get-color-from-palette(theme.$primary-palette, 50);
-    width: 250px;
-    height: 100px;
-    border-radius: 5px;
-    border: 1px solid mat.get-color-from-palette(theme.$primary-palette, 100);
+  pointer-events: all;
+  background-color: mat.get-color-from-palette(theme.$primary-palette, 50);
+  width: 250px;
+  height: 100px;
+  border-radius: 5px;
+  border: 1px solid mat.get-color-from-palette(theme.$primary-palette, 100);
 
-    animation: slide 0.8s ease-out forwards, close 10s, ease-out forwards;
+  animation: slide 0.8s ease-out forwards, close 10s, ease-out forwards;
 }
 
 .text{
-  /*font-size: 0.8em;*/
   font-family: theme.$font-primary !important;
 }
 

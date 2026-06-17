@@ -7,5 +7,5 @@ export interface FixedTransactionDto{
     amount: number,
     category: Category,
     isActive: boolean,
-    transactionData: Date
+    transactionDate: Date
 }

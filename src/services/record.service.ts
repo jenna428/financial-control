@@ -74,24 +74,35 @@ export class RecordService{
         return transactionResponde; 
     }
 
-    async listTransactionsByUserIdMonthAndCategory(category: string, year: number, month: number, userId: number):Promise<TransactionTableDto[]>{
+    async listTransactionsByUserIdMonthAndCategory(category: string, isFixed: any | null, year: number, month: number, userId: number):Promise<TransactionTableDto[]>{
         const transactions = await this.listTransactionsByUserIdAndMonth(year, month, userId);
+        isFixed = isFixed === 'true' ? true : isFixed === 'false' ? false : null;
+
+        if(isFixed == null || category === Category.INCOME){
+            const transactionResponde = transactions.filter(transactions =>
+                transactions.category === category
+            )
+            return transactionResponde;    
+        }
+
+        console.log('1', isFixed, typeof isFixed)
 
         const transactionResponde = transactions.filter(transactions =>
-            transactions.category === category
-        )
+        transactions.category === category && transactions.isFixed === isFixed)
         return transactionResponde;
     }
 
-    async filterSearchByUserId(category: string, search: string, year: number, month: number, userId: number): Promise<TransactionTableDto[]> {
+    async filterSearchByUserId(category: string, isFixed: boolean | null, search: string, year: number, month: number, userId: number): Promise<TransactionTableDto[]> {
         if(category == 'all'){
             const response = await this.filterSearch(search, year, month, userId);
             return response; 
         }else{
-            const transactions = await this.listTransactionsByUserIdMonthAndCategory(category, year, month, userId);
+            const transactions = await this.listTransactionsByUserIdMonthAndCategory(category, isFixed, year, month, userId);
+            
+            
             const response = transactions.filter(transactions =>
-            transactions.name.toLocaleLowerCase().includes(search.toLowerCase())
-        )
+            transactions.name.toLocaleLowerCase().includes(search.toLowerCase()))
+            console.log('opa')
         return response;
         }
     }

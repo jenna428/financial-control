@@ -1,41 +1,45 @@
-<div class="table d-flex justify-content-center">
-    <div class="row m-5 p-5">
-        <h1 class="text-start mb-5">Transações Desativadas</h1>
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-            <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Nome </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef> Categoria </th>
-            <td mat-cell *matCellDef="let element"> {{element.category === Category.EXPENDITURE ? 'Despesa' : 'Receita'}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef> Tipo </th>
-            <td mat-cell *matCellDef="let element">
-                <div class="d-flex align-items-center">
-                    {{element.isFixed ? 'Fixa' : 'Variável'}}
-                    <div class="d-flex ms-auto">
-                        <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="isActive(element.id, element.isFixed)">
-                            <span class="material-symbols-outlined">
-                                enable
-                            </span>
-                        </button>
-                        <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="openDeleteDialog(element)">
-                            <span class="material-symbols-outlined">
-                                delete
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </td>
-            </ng-container>
+<div class="page d-flex justify-content-center flex-column">
         
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </div>
+        <div class="d-flex justify-content-center pb-5 mb-5">
+            <h1 class="text-start mb-5">Transações Desativadas</h1>
+        </div>
+
+        <div class="mx-auto w-50">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Nome </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef> Categoria </th>
+                <td mat-cell *matCellDef="let element"> {{element.category === Category.EXPENDITURE ? 'Despesa' : 'Receita'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="d-flex align-items-center">
+                        {{element.isFixed ? 'Fixa' : 'Variável'}}
+                        <div class="d-flex ms-auto">
+                            <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="isActive(element.id, element.isFixed)">
+                                <span class="material-symbols-outlined">
+                                    enable
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="openDeleteDialog(element)">
+                                <span class="material-symbols-outlined">
+                                    delete
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
 </div>
