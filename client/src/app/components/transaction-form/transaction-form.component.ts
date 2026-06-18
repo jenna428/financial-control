@@ -67,10 +67,11 @@ export class TransactionFormComponent implements OnInit {
   }
 
   async submit(){
+    const amount = ((this.form.get('amount').value) * 100);
     if (this.action == 'create'){
       const transactionDto: TransactionDto = {
         expenditure: this.form.get('expenditure')?.value,
-        amount: this.form.get('amount')?.value,
+        amount: amount,
         description: this.form.get('description')?.value,
         transDate: this.form.get('transDate')?.value
       }
@@ -84,7 +85,7 @@ export class TransactionFormComponent implements OnInit {
     }else{
       const transactionDto: TransactionDto = {
         expenditure: this.form.get('expenditure').value,
-        amount: this.form.get('amount').value,
+        amount: amount,
         description: this.form.get('description').value,
         transDate: this.form.get('transDate').value
       }

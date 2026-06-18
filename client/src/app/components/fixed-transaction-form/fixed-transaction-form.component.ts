@@ -66,11 +66,13 @@ export class FixedTransactionFormComponent implements OnInit {
   }
 
   async submit(){
+    const amount = ((this.form.get('amount').value) * 100);
+
     if(this.action == 'create'){
       if(this.category == Category.INCOME){
         const incomeDto: FixedTransactionDto = {
           name: this.form.get('name').value,
-          amount: this.form.get('amount').value,
+          amount: amount,
           category: Category.INCOME,
           isActive: true,
           transactionDate: this.form.get('transDate').value
@@ -80,7 +82,7 @@ export class FixedTransactionFormComponent implements OnInit {
       if(this.category == Category.EXPENDITURE){
         const expenditureDto: FixedTransactionDto = {
           name: this.form.get('name').value,
-          amount: this.form.get('amount').value,
+          amount: amount,
           category: Category.EXPENDITURE,
           isActive: true,
           transactionDate: this.form.get('transDate').value
