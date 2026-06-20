@@ -48,15 +48,20 @@ export class RecordService{
 
         const records: RecordDto[] = [];
 
+        let initialB = 0;
+
         transacGroupsByMonth.forEach((transactions, month, map) => {
             const record: RecordDto = {
                 date: new Date(year, month),
                 totalIncome: transactions.filter(t => t.category === Category.INCOME).reduce((acc, t) => acc + t.amount, 0),
                 totalExpenditure: transactions.filter(t => t.category === Category.EXPENDITURE).reduce((acc, t) => acc + t.amount, 0),
+                initialBalance: initialB,
                 finalBalance: 0
             }
 
-            record.finalBalance = record.totalIncome - record.totalExpenditure;
+            record.finalBalance = record.initialBalance + record.totalIncome - record.totalExpenditure;
+
+            initialB = record.finalBalance;
 
             records.push(record);
         });

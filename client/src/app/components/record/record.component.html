@@ -13,6 +13,11 @@
             <td mat-cell *matCellDef="let element"> {{element.date | date: 'MM-yyyy'}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="initialB">
+            <th mat-header-cell *matHeaderCellDef> Saldo I. </th>
+            <td mat-cell *matCellDef="let element"> {{element.initialBalance | currency}} </td>
+            </ng-container>
+
             <ng-container matColumnDef="totI">
             <th mat-header-cell *matHeaderCellDef> T. Receitas </th>
             <td mat-cell *matCellDef="let element"> {{element.totalIncome | currency}}</td>
