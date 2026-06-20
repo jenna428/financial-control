@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RecordService } from '../../service/record.service';
 import { TransactionTableDto } from '../../dto/transaction-table.dto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../classes/enums/enums';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-month-record',
@@ -32,7 +34,18 @@ export class MonthRecordComponent implements OnInit{
   isFixed: boolean | null = null;
 
   displayedColumns: string[] = ['date', 'name', 'category', 'type', 'amount'];
-  dataSource: TransactionTableDto[] = [];
+  dataSource = new MatTableDataSource<TransactionTableDto>();
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+
+  /*paginator*/
+  length: number;
+  pageSize = 20;
+  pageIndex = 0;
+
+  hidePageSize = true;
+
+  pageEvent: PageEvent;
 
   ngOnInit(): void {
     this.year = Number(
@@ -52,25 +65,44 @@ export class MonthRecordComponent implements OnInit{
       switchMap(search => this.recordService.filterSearch(this.category, this.isFixed, search, this.year, this.month)) // chama o serviço
     )
     .subscribe((result: TransactionTableDto[]) => {
-      this.dataSource = result;
+      this.dataSource.data = result;
+      this.length = result.length;
+      this.pageIndex = 0;
     });
   }
 
   async submit() {
     const search = this.formSearch?.get('search')?.value;
-    this.dataSource = await this.recordService.filterSearch(this.category, this.isFixed, search, this.year, this.month);
+    const data = await this.recordService.filterSearch(this.category, this.isFixed, search, this.year, this.month);
+
+    this.dataSource.data = data;
+    this.length = data.length;
   }
 
   async load(){
     this.isFixed = null;
-    this.dataSource = await this.recordService.findOneByMonth(this.year, this.month);
+    
+    const data = await this.recordService.findOneByMonth(this.year, this.month);
+
+    this.dataSource.data = data;
+    this.length = data.length;
+
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
+
     this.category = null;
   }
 
   async loadIncomes(){
     const search = '';
     this.isFixed = null;
-    this.dataSource = await this.recordService.filterSearch(Category.INCOME, this.isFixed, search, this.year, this.month)
+    const data = await this.recordService.filterSearch(Category.INCOME, this.isFixed, search, this.year, this.month)
+
+    this.dataSource.data = data;
+    this.length = data.length;
+    this.pageIndex = 0;
+
     this.category = Category.INCOME;
   }
 
@@ -78,7 +110,12 @@ export class MonthRecordComponent implements OnInit{
     const search = '';
     this.isFixed = null;
     console.log(this.isFixed)
-    this.dataSource = await this.recordService.filterSearch(Category.EXPENDITURE, this.isFixed, search, this.year, this.month)
+    const data = await this.recordService.filterSearch(Category.EXPENDITURE, this.isFixed, search, this.year, this.month)
+
+    this.dataSource.data = data;
+    this.length = data.length;
+    this.pageIndex = 0;
+
     this.category = Category.EXPENDITURE;
   }
 
@@ -86,6 +123,17 @@ export class MonthRecordComponent implements OnInit{
     const search = ''
     this.isFixed = isFixed;
     console.log(isFixed)
-    this.dataSource = await this.recordService.filterSearch(Category.EXPENDITURE, isFixed, search, this.year, this.month)
+    const data = await this.recordService.filterSearch(Category.EXPENDITURE, isFixed, search, this.year, this.month)
+
+    this.dataSource.data = data;
+    this.length = data.length;
+    this.pageIndex = 0;
+  }
+
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
   }
 }

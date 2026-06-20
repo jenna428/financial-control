@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { VariableExpenditureDto } from '../../dto/variable-expenditure.dto';
 import { VariableExpenditureService } from '../../service/variable-expentidure.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ToggleEnabledService } from '../../service/toggle-enabled.service';
 import { DialogVariableExpenditureUpdateComponent } from '../dialogs/dialog-variable-expenditure-update/dialog-variable-expenditure-update.component';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-variable-expenditure-create',
@@ -13,7 +15,10 @@ import { DialogVariableExpenditureUpdateComponent } from '../dialogs/dialog-vari
 })
 export class VariableExpenditureCreateComponent implements OnInit {
 
-  dataSource: VariableExpenditureDto[] = [];
+  dataSource = new MatTableDataSource<VariableExpenditureDto>();
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+
   displayedColumns: string[] = ['name'];
   
   constructor(
@@ -24,12 +29,29 @@ export class VariableExpenditureCreateComponent implements OnInit {
 
   form: FormGroup;
 
+  /*paginator*/
+  length: number;
+  pageSize = 25;
+  pageIndex = 0;
+
+  hidePageSize = true;
+
+  pageEvent: PageEvent;
+
+
   ngOnInit(): void {
     this.load();
   }
 
-  async load(){
-    this.dataSource = await this.variableExpenditureService.findAll();
+  async load() {
+    const data = await this.variableExpenditureService.findAll();
+
+    this.dataSource.data = data;
+    this.length = data.length;
+
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   async isActive(id: number){
@@ -46,4 +68,13 @@ export class VariableExpenditureCreateComponent implements OnInit {
       this.load();
     });
   }
+
+  //paginator
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+  }
+
 }
