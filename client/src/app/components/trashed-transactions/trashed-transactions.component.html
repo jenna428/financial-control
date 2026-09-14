@@ -1,7 +1,7 @@
 <div class="page d-flex justify-content-center flex-column">
         
         <div class="d-flex justify-content-center pb-5 mb-5">
-            <h1 class="text-start mb-5">Transações Desativadas</h1>
+            <h1 class="text-start mb-5">Lixeira</h1>
         </div>
 
         <div class="mx-auto w-50">
@@ -24,12 +24,12 @@
                         {{element.isFixed ? 'Fixa' : 'Variável'}}
                         <div class="d-flex ms-auto">
                             <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="isActive(element.id, element.isFixed)">
-                                <span class="material-symbols-outlined">
+                                <span matTooltip="Recuperar" class="material-symbols-outlined">
                                     enable
                                 </span>
                             </button>
                             <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="openDeleteDialog(element)">
-                                <span class="material-symbols-outlined">
+                                <span matTooltip="Deletar" class="material-symbols-outlined" style="color: rgb(163, 5, 5);">
                                     delete
                                 </span>
                             </button>

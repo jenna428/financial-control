@@ -9,7 +9,7 @@ import { Category } from "../classes/enums/enums";
 @Injectable({
     providedIn: 'root'
 })
-export class ToggleEnabledService{
+export class ToggleTrashedService{
 
     private readonly fixBaseUrl = environment.api_url + 'fixed-transaction/';
     private readonly varBaseUrl = environment.api_url + 'variable-expenditure/';
@@ -18,10 +18,10 @@ export class ToggleEnabledService{
         private readonly http: HttpService
     ){}
 
-    async findDisabledTransactions(): Promise <TransactionTableDto[]>{
+    async findTrashedTransactions(): Promise <TransactionTableDto[]>{
         const [fixTransactions, varTransactions] = await Promise.all([
             this.http.get<FixedTransactionDto[]>(this.fixBaseUrl),
-            this.http.get<VariableExpenditureDto[]>(this.varBaseUrl + 'disabled/')
+            this.http.get<VariableExpenditureDto[]>(this.varBaseUrl + 'trashed/')
         ]);
         
         const fixed = fixTransactions.data.map(i => ({

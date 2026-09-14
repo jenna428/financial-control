@@ -12,13 +12,13 @@
                     {{element.name}}
                     <div class="d-flex ms-auto">
                         <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="openUpdateDialog(element)">
-                            <span class="material-symbols-outlined">
+                            <span matTooltip="Editar" class="material-symbols-outlined">
                                 edit
                             </span>
                         </button>
-                        <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="isActive(element.id)">
-                            <span class="material-symbols-outlined">
-                                archive
+                        <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="moveToTrash(element.id)">
+                            <span matTooltip="Mover para Lixeira" class="material-symbols-outlined">
+                                delete
                             </span>
                         </button>
                     </div>

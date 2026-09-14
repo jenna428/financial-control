@@ -4,7 +4,7 @@ import { FixedTransactionDto } from '../../dto/fixed-transaction.dto';
 import { FixedTransactionService } from '../../service/fixed-transaction.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { ToggleEnabledService } from '../../service/toggle-enabled.service';
+import { ToggleTrashedService } from '../../service/toggle-trashed.service';
 import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -26,7 +26,7 @@ export class FixedTransactionCreateComponent implements OnInit{
 
   constructor(
     private fixedTransactionService: FixedTransactionService,
-    private toggleEnabledService: ToggleEnabledService,
+    private toggleTrashedService: ToggleTrashedService,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ){}
@@ -69,8 +69,8 @@ export class FixedTransactionCreateComponent implements OnInit{
     }
   }
 
-  async isActive(id: number){
-    await this.toggleEnabledService.isActive(id, true);
+  async moveToTrash(id: number){
+    await this.toggleTrashedService.isActive(id, true);
     await this.load()
   }
   

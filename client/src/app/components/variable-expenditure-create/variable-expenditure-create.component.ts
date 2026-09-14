@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { VariableExpenditureDto } from '../../dto/variable-expenditure.dto';
 import { VariableExpenditureService } from '../../service/variable-expentidure.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ToggleEnabledService } from '../../service/toggle-enabled.service';
+import { ToggleTrashedService } from '../../service/toggle-trashed.service';
 import { DialogVariableExpenditureUpdateComponent } from '../dialogs/dialog-variable-expenditure-update/dialog-variable-expenditure-update.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -24,7 +24,7 @@ export class VariableExpenditureCreateComponent implements OnInit {
   constructor(
     private readonly variableExpenditureService: VariableExpenditureService,
     private dialog: MatDialog,
-    private toggleEnabledService: ToggleEnabledService,
+    private toggleTrashedService: ToggleTrashedService,
   ){}
 
   form: FormGroup;
@@ -54,8 +54,8 @@ export class VariableExpenditureCreateComponent implements OnInit {
     }
   }
 
-  async isActive(id: number){
-    await this.toggleEnabledService.isActive(id, false);
+  async moveToTrash(id: number){
+    await this.toggleTrashedService.isActive(id, false);
     await this.load()
   }
 

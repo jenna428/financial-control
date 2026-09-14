@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ToggleEnabledService } from '../../service/toggle-enabled.service';
+import { ToggleTrashedService } from '../../service/toggle-trashed.service';
 import { TransactionTableDto } from '../../dto/transaction-table.dto';
 import { Category } from '../../classes/enums/enums';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,11 +8,11 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-disabled-transactions',
-  templateUrl: './disabled-transactions.component.html',
-  styleUrl: './disabled-transactions.component.scss'
+  selector: 'app-trashed-transactions',
+  templateUrl: './trashed-transactions.component.html',
+  styleUrl: './trashed-transactions.component.scss'
 })
-export class DisabledTransactionsComponent implements OnInit{
+export class TrashedTransactionsComponent implements OnInit{
 
   dataSource = new MatTableDataSource<TransactionTableDto>();
   @ViewChild(MatPaginator)
@@ -21,7 +21,7 @@ export class DisabledTransactionsComponent implements OnInit{
   Category = Category;
 
   constructor(
-    private readonly toggleEnabledService: ToggleEnabledService,
+    private readonly toggleEnabledService: ToggleTrashedService,
     private readonly dialog: MatDialog
   ){}
 
@@ -39,7 +39,7 @@ export class DisabledTransactionsComponent implements OnInit{
   }
 
   async load(){
-    const data = await this.toggleEnabledService.findDisabledTransactions();
+    const data = await this.toggleEnabledService.findTrashedTransactions();
 
     this.dataSource.data = data;
     this.length = data.length;

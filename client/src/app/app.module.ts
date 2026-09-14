@@ -47,7 +47,7 @@ import { VariableExpenditureFormComponent } from './components/variable-expendit
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
 import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
 import { DialogTransactionUpdateComponent } from './components/dialogs/dialog-transaction-update/dialog-transaction-update.component';
-import { DisabledTransactionsComponent } from './components/disabled-transactions/disabled-transactions.component';
+import { TrashedTransactionsComponent } from './components/trashed-transactions/trashed-transactions.component';
 import { DialogFixedTransactionUpdateComponent } from './components/dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 import { DialogVariableExpenditureUpdateComponent } from './components/dialogs/dialog-variable-expenditure-update/dialog-variable-expenditure-update.component';
 import { MessageComponent } from './components/message/message.component';
@@ -80,8 +80,7 @@ registerLocaleData(localePt);
     TransactionFormComponent,
     TransactionCreateComponent,
     DialogTransactionUpdateComponent,
-    DisabledTransactionsComponent,
-    DisabledTransactionsComponent,
+    TrashedTransactionsComponent,
     MessageComponent,
     MessageContainerComponent,
     MessagePipe,

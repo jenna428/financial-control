@@ -24,9 +24,9 @@ export class VariableExpenditureController {
     }
 
     @UseGuards(JwtGuard)
-    @Get('/disabled')
-    async findDisabledTransactions(@Request() req): Promise<VariableExpenditureDto[]>{
-        const transactions = await this.variableExpenditureService.findDisabledTransactions(req.user.id);
+    @Get('/trashed')
+    async findTrashedTransactions(@Request() req): Promise<VariableExpenditureDto[]>{
+        const transactions = await this.variableExpenditureService.findTrashedTransactions(req.user.id);
         return transactions;
     }
 

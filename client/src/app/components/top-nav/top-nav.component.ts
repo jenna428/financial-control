@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 export class TopNavComponent {
 
   constructor(
-    private readonly userService: UserService,
     private readonly router: Router
   ){}
 

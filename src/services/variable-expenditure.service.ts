@@ -33,7 +33,7 @@ export class VariableExpenditureService{
         return variableExpendituresDto;
     }
 
-    async findDisabledTransactions( userId: number ): Promise<VariableExpenditureDto[]>{
+    async findTrashedTransactions( userId: number ): Promise<VariableExpenditureDto[]>{
             const option: FindManyOptions = {
                 where: {
                     isActive: false,

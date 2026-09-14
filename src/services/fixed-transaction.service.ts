@@ -106,7 +106,7 @@ export class FixedTransactionService{
         return transactionsDto;
     }
 
-    async findDisabledTransactions( userId: number ): Promise<FixedTransactionDto[]>{
+    async findTrashedTransactions( userId: number ): Promise<FixedTransactionDto[]>{
         const option: FindManyOptions = {
             where: {
                 isActive: false,

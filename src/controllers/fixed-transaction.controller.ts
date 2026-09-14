@@ -19,8 +19,8 @@ export class FixedTransactionController {
 
     @UseGuards(JwtGuard)
     @Get('/')
-    async findDisabledTransactions(@Request() req): Promise<FixedTransactionDto[]>{
-        const transactions = await this.fixedTransactionService.findDisabledTransactions(req.user.id);
+    async findTrashedTransactions(@Request() req): Promise<FixedTransactionDto[]>{
+        const transactions = await this.fixedTransactionService.findTrashedTransactions(req.user.id);
         return transactions;
     }
 
