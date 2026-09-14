@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Optional, Output } from '@angular/core';
 import { VariableExpenditureDto } from '../../dto/variable-expenditure.dto';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogTransactionUpdateComponent } from '../dialogs/dialog-transaction-update/dialog-transaction-update.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import type { TransactionDto } from '../../dto/transaction.dto';
@@ -25,6 +25,10 @@ export class TransactionFormComponent implements OnInit {
   @Output()
   onSubmit: EventEmitter<void> = new EventEmitter<void>();
 
+  get isFormValid(): boolean {
+    return this.form.valid;
+  }
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly variableExpenditureService: VariableExpenditureService,
@@ -43,10 +47,10 @@ export class TransactionFormComponent implements OnInit {
     this.expenditures = await this.variableExpenditureService.findAll();
 
     this.form = this.fb.group({
-      expenditure: [''],
-      amount: [''],
+      expenditure: ['', Validators.required],
+      amount: ['', Validators.required],
       description: [''],
-      transDate: ['']
+      transDate: ['', Validators.required]
     });
 
     if(this.action == 'create'){

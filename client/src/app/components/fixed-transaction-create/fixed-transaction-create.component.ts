@@ -8,6 +8,7 @@ import { ToggleTrashedService } from '../../service/toggle-trashed.service';
 import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-fixed-transaction-create',
@@ -28,7 +29,8 @@ export class FixedTransactionCreateComponent implements OnInit{
     private fixedTransactionService: FixedTransactionService,
     private toggleTrashedService: ToggleTrashedService,
     private dialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private readonly messageService: MessageService
   ){}
 
   /*paginator*/
@@ -70,7 +72,9 @@ export class FixedTransactionCreateComponent implements OnInit{
   }
 
   async moveToTrash(id: number){
-    await this.toggleTrashedService.isActive(id, true);
+    await this.toggleTrashedService.isActive(id, true).then(()=> {
+      this.messageService.showSuccess('Transação Movida Para Lixeira!')
+    });
     await this.load()
   }
   

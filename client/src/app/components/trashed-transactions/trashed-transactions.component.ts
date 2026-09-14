@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-trashed-transactions',
@@ -21,8 +22,9 @@ export class TrashedTransactionsComponent implements OnInit{
   Category = Category;
 
   constructor(
-    private readonly toggleEnabledService: ToggleTrashedService,
-    private readonly dialog: MatDialog
+    private readonly toggleTrashedService: ToggleTrashedService,
+    private readonly dialog: MatDialog,
+    private readonly messageService: MessageService
   ){}
 
   /*paginator*/
@@ -39,7 +41,7 @@ export class TrashedTransactionsComponent implements OnInit{
   }
 
   async load(){
-    const data = await this.toggleEnabledService.findTrashedTransactions();
+    const data = await this.toggleTrashedService.findTrashedTransactions();
 
     this.dataSource.data = data;
     this.length = data.length;
@@ -50,7 +52,9 @@ export class TrashedTransactionsComponent implements OnInit{
   }
 
   async isActive(id: number, isFixed: boolean){
-    await this.toggleEnabledService.isActive(id, isFixed);
+    await this.toggleTrashedService.isActive(id, isFixed).then(()=> {
+      this.messageService.showSuccess('Transação Recuperada!')
+    });
     await this.load();
   }
 

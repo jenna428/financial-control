@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Optional, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Category } from '../../classes/enums/enums';
 import type { FixedTransactionDto } from '../../dto/fixed-transaction.dto';
 import { FixedTransactionService } from '../../service/fixed-transaction.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-fixed-transaction-form',
@@ -20,11 +21,16 @@ export class FixedTransactionFormComponent implements OnInit {
   @Output()
   onSubmit: EventEmitter<void> = new EventEmitter<void>();
 
+  get isFormValid(): boolean {
+    return this.form.valid;
+  }
+
   constructor(
     private readonly router: Router,
     private fb: FormBuilder,
     private fixedTransactionService: FixedTransactionService,
     @Optional() private readonly dialogRef: MatDialogRef <DialogFixedTransactionUpdateComponent>,
+    private readonly messageService: MessageService
   ){}
 
   form: FormGroup;
@@ -43,9 +49,9 @@ export class FixedTransactionFormComponent implements OnInit {
     if(this.action == 'create'){
 
       this.form = this.fb.group({
-        name: [''],
-        amount: [''],
-        transDate: ['']
+        name: ['', Validators.required],
+        amount: ['', Validators.required],
+        transDate: ['', Validators.required]
       });
 
       this.primaryButton = 'Adicionar';
@@ -77,7 +83,9 @@ export class FixedTransactionFormComponent implements OnInit {
           isActive: true,
           transactionDate: this.form.get('transDate').value
         }
-        await this.fixedTransactionService.save(incomeDto)
+        await this.fixedTransactionService.save(incomeDto).then(() => {
+          this.messageService.showSuccess('Receita Adicionada!');
+        });
       }
       if(this.category == Category.EXPENDITURE){
         const expenditureDto: FixedTransactionDto = {
@@ -87,7 +95,9 @@ export class FixedTransactionFormComponent implements OnInit {
           isActive: true,
           transactionDate: this.form.get('transDate').value
         }
-        await this.fixedTransactionService.save(expenditureDto)
+        await this.fixedTransactionService.save(expenditureDto).then(() => {
+          this.messageService.showSuccess('Despesa Adicionada!');
+        });
       }
 
       this.onSubmit.emit();
@@ -105,7 +115,9 @@ export class FixedTransactionFormComponent implements OnInit {
 
         incomeDto.id = this.data.id;
 
-        await this.fixedTransactionService.update(incomeDto);
+        await this.fixedTransactionService.update(incomeDto).then(() => {
+          this.messageService.showSuccess('Receita Atualizada!');
+        });
       }
       if(this.category == Category.EXPENDITURE){
         const expenditureDto: FixedTransactionDto = {
@@ -118,7 +130,9 @@ export class FixedTransactionFormComponent implements OnInit {
 
         expenditureDto.id = this.data.id;
 
-        await this.fixedTransactionService.update(expenditureDto);
+        await this.fixedTransactionService.update(expenditureDto).then(() => {
+          this.messageService.showSuccess('Despesa Atualizada!');
+        });
       }
 
       this.dialogRef.close()

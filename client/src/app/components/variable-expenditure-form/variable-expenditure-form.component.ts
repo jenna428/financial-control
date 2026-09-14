@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Optional, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import type { VariableExpenditureDto } from '../../dto/variable-expenditure.dto';
 import { VariableExpenditureService } from '../../service/variable-expentidure.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DialogVariableExpenditureUpdateComponent } from '../dialogs/dialog-variable-expenditure-update/dialog-variable-expenditure-update.component';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-variable-expenditure-form',
@@ -17,10 +18,15 @@ export class VariableExpenditureFormComponent {
   @Output()
   onSubmit: EventEmitter<void> = new EventEmitter<void>();
 
+  get isFormValid(): boolean {
+    return this.form.valid;
+  }
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly variableExpenditureService: VariableExpenditureService,
     @Optional() private readonly dialogRef: MatDialogRef <DialogVariableExpenditureUpdateComponent>,
+    private readonly messageService: MessageService
   ){}
 
   @Input() action: string = '';
@@ -34,7 +40,7 @@ export class VariableExpenditureFormComponent {
     if(this.action == 'create'){
 
       this.form = this.fb.group({
-        name: ['']
+        name: ['', Validators.required]
       });
 
       this.title = 'Adicionar'
@@ -60,7 +66,9 @@ export class VariableExpenditureFormComponent {
         name: this.form.get('name').value,
         isActive: true
       }
-      await this.variableExpenditureService.save(variableExpenditureDto);
+      await this.variableExpenditureService.save(variableExpenditureDto).then(() => {
+        this.messageService.showSuccess('Despesa Adicionada!');
+      });
 
       this.onSubmit.emit();
     }

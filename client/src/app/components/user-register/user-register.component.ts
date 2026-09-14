@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import {Router } from '@angular/router';
 import { UserRegisterDto } from '../../dto/user-register.dto';
 import { UserService } from '../../service/user.service';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-user-register',
@@ -22,7 +23,8 @@ export class UserRegisterComponent implements OnInit {
   constructor(
     private router: Router,
     private readonly fb: FormBuilder,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly messageService: MessageService
   ){
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
@@ -85,6 +87,8 @@ export class UserRegisterComponent implements OnInit {
       password: this.form.get('password')?.value
     }
 
-    await this.userService.save(userdto, this.form.get('confirmPassword')?.value)
+    await this.userService.save(userdto, this.form.get('confirmPassword')?.value).then(() => {
+      this.messageService.showSuccess('Cadastro Concluido!')
+    });
   }
 }

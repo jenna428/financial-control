@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FixedTransactionService } from '../../../service/fixed-transaction.service';
 import { VariableExpenditureService } from '../../../service/variable-expentidure.service';
 import { TransactionService } from '../../../service/transaction.service';
+import { MessageService } from '../../../service/message.service';
 
 @Component({
   selector: 'app-dialog-delete-transaction',
@@ -17,7 +18,8 @@ export class DialogDeleteTransactionComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogDeleteTransactionComponent>,
     private readonly fixedTransactionService: FixedTransactionService,
     private readonly variableTransactionService: VariableExpenditureService,
-    private readonly transactionService: TransactionService
+    private readonly transactionService: TransactionService,
+    private readonly messageService: MessageService
   ){}
 
   ngOnInit(): void {
@@ -26,13 +28,19 @@ export class DialogDeleteTransactionComponent implements OnInit {
 
   deletar(){
     if(this.data.isFixed == true){
-      this.fixedTransactionService.delete(this.data.id)
+      this.fixedTransactionService.delete(this.data.id).then(() => {
+        this.messageService.showSuccess('Transação Deletada!')
+      });
     }
     if(this.data.isFixed == false){
-      this.variableTransactionService.delete(this.data.id)
+      this.variableTransactionService.delete(this.data.id).then(() => {
+        this.messageService.showSuccess('Transação Deletada!')
+      });
     }
     if(this.data.isFixed == null){
-      this.transactionService.delete(this.data.id)
+      this.transactionService.delete(this.data.id).then(() => {
+        this.messageService.showSuccess('Transação Deletada!')
+      });
     }
     this.dialogRef.close()
   }
