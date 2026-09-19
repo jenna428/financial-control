@@ -1,3 +1,12 @@
+import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
+// import echarts core
+import * as echarts from 'echarts/core';
+// import necessary echarts components
+import { BarChart, PieChart } from 'echarts/charts';
+import { GridComponent, TitleComponent, TooltipComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+echarts.use([BarChart, PieChart, GridComponent, CanvasRenderer, TitleComponent, TooltipComponent]);
+
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -122,12 +131,14 @@ registerLocaleData(localePt);
     MatIconModule,
     MatSlideToggleModule,
     MatListModule,
-    NgxCurrencyDirective
+    NgxCurrencyDirective,
+    NgxEchartsDirective,
 ],
   providers: [
     provideAnimationsAsync(),
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    provideEchartsCore({ echarts })
   ],
   bootstrap: [AppComponent]
 })

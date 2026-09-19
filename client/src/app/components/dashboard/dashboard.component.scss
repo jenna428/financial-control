@@ -1,0 +1,31 @@
+@use '@angular/material' as mat;
+@use '../../../theme' as theme;
+
+.card{
+    width: 30%;
+    height: 100px;
+}
+
+.income{
+    background-color: mat.get-color-from-palette(theme.$primary-palette, 600);
+    color: white;
+}
+
+.expenditure{
+    background-color: mat.get-color-from-palette(theme.$secondary-palette, 600);
+    color: white;
+}
+
+.balance{
+    color: mat.get-color-from-palette(theme.$primary-palette, 600);
+}
+
+.pieChart {
+  width: 700px;
+  height: 500px;
+}
+
+.barChart {
+  width: 700px;
+  height: 500px;
+}

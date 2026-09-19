@@ -16,6 +16,11 @@ export class RecordService{
 
     private readonly baseUrl = environment.api_url + 'record/';
 
+   /* async getCurrentMonthStatus(year: number, month: number): Promise<RecordDto>{
+        const status = await this.http.get<RecordDto>(`${this.baseUrl}current/${year}/${month}`);
+        return status.data;
+    }*/
+
     async findAllByYear(year: number): Promise<RecordDto[]>{
         const records = await this.http.get<RecordDto[]>(this.baseUrl + 'year/' + year);
         return records.data;

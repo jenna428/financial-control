@@ -13,6 +13,12 @@ export class RecordController {
         private readonly recordService: RecordService
     ){}
 
+    /*@UseGuards(JwtGuard)
+    @Get('/current/:year/:month')
+    async getCurrentMonthStatus(@Request() req, @Param('year') year: number, @Param('month') month: number): Promise<RecordDto>{
+        return await this.recordService.getCurrentMonthStatus(req.user.id, year, month);
+    }*/
+
     @UseGuards(JwtGuard)
     @Get('/year/:year')
     async findAll(@Request() req, @Param('year') year: number): Promise<RecordDto[]>{

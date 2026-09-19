@@ -15,6 +15,14 @@ export class RecordService{
         private readonly transactionService: TransactionService
     ){}
 
+    /*async getCurrentMonthStatus(userId: number, year: number, month: number) :Promise<RecordDto>{
+        const records = await this.listRecordsByUserIdAndYear(userId, year);
+
+        const response = records.find( r => r.date.getMonth() === month-1);
+
+        return response;
+    }*/
+
     async listRecordsByUserIdAndYear(userId: number, year: number): Promise<RecordDto[]>{
         const beginDate = new Date(year, 0, 1);
         const endDate = new Date(year, 11, 31);
@@ -107,7 +115,6 @@ export class RecordService{
             
             const response = transactions.filter(transactions =>
             transactions.name.toLocaleLowerCase().includes(search.toLowerCase()))
-            console.log('opa')
         return response;
         }
     }

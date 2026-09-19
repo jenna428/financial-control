@@ -1,4 +1,24 @@
-<div class="d-flex flex-row w-100">
-    <button (click)="messageService.showError('' + count)">clique</button>
-    <button (click)="messageService.showSuccess('' + count)">clique</button>
+<div class="page d-flex justify-content-center flex-column">
+    <div class="d-flex justify-content-center mb-3">
+        <h1>{{currentMonth | month}} / {{currentYear}}</h1>
+    </div>
+
+    <div class="d-flex flex-row justify-content-evenly">
+        <div class="card income p-2">
+            <h1>Receita</h1>
+            <p>{{status?.totalIncome| currency}}</p>
+        </div>
+        <div class="card expenditure p-2">
+            <h1>Despesa</h1>
+            <p>{{status?.totalExpenditure | currency}}</p>
+        </div>
+        <div class="card balance p-2">
+            <h1>Saldo Atual</h1>
+            <p>{{status?.finalBalance | currency}}</p>
+        </div>
+    </div>
+    <div class="d-flex flex-row">
+        <div echarts [options]="pieOption" class="pieChart m-3"></div>
+        <div echarts [options]="barOption" class="barChart m-3"></div>
+    </div>
 </div>
