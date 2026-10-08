@@ -18,6 +18,13 @@ export class VariableExpenditureFormComponent {
   @Output()
   onSubmit: EventEmitter<void> = new EventEmitter<void>();
 
+  @Input() action: string = '';
+
+  form: FormGroup;
+  primaryButton: string;
+  secondButton: string;
+  title: string;
+
   get isFormValid(): boolean {
     return this.form.valid;
   }
@@ -28,13 +35,6 @@ export class VariableExpenditureFormComponent {
     @Optional() private readonly dialogRef: MatDialogRef <DialogVariableExpenditureUpdateComponent>,
     private readonly messageService: MessageService
   ){}
-
-  @Input() action: string = '';
-
-  form: FormGroup;
-  primaryButton: string;
-  secondButton: string;
-  title: string;
 
   async ngOnInit(): Promise<void> {
     if(this.action == 'create'){
@@ -51,7 +51,7 @@ export class VariableExpenditureFormComponent {
     }
 
     this.form = this.fb.group({
-      name: [this.data.name],
+      name: [this.data.name, Validators.required],
     });
 
     this.title = 'Editar'

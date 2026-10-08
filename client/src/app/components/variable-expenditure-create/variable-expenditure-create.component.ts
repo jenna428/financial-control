@@ -18,14 +18,9 @@ export class VariableExpenditureCreateComponent implements OnInit {
   dataSource = new MatTableDataSource<VariableExpenditureDto>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-
-  displayedColumns: string[] = ['name'];
-  
-  constructor(
-    private readonly variableExpenditureService: VariableExpenditureService,
-    private dialog: MatDialog,
-    private toggleTrashedService: ToggleTrashedService,
-  ){}
+  columns: string[] = ['name'];
+  displayedColumns: string[] = this.columns;
+  showSelection = false;
 
   form: FormGroup;
 
@@ -37,7 +32,12 @@ export class VariableExpenditureCreateComponent implements OnInit {
   hidePageSize = true;
 
   pageEvent: PageEvent;
-
+  
+  constructor(
+    private readonly variableExpenditureService: VariableExpenditureService,
+    private dialog: MatDialog,
+    private toggleTrashedService: ToggleTrashedService,
+  ){}
 
   ngOnInit(): void {
     this.load();
@@ -75,6 +75,30 @@ export class VariableExpenditureCreateComponent implements OnInit {
     this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
+  }
+
+  isAllSelected(): boolean {
+    return this.dataSource.data.length > 0 &&
+    this.dataSource.data.every(transaction => transaction.selected);
+  }
+
+  isSomeSelected(): boolean {
+    return this.dataSource.data.some(transaction => transaction.selected) &&
+      !this.isAllSelected();
+  }
+
+  toggleAll(checked: boolean): void {
+    this.dataSource.data.forEach(transaction => {
+      transaction.selected = checked;
+    });
+  }
+
+  toggleSelection() {
+    this.showSelection = !this.showSelection;
+
+    this.displayedColumns = this.showSelection
+    ? ['select'].concat(this.columns)
+    : this.columns;
   }
 
 }

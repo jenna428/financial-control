@@ -21,6 +21,17 @@ export class FixedTransactionFormComponent implements OnInit {
   @Output()
   onSubmit: EventEmitter<void> = new EventEmitter<void>();
 
+  form: FormGroup;
+
+  @Input() action: string = '';
+  @Input() category: Category;
+  @Input() title: string = '';
+
+  maxDate = new Date();
+
+  primaryButton: string = '';
+  secondButton: string = '';
+
   get isFormValid(): boolean {
     return this.form.valid;
   }
@@ -33,24 +44,13 @@ export class FixedTransactionFormComponent implements OnInit {
     private readonly messageService: MessageService
   ){}
 
-  form: FormGroup;
-
-  @Input() action: string = '';
-  @Input() category: Category;
-  @Input() title: string = '';
-
-  maxDate = new Date();
-
-  primaryButton: string = '';
-  secondButton: string = '';
-
   ngOnInit(): void {
 
     if(this.action == 'create'){
 
       this.form = this.fb.group({
         name: ['', Validators.required],
-        amount: ['', Validators.required],
+        amount: ['', [Validators.required, Validators.min(0.01)]],
         transDate: ['', Validators.required]
       });
 
@@ -61,9 +61,9 @@ export class FixedTransactionFormComponent implements OnInit {
     if(this.action == 'update'){
 
       this.form = this.fb.group({
-        name: [this.data.name],
-        amount: [this.data.amount],
-        transDate: [this.data.transactionDate]
+        name: [this.data.name, Validators.required],
+        amount: [this.data.amount / 100, [Validators.required, Validators.min(0.01)]],
+        transDate: [this.data.transactionDate, Validators.required]
       });
 
       this.primaryButton = 'Salvar';
@@ -104,10 +104,12 @@ export class FixedTransactionFormComponent implements OnInit {
     }
 
     if(this.action == 'update'){
+      const amount = ((this.form.get('amount').value) * 100);
+
       if(this.category == Category.INCOME) {
         const incomeDto: FixedTransactionDto = {
           name: this.form.get('name').value,
-          amount: this.form.get('amount').value,
+          amount: amount,
           category: Category.INCOME,
           isActive: true,
           transactionDate: this.form.get('transDate').value
@@ -122,7 +124,7 @@ export class FixedTransactionFormComponent implements OnInit {
       if(this.category == Category.EXPENDITURE){
         const expenditureDto: FixedTransactionDto = {
           name: this.form.get('name').value,
-          amount: this.form.get('amount').value,
+          amount: amount,
           category: Category.EXPENDITURE,
           isActive: true,
           transactionDate: this.form.get('transDate').value

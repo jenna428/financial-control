@@ -25,6 +25,12 @@ export class TransactionFormComponent implements OnInit {
   @Output()
   onSubmit: EventEmitter<void> = new EventEmitter<void>();
 
+  title: string;
+  primaryButton: string;
+  secondButton: string;
+
+  form: FormGroup;
+
   get isFormValid(): boolean {
     return this.form.valid;
   }
@@ -37,29 +43,30 @@ export class TransactionFormComponent implements OnInit {
     private readonly messageService: MessageService
   ){}
 
-  title: string;
-  primaryButton: string;
-  secondButton: string;
-
-  form: FormGroup;
-
   async ngOnInit(): Promise<void> {
     this.expenditures = await this.variableExpenditureService.findAll();
 
-    this.form = this.fb.group({
-      expenditure: ['', Validators.required],
-      amount: ['', Validators.required],
-      description: [''],
-      transDate: ['', Validators.required]
-    });
-
     if(this.action == 'create'){
+      this.form = this.fb.group({
+        expenditure: ['', Validators.required],
+        amount: ['', [Validators.required, Validators.min(0.01)]],
+        description: [''],
+        transDate: ['', Validators.required]
+      });
+
       this.title = 'Adicionar';
       this.primaryButton = 'Adicionar'
       this.secondButton = 'Limpar'
 
     }else{
-      this.form.patchValue(this.data);
+      this.form = this.fb.group({
+        expenditure: [this.data.expenditure, Validators.required],
+        amount: [this.data.amount / 100, [Validators.required, Validators.min(0.01)]],
+        description: [this.data.description],
+        transDate: [this.data.transDate, Validators.required]
+      });
+
+      /*this.form.patchValue(this.data);*/
       
       const exp = this.expenditures.find(e => e.id === this.data.expenditure.id);
       this.form.get('expenditure').setValue(exp);

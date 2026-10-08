@@ -20,18 +20,12 @@ export class FixedTransactionCreateComponent implements OnInit{
   dataSource = new MatTableDataSource<FixedTransactionDto>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  displayedColumns: string[] = ['date', 'name', 'amount'];
+  columns: string[] = ['date', 'name', 'amount'];
+  displayedColumns: string[] = this.columns
 
   title: string;
   category: Category;
-
-  constructor(
-    private fixedTransactionService: FixedTransactionService,
-    private toggleTrashedService: ToggleTrashedService,
-    private dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
-    private readonly messageService: MessageService
-  ){}
+  showSelection = false;
 
   /*paginator*/
   length: number;
@@ -42,10 +36,20 @@ export class FixedTransactionCreateComponent implements OnInit{
 
   pageEvent: PageEvent;
 
+  constructor(
+    private fixedTransactionService: FixedTransactionService,
+    private toggleTrashedService: ToggleTrashedService,
+    private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private readonly messageService: MessageService
+  ){}
+
   async ngOnInit() {
     this.activatedRoute.paramMap.subscribe(async p => {
       await this.onCategoryChange();
     })
+
+    this.load()
   }
 
   async onCategoryChange() { // colocar aqui coisas que será carregado na criação do componente
@@ -59,6 +63,7 @@ export class FixedTransactionCreateComponent implements OnInit{
   }
 
   async load(){
+    this.showSelection = false;
     if(this.category){
       const data = await this.fixedTransactionService.findByCategory(this.category);
 
@@ -93,5 +98,29 @@ export class FixedTransactionCreateComponent implements OnInit{
     this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
+  }
+
+  isAllSelected(): boolean {
+    return this.dataSource.data.length > 0 &&
+    this.dataSource.data.every(transaction => transaction.selected);
+  }
+
+  isSomeSelected(): boolean {
+    return this.dataSource.data.some(transaction => transaction.selected) &&
+      !this.isAllSelected();
+  }
+
+  toggleAll(checked: boolean): void {
+    this.dataSource.data.forEach(transaction => {
+      transaction.selected = checked;
+    });
+  }
+
+  toggleSelection() {
+    this.showSelection = !this.showSelection;
+
+    this.displayedColumns = this.showSelection
+    ? ['select'].concat(this.columns)
+    : this.columns;
   }
 }

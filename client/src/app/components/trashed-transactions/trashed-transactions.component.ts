@@ -21,12 +21,6 @@ export class TrashedTransactionsComponent implements OnInit{
   displayedColumns: string[] = ['name', 'category', 'type'];
   Category = Category;
 
-  constructor(
-    private readonly toggleTrashedService: ToggleTrashedService,
-    private readonly dialog: MatDialog,
-    private readonly messageService: MessageService
-  ){}
-
   /*paginator*/
   length: number;
   pageSize = 10;
@@ -35,6 +29,12 @@ export class TrashedTransactionsComponent implements OnInit{
   hidePageSize = true;
 
   pageEvent: PageEvent;
+
+  constructor(
+    private readonly toggleTrashedService: ToggleTrashedService,
+    private readonly dialog: MatDialog,
+    private readonly messageService: MessageService
+  ){}
 
   async ngOnInit() {
     this.load();

@@ -5,5 +5,6 @@ export interface TransactionDto{
     amount: number,
     transDate: Date,
     description: string,
-    expenditure: VariableExpenditureDto
+    expenditure: VariableExpenditureDto,
+    selected?: boolean
 }

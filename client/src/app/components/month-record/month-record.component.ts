@@ -17,16 +17,6 @@ export class MonthRecordComponent implements OnInit{
   
   formSearch: FormGroup;
 
-  constructor(
-    private readonly recordService: RecordService,
-    private readonly route: ActivatedRoute,
-    private readonly fb: FormBuilder
-  ){
-    this.formSearch = this.fb.group({
-      search: ['']
-    })
-  }
-
   year: number;
   month: number;
   category: string;
@@ -46,6 +36,16 @@ export class MonthRecordComponent implements OnInit{
   hidePageSize = true;
 
   pageEvent: PageEvent;
+
+  constructor(
+    private readonly recordService: RecordService,
+    private readonly route: ActivatedRoute,
+    private readonly fb: FormBuilder
+  ){
+    this.formSearch = this.fb.group({
+      search: ['']
+    })
+  }
 
   ngOnInit(): void {
     this.year = Number(

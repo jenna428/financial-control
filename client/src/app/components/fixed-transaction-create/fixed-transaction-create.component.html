@@ -8,7 +8,39 @@
     </app-fixed-transaction-form>
 
     <div class="mx-auto w-75">
+        <div class="d-flex justify-content-between">
+            <mat-checkbox class="mb-4"
+                [checked]="showSelection"
+                (change)="toggleSelection()">
+                Selecionar
+            </mat-checkbox>
+            <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" *ngIf="showSelection">
+                <span matTooltip="Mover para Lixeira" class="material-symbols-outlined">
+                    delete
+                </span>
+            </button>
+        </div>
+        
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="select" *ngIf="showSelection">
+                <div>
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox class="allSelect"
+                            [checked]="isAllSelected()"
+                            [indeterminate]="isSomeSelected()"
+                            (change)="toggleAll($event.checked)">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-checkbox class="checkbox"
+                            [checked]="element.selected"
+                            (change)="element.selected = $event.checked">
+                        </mat-checkbox>
+                    </td>
+                </div>
+            </ng-container>
+
             <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef> Data </th>
             <td mat-cell *matCellDef="let element"> {{element.transactionDate | date: 'dd-MM-yyyy'}} </td>
