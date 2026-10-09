@@ -7,7 +7,6 @@ export class VariableExpenditureMapper{
         const variableExpenditureDto: VariableExpenditureDto = {
             id: variableExpenditureEntity.id,
             name: variableExpenditureEntity.name,
-            isActive: variableExpenditureEntity.isActive,
         }
         return variableExpenditureDto;
     }
@@ -17,7 +16,6 @@ export class VariableExpenditureMapper{
             id: variableExpenditureDto.id,
             userId: userId,
             name: variableExpenditureDto.name,
-            isActive: variableExpenditureDto.isActive,
         }
         return variableExpenditureEntity
     }

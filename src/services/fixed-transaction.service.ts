@@ -65,31 +65,9 @@ export class FixedTransactionService{
 
         transType.name = fixedTransactionDto.name;
         transType.amount = fixedTransactionDto.amount,
-        transType.isActive = fixedTransactionDto.isActive;
         transType.category = fixedTransactionDto.category;
 
         await this.fixedTransactionRepository.save(transType);
-    }
-
-    async isActive(transId: number, userId: number){
-        const trans = await this.fixedTransactionRepository.findOne({
-            relations: ['user'],
-            where: {
-                id: transId,
-            }
-        })
-
-        if (!trans) {
-            throw new HttpException('Tipo de Transação não encontrada!', HttpStatus.NOT_FOUND)
-        }
-
-        if (trans.user?.id !== userId ) {
-            throw new HttpException('Requisição não autorizada!', HttpStatus.UNAUTHORIZED)    
-        }
-
-        trans.isActive = !trans.isActive;
-
-        await this.fixedTransactionRepository.save(trans);
     }
 
    async findByCategory(category: Category, userId: number): Promise<FixedTransactionDto[]>{
@@ -97,20 +75,6 @@ export class FixedTransactionService{
             where: {
                 category: category,
                 userId: userId,
-                isActive: true
-            }
-        }
-        const transactions = await this.fixedTransactionRepository.find(option);
-
-        const transactionsDto: FixedTransactionDto[] = transactions.map(FixedTransactionMapper.toDto);
-        return transactionsDto;
-    }
-
-    async findTrashedTransactions( userId: number ): Promise<FixedTransactionDto[]>{
-        const option: FindManyOptions = {
-            where: {
-                isActive: false,
-                userId: userId
             }
         }
         const transactions = await this.fixedTransactionRepository.find(option);

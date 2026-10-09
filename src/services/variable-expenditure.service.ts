@@ -23,7 +23,6 @@ export class VariableExpenditureService{
         const option: FindManyOptions = {
             where: {
                 userId: userId,
-                isActive: true
             }
         }
         const variableExpenditures = await this.variableExpenditureRepository.find(option);
@@ -33,20 +32,7 @@ export class VariableExpenditureService{
         return variableExpendituresDto;
     }
 
-    async findTrashedTransactions( userId: number ): Promise<VariableExpenditureDto[]>{
-            const option: FindManyOptions = {
-                where: {
-                    isActive: false,
-                    userId: userId
-                }
-            }
-            const transactions = await this.variableExpenditureRepository.find(option);
-    
-            const transactionsDto: VariableExpenditureDto[] = transactions.map(VariableExpenditureMapper.toDto);
-            return transactionsDto;
-        }
-
-    async delete(variableExpenditureId: number, userId: number){
+    async delete(variableExpenditureId: number, userId: number){        
         const transType = await this.variableExpenditureRepository.findOne({
             relations: ['user'],
             where: {
@@ -60,27 +46,6 @@ export class VariableExpenditureService{
         }
         
         await this.variableExpenditureRepository.delete(variableExpenditureId);
-    }
-
-    async isActive(transId: number, userId: number){
-        const trans = await this.variableExpenditureRepository.findOne({
-            relations: ['user'],
-            where: {
-                id: transId,
-            }
-        })
-
-        if (!trans) {
-            throw new HttpException('Tipo de Transação não encontrada!', HttpStatus.NOT_FOUND)
-        }
-
-        if (trans.user?.id !== userId ) {
-            throw new HttpException('Requisição não autorizada!', HttpStatus.UNAUTHORIZED)    
-        }
-
-        trans.isActive = !trans.isActive;
-
-        await this.variableExpenditureRepository.save(trans);
     }
 
     async update(variableExpenditureDto: VariableExpenditureDto, userId: number){
@@ -99,7 +64,6 @@ export class VariableExpenditureService{
         }
 
         transType.name = variableExpenditureDto.name;
-        transType.isActive = variableExpenditureDto.isActive;
 
         await this.variableExpenditureRepository.save(transType);
     }

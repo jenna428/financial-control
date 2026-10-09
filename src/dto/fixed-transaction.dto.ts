@@ -6,6 +6,5 @@ export interface FixedTransactionDto{
     name: string,
     amount: number,
     category: Category,
-    isActive: boolean,
     transactionDate: Date
 }

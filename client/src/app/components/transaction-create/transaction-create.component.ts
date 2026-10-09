@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ToggleTrashedService } from '../../service/toggle-trashed.service';
 
 @Component({
   selector: 'app-transaction-create',

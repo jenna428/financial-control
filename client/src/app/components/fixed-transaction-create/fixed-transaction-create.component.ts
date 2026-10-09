@@ -4,11 +4,11 @@ import { FixedTransactionDto } from '../../dto/fixed-transaction.dto';
 import { FixedTransactionService } from '../../service/fixed-transaction.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { ToggleTrashedService } from '../../service/toggle-trashed.service';
 import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MessageService } from '../../service/message.service';
+import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
+import { TransactionTableDto } from '../../dto/transaction-table.dto';
 
 @Component({
   selector: 'app-fixed-transaction-create',
@@ -38,10 +38,8 @@ export class FixedTransactionCreateComponent implements OnInit{
 
   constructor(
     private fixedTransactionService: FixedTransactionService,
-    private toggleTrashedService: ToggleTrashedService,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private readonly messageService: MessageService
   ){}
 
   async ngOnInit() {
@@ -75,17 +73,23 @@ export class FixedTransactionCreateComponent implements OnInit{
       }
     }
   }
-
-  async moveToTrash(id: number){
-    await this.toggleTrashedService.isActive(id, true).then(()=> {
-      this.messageService.showSuccess('Transação Movida Para Lixeira!')
-    });
-    await this.load()
-  }
   
   openUpdateDialog(transaction: FixedTransactionDto) {
     const dialogRef = this.dialog.open(DialogFixedTransactionUpdateComponent, {
       data: transaction
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.load();
+    });
+  }
+
+  openDeleteDialog(transaction: TransactionTableDto) {
+    transaction.isFixed = true;
+    const dialogRef = this.dialog.open(DialogDeleteTransactionComponent, {
+      data: transaction,
+      width: '400px',
+      height: '180px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

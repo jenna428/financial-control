@@ -24,13 +24,6 @@ export class VariableExpenditureController {
     }
 
     @UseGuards(JwtGuard)
-    @Get('/trashed')
-    async findTrashedTransactions(@Request() req): Promise<VariableExpenditureDto[]>{
-        const transactions = await this.variableExpenditureService.findTrashedTransactions(req.user.id);
-        return transactions;
-    }
-
-    @UseGuards(JwtGuard)
     @Delete('/:id')
     async delete(@Param('id') id: number, @Request() req){
         await this.variableExpenditureService.delete(id, req.user.id)
@@ -42,9 +35,4 @@ export class VariableExpenditureController {
         await this.variableExpenditureService.update(transactionDto, req.user.id)
     }
 
-    @UseGuards(JwtGuard)
-    @Put('/:id')
-    async isActive(@Request() req, @Param('id') id: number){
-        await this.variableExpenditureService.isActive(id, req.user.id);
-    }  
 }

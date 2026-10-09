@@ -9,7 +9,6 @@ export class FixedTransactionMapper{
             name: fixedTransactionEntity.name,
             amount: fixedTransactionEntity.amount,
             category: fixedTransactionEntity.category,
-            isActive: fixedTransactionEntity.isActive,
             transactionDate: fixedTransactionEntity.transactionDate
         }
         return fixedTransactionDto;
@@ -22,7 +21,6 @@ export class FixedTransactionMapper{
             name: fixedTransactionDto.name,
             amount: fixedTransactionDto.amount,
             category: fixedTransactionDto.category,
-            isActive: fixedTransactionDto.isActive,
             transactionDate: fixedTransactionDto.transactionDate
         }
         return fixedTransactionEntity

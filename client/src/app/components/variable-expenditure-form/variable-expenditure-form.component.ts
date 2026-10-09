@@ -64,7 +64,6 @@ export class VariableExpenditureFormComponent {
     if(this.action == 'create'){
         const variableExpenditureDto: VariableExpenditureDto = {
         name: this.form.get('name').value,
-        isActive: true
       }
       await this.variableExpenditureService.save(variableExpenditureDto).then(() => {
         this.messageService.showSuccess('Despesa Adicionada!');
@@ -76,7 +75,6 @@ export class VariableExpenditureFormComponent {
     if(this.action == 'update'){
         const variableExpenditureDto: VariableExpenditureDto = {
         name: this.form.get('name').value,
-        isActive: true
       }
 
       variableExpenditureDto.id = this.data.id;

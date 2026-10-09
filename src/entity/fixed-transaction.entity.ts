@@ -24,9 +24,6 @@ export class FixedTransactionEntity {
     category: Category;
 
     @Column()
-    isActive: boolean;
-
-    @Column()
     @Index()
     transactionDate: Date;
 }

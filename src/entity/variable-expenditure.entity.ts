@@ -15,7 +15,4 @@ export class VariableExpenditureEntity{
 
     @Column()
     name: string
-
-    @Column()
-    isActive: boolean;
 }

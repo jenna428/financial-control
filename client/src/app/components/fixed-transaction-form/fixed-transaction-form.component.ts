@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Category } from '../../classes/enums/enums';
 import type { FixedTransactionDto } from '../../dto/fixed-transaction.dto';
 import { FixedTransactionService } from '../../service/fixed-transaction.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 import { MessageService } from '../../service/message.service';
 
@@ -41,7 +41,7 @@ export class FixedTransactionFormComponent implements OnInit {
     private fb: FormBuilder,
     private fixedTransactionService: FixedTransactionService,
     @Optional() private readonly dialogRef: MatDialogRef <DialogFixedTransactionUpdateComponent>,
-    private readonly messageService: MessageService
+    private readonly messageService: MessageService,
   ){}
 
   ngOnInit(): void {
@@ -80,7 +80,6 @@ export class FixedTransactionFormComponent implements OnInit {
           name: this.form.get('name').value,
           amount: amount,
           category: Category.INCOME,
-          isActive: true,
           transactionDate: this.form.get('transDate').value
         }
         await this.fixedTransactionService.save(incomeDto).then(() => {
@@ -92,7 +91,6 @@ export class FixedTransactionFormComponent implements OnInit {
           name: this.form.get('name').value,
           amount: amount,
           category: Category.EXPENDITURE,
-          isActive: true,
           transactionDate: this.form.get('transDate').value
         }
         await this.fixedTransactionService.save(expenditureDto).then(() => {
@@ -111,7 +109,6 @@ export class FixedTransactionFormComponent implements OnInit {
           name: this.form.get('name').value,
           amount: amount,
           category: Category.INCOME,
-          isActive: true,
           transactionDate: this.form.get('transDate').value
         }
 
@@ -126,7 +123,6 @@ export class FixedTransactionFormComponent implements OnInit {
           name: this.form.get('name').value,
           amount: amount,
           category: Category.EXPENDITURE,
-          isActive: true,
           transactionDate: this.form.get('transDate').value
         }
 

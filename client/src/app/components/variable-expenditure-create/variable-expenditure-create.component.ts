@@ -3,10 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { VariableExpenditureDto } from '../../dto/variable-expenditure.dto';
 import { VariableExpenditureService } from '../../service/variable-expentidure.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ToggleTrashedService } from '../../service/toggle-trashed.service';
 import { DialogVariableExpenditureUpdateComponent } from '../dialogs/dialog-variable-expenditure-update/dialog-variable-expenditure-update.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { TransactionTableDto } from '../../dto/transaction-table.dto';
+import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
 
 @Component({
   selector: 'app-variable-expenditure-create',
@@ -36,7 +37,6 @@ export class VariableExpenditureCreateComponent implements OnInit {
   constructor(
     private readonly variableExpenditureService: VariableExpenditureService,
     private dialog: MatDialog,
-    private toggleTrashedService: ToggleTrashedService,
   ){}
 
   ngOnInit(): void {
@@ -54,14 +54,22 @@ export class VariableExpenditureCreateComponent implements OnInit {
     }
   }
 
-  async moveToTrash(id: number){
-    await this.toggleTrashedService.isActive(id, false);
-    await this.load()
-  }
-
   async openUpdateDialog(transaction: VariableExpenditureDto){
     const dialogRef = this.dialog.open(DialogVariableExpenditureUpdateComponent, {
       data: transaction
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.load();
+    });
+  }
+
+  openDeleteDialog(transaction: TransactionTableDto) {
+    transaction.isFixed = false;
+    const dialogRef = this.dialog.open(DialogDeleteTransactionComponent, {
+      data: transaction,
+      width: '400px',
+      height: '180px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

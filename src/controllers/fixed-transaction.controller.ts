@@ -18,13 +18,6 @@ export class FixedTransactionController {
     }
 
     @UseGuards(JwtGuard)
-    @Get('/')
-    async findTrashedTransactions(@Request() req): Promise<FixedTransactionDto[]>{
-        const transactions = await this.fixedTransactionService.findTrashedTransactions(req.user.id);
-        return transactions;
-    }
-
-    @UseGuards(JwtGuard)
     @Post('/')
     async save(@Request() req, @Body() transactionDto: FixedTransactionDto){
         await this.fixedTransactionService.create(transactionDto, req.user.id);
@@ -41,10 +34,4 @@ export class FixedTransactionController {
     async update(@Request() req, @Body() transactionDto: FixedTransactionDto) {
         await this.fixedTransactionService.update(transactionDto, req.user.id)
     }
-
-    @UseGuards(JwtGuard)
-    @Put('/:id')
-    async isActive(@Request() req, @Param('id') id: number){
-        await this.fixedTransactionService.isActive(id, req.user.id);
-    }   
 }
