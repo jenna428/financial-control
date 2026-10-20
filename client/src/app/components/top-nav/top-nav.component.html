@@ -1,7 +1,10 @@
 <div class="top-nav-container d-flex align-items-center justify-content-between">
-    <div class="header ms-5 p-2">
-        <div class="d-flex align-items-center">
-            <mat-icon class="fs-1 me-3 overflow-visible d-flex justify-content-center align-items-center lh-1">savings</mat-icon>
+    <div class="header">
+        <div class="d-flex align-items-center h-100 p-0 ms-3">
+            <button *ngIf="isMobile" type="button" class="menu-button d-flex justify-content-center align-items-center" (click)="toggleHiddenMenu()">
+                <mat-icon class="d-flex justify-content-center align-items-center material-symbols-outlined">{{hiddenMenu ? 'menu' : 'close'}}</mat-icon>
+            </button>
+            <mat-icon class="overflow-visible d-flex align-items-center ms-3 mx-2">savings</mat-icon>
             <span class="fs-5">Pecunia</span>
         </div>
     </div>

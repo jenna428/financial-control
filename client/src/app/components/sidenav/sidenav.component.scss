@@ -1,13 +1,46 @@
 @use '@angular/material' as mat;
 @use '../../../theme' as theme;
 
-.side-nav-container{
+.overlay {
+  z-index: 9999; 
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.418);
+  width: 100%;
+  height: 100%;
+}
+
+.side-nav-container {
     width: 280px;
     height: 100vh;
     background-color: theme.$menu-background;
     padding: 20px;
     padding-top: 30px;
 }
+
+.side-nav-mobile {
+    position: absolute;
+    z-index: 9999;
+    left: -280px;
+    transition: 0.6s ease;
+}
+
+// .side-nav-hidden {
+//     left: -280px;
+// }
+
+.side-nav-show-up {
+    left: 0px;
+}
+
+// @keyframes aparecer {
+//   from {
+//     transform: translateX(-280px);
+//   }
+
+//   to {
+//     transform: translateX(0);
+//   }
+// }
 
 h3{
     color: mat.get-color-from-palette(theme.$secondary-palette, 600);

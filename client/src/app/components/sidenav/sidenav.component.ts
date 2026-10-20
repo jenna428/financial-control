@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { Category } from '../../classes/enums/enums';
+import { LayoutService } from '../../service/layout.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,7 +10,19 @@ import { Category } from '../../classes/enums/enums';
 export class SidenavComponent {
   Category = Category;
 
+  get isHidden(): boolean {
+    return this.isMobile && this.layoutService.hiddenMenu;
+  }
+
+  get isMobile(): boolean {
+    return this.layoutService.isMobile;
+  }
+
   constructor(
-    private router: Router
+    public layoutService: LayoutService
   ){}
+
+  close(){
+    this.layoutService.toggleHiddenMenu();
+  }
 }

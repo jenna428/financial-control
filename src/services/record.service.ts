@@ -74,6 +74,15 @@ export class RecordService{
             records.push(record);
         });
 
+        records.sort((a, b) => {// 3 numeros n < 0 || n > 0 || n == 0
+            if (a.date > b.date) {
+                return -1;
+            }else if (a.date < b.date){
+                return 1;
+            }
+            return 0;
+        });
+
         return records;
     }
 
@@ -133,16 +142,6 @@ export class RecordService{
             amount: t.amount,
             transactionDate: t.transactionDate
         }));
-
-        allTransactions.push(
-            ...transactions.map(t => ({
-                name: t.expenditure.name,
-                category: Category.EXPENDITURE,
-                isFixed: false,
-                amount: t.amount,
-                transactionDate: t.transactionDate
-            }))       
-        )
 
         return allTransactions;
     }

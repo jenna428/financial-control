@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../service/user.service';
 import { Router } from '@angular/router';
+import { LayoutService } from '../../service/layout.service';
 
 @Component({
   selector: 'app-top-nav',
@@ -9,12 +9,24 @@ import { Router } from '@angular/router';
 })
 export class TopNavComponent {
 
+  get hiddenMenu(): boolean {
+    return this.layoutService.hiddenMenu;
+  }
+  
+  get isMobile(): boolean {
+    return this.layoutService.isMobile;
+  }
+
   constructor(
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly layoutService: LayoutService
   ){}
 
   logout(){
     this.router.navigate(['login'])
   }
 
+  toggleHiddenMenu() {
+    this.layoutService.toggleHiddenMenu();
+  }
 }
