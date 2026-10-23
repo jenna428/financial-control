@@ -4,7 +4,7 @@ import { VariableExpenditureDto } from "src/dto/variable-expenditure.dto";
 import { VariableExpenditureEntity } from "src/entity/variable-expenditure.entity";
 import { VariableExpenditureMapper } from "src/mapper/variable-expenditure.mapper";
 import { VariableExpenditureRepository } from "src/repository/variable-expenditure.repository";
-import { Between, FindManyOptions } from "typeorm";
+import { Between, FindManyOptions, In } from "typeorm";
 
 @Injectable()
 export class VariableExpenditureService{
@@ -32,21 +32,17 @@ export class VariableExpenditureService{
         return variableExpendituresDto;
     }
 
-    async delete(variableExpenditureId: number, userId: number){        
-        const transType = await this.variableExpenditureRepository.findOne({
-            relations: ['user'],
-            where: {
-                id: variableExpenditureId,
-                userId: userId
+    async delete(variableTransactionIds: number[], userId: number){
+    
+            if (!variableTransactionIds) {
+                throw new HttpException('Tipo de Transação não encontrada!', HttpStatus.NOT_FOUND)
             }
-        })
-
-        if (!transType) {
-            throw new HttpException('Tipo de Transação não encontrada!', HttpStatus.NOT_FOUND)
+    
+            await this.variableExpenditureRepository.delete({
+                id: In(variableTransactionIds),
+                userId: userId
+            });
         }
-        
-        await this.variableExpenditureRepository.delete(variableExpenditureId);
-    }
 
     async update(variableExpenditureDto: VariableExpenditureDto, userId: number){
         const transType = await this.variableExpenditureRepository.findOne({

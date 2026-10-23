@@ -7,6 +7,7 @@ import { FixedTransactionService } from '../../service/fixed-transaction.service
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 import { MessageService } from '../../service/message.service';
+import { LayoutService } from '../../service/layout.service';
 
 @Component({
   selector: 'app-fixed-transaction-form',
@@ -36,12 +37,17 @@ export class FixedTransactionFormComponent implements OnInit {
     return this.form.valid;
   }
 
+  get isMobile(): boolean {
+    return this.layoutService.isMobile;
+  }
+
   constructor(
     private readonly router: Router,
     private fb: FormBuilder,
     private fixedTransactionService: FixedTransactionService,
     @Optional() private readonly dialogRef: MatDialogRef <DialogFixedTransactionUpdateComponent>,
     private readonly messageService: MessageService,
+    private layoutService: LayoutService
   ){}
 
   ngOnInit(): void {

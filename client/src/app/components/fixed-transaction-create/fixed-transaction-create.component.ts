@@ -7,8 +7,12 @@ import { ActivatedRoute } from '@angular/router';
 import { DialogFixedTransactionUpdateComponent } from '../dialogs/dialog-fixed-transaction-update/dialog-fixed-transaction-update.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
+import { DeleteTransaction, DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
 import { TransactionTableDto } from '../../dto/transaction-table.dto';
+import { LayoutService } from '../../service/layout.service';
+import { firstValueFrom } from 'rxjs';
+import { DialogConfirmComponent } from '../dialogs/dialog-confirm/dialog-confirm.component';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-fixed-transaction-create',
@@ -16,7 +20,6 @@ import { TransactionTableDto } from '../../dto/transaction-table.dto';
   styleUrl: './fixed-transaction-create.component.scss'
 })
 export class FixedTransactionCreateComponent implements OnInit{
-  
   dataSource = new MatTableDataSource<FixedTransactionDto>();
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -29,17 +32,23 @@ export class FixedTransactionCreateComponent implements OnInit{
 
   /*paginator*/
   length: number;
-  pageSize = 25;
+  pageSize = 5;
   pageIndex = 0;
 
   hidePageSize = true;
 
   pageEvent: PageEvent;
 
+  get isMobile(): boolean {
+    return this.layoutService.isMobile;
+  }
+
   constructor(
     private fixedTransactionService: FixedTransactionService,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
+    private layoutService: LayoutService,
+    private readonly messageService: MessageService
   ){}
 
   async ngOnInit() {
@@ -47,7 +56,7 @@ export class FixedTransactionCreateComponent implements OnInit{
       await this.onCategoryChange();
     })
 
-    this.load()
+    // this.load()
   }
 
   async onCategoryChange() { // colocar aqui coisas que será carregado na criação do componente
@@ -63,7 +72,7 @@ export class FixedTransactionCreateComponent implements OnInit{
   async load(){
     this.showSelection = false;
     if(this.category){
-      const data = await this.fixedTransactionService.findByCategory(this.category);
+      const data = await this.fixedTransactionService.findByCategory(this.category);// TODO: refatorar a chamada na api, pois nao esta usando a paginação.
 
       this.dataSource.data = data;
       this.length = data.length;
@@ -84,10 +93,13 @@ export class FixedTransactionCreateComponent implements OnInit{
     });
   }
 
-  openDeleteDialog(transaction: TransactionTableDto) {
-    transaction.isFixed = true;
+  openDeleteDialog(transaction: FixedTransactionDto) {
     const dialogRef = this.dialog.open(DialogDeleteTransactionComponent, {
-      data: transaction,
+      data: {
+        id: transaction.id,
+        name: transaction.name,
+        isFixed: true
+      },
       width: '400px',
       height: '180px',
     });
@@ -95,6 +107,23 @@ export class FixedTransactionCreateComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       this.load();
     });
+  }
+
+  async deleteAll() {
+    const confirm = await firstValueFrom(this.dialog.open(DialogConfirmComponent).afterClosed())
+
+    if (confirm != 'true') {
+      return;
+    }
+
+    const ids = this.dataSource.data
+      .filter(t => t.selected)
+      .map(t => t.id);
+
+    await this.fixedTransactionService.delete(ids).then(() => {
+      this.messageService.showSuccess('Transação Deletada!')
+      this.load()
+    })
   }
 
   handlePageEvent(e: PageEvent) {
@@ -107,6 +136,10 @@ export class FixedTransactionCreateComponent implements OnInit{
   isAllSelected(): boolean {
     return this.dataSource.data.length > 0 &&
     this.dataSource.data.every(transaction => transaction.selected);
+  }
+
+  isNoneSelected(): boolean{
+    return this.dataSource.data.length > 0 && this.dataSource.data.every(transaction => !transaction.selected);
   }
 
   isSomeSelected(): boolean {

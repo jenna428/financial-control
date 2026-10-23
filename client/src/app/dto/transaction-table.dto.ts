@@ -4,7 +4,7 @@ export interface TransactionTableDto {
     name: string,
     id: number,
     category: Category,
-    isFixed: boolean,
+    isFixed?: boolean,
     amount: number,
     transactionDate: Date
 }

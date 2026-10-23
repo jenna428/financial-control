@@ -6,6 +6,12 @@ import { VariableExpenditureService } from '../../../service/variable-expentidur
 import { TransactionService } from '../../../service/transaction.service';
 import { MessageService } from '../../../service/message.service';
 
+export interface DeleteTransaction {
+  id: number;
+  name?: string;
+  isFixed?: boolean;
+}
+
 @Component({
   selector: 'app-dialog-delete-transaction',
   templateUrl: './dialog-delete-transaction.component.html',
@@ -14,7 +20,7 @@ import { MessageService } from '../../../service/message.service';
 export class DialogDeleteTransactionComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: TransactionTableDto,
+    @Inject(MAT_DIALOG_DATA) public data: DeleteTransaction,
     private dialogRef: MatDialogRef<DialogDeleteTransactionComponent>,
     private readonly fixedTransactionService: FixedTransactionService,
     private readonly variableTransactionService: VariableExpenditureService,
@@ -28,17 +34,17 @@ export class DialogDeleteTransactionComponent implements OnInit {
 
   deletar(){
     if(this.data.isFixed == true){
-      this.fixedTransactionService.delete(this.data.id).then(() => {
+      this.fixedTransactionService.delete([this.data.id]).then(() => {
         this.messageService.showSuccess('Transação Deletada!')
       });
     }
     if(this.data.isFixed == false){
-      this.variableTransactionService.delete(this.data.id).then(() => {
+      this.variableTransactionService.delete([this.data.id]).then(() => {
         this.messageService.showSuccess('Transação Deletada!')
       });
     }
     if(this.data.isFixed == null){
-      this.transactionService.delete(this.data.id).then(() => {
+      this.transactionService.delete([this.data.id]).then(() => {
         this.messageService.showSuccess('Transação Deletada!')
       });
     }

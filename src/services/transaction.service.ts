@@ -5,7 +5,7 @@ import { TransactionEntity } from "src/entity/transaction.entity";
 import { TransactionMapper } from "src/mapper/transaction.mapper";
 import { TransactionRepository } from "src/repository/transaction.repository";
 import { Transaction2Repository } from "src/repository/transaction2.repository";
-import { Between } from "typeorm";
+import { Between, In } from "typeorm";
 
 @Injectable()
 export class TransactionService{
@@ -19,20 +19,15 @@ export class TransactionService{
         await this.transactionRepository.save(TransactionMapper.toEntity(transactionDto, userId))
     }
 
-    async delete(transactionId: number, userId: number){
-        const transaction = await this.transactionRepository.findOne({
-            relations: ['user'],
-            where: {
-                id: transactionId,
-                userId: userId
-            }
-        });
-
-        if (!transaction){
-            throw new HttpException('Transação não encontrada', HttpStatus.NOT_FOUND)
+    async delete(transactionIds: number[], userId: number){
+        if (!transactionIds) {
+            throw new HttpException('Tipo de Transação não encontrada!', HttpStatus.NOT_FOUND)
         }
 
-        await this.transactionRepository.delete(transactionId)
+        await this.transactionRepository.delete({
+            id: In(transactionIds),
+            userId: userId
+        });
     }
 
     async update(transactionDto: TransactionDto, userId: number){

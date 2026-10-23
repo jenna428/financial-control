@@ -67,6 +67,7 @@ import { MonthName } from './pipes/month.pipe';
 import { DialogDeleteTransactionComponent } from './components/dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
 import { NgxCurrencyDirective } from "ngx-currency";
 import { CurrencyPipe } from './pipes/currency.pipe';
+import { DialogConfirmComponent } from './components/dialogs/dialog-confirm/dialog-confirm.component';
 
 registerLocaleData(localePt);
 
@@ -96,6 +97,7 @@ registerLocaleData(localePt);
     RecordComponent,
     MonthRecordComponent,
     DialogDeleteTransactionComponent,
+    DialogConfirmComponent,
   ],
   imports: [
     BrowserModule,

@@ -24,9 +24,9 @@ export class VariableExpenditureController {
     }
 
     @UseGuards(JwtGuard)
-    @Delete('/:id')
-    async delete(@Param('id') id: number, @Request() req){
-        await this.variableExpenditureService.delete(id, req.user.id)
+    @Delete('/')
+    async delete(@Body() ids: number[], @Request() req){
+        await this.variableExpenditureService.delete(ids, req.user.id)
     }
 
     @UseGuards(JwtGuard)

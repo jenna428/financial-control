@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { CookieService } from "ngx-cookie-service";
 import { environment } from "../../environments/environment";
 import { MessageService } from "./message.service";
@@ -50,7 +50,7 @@ export class HttpService {
         return this.api.put<T>(url, data, config);
     }
 
-    delete<T>(url: string, config = {}) {
+    delete<T>(url: string, config: AxiosRequestConfig = {}) {
         return this.api.delete<T>(url, config);
     }
 }

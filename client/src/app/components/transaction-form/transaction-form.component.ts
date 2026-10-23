@@ -7,6 +7,7 @@ import type { TransactionDto } from '../../dto/transaction.dto';
 import { VariableExpenditureService } from '../../service/variable-expentidure.service';
 import { TransactionService } from '../../service/transaction.service';
 import { MessageService } from '../../service/message.service';
+import { LayoutService } from '../../service/layout.service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -35,12 +36,17 @@ export class TransactionFormComponent implements OnInit {
     return this.form.valid;
   }
 
+  get isMobile(): boolean {
+    return this.layoutService.isMobile;
+  }
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly variableExpenditureService: VariableExpenditureService,
     private readonly transactionService: TransactionService,
     @Optional() private readonly dialogRef: MatDialogRef <DialogTransactionUpdateComponent>,
-    private readonly messageService: MessageService
+    private readonly messageService: MessageService,
+    private layoutService: LayoutService
   ){}
 
   async ngOnInit(): Promise<void> {

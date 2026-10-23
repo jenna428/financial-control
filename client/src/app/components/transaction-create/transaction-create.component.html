@@ -3,7 +3,7 @@
         (onSubmit)="load()" action="create">
     </app-transaction-form>
 
-    <div class="mx-auto w-75">
+    <div class="mx-auto w-75" [ngClass]="{'w-100 p-3': isMobile}">
 
         <div class="d-flex justify-content-between">
             <mat-checkbox class="mb-4"
@@ -11,14 +11,20 @@
                 (change)="toggleSelection()">
                 Selecionar
             </mat-checkbox>
-            <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" *ngIf="showSelection">
+            <mat-checkbox class="allSelect" *ngIf="showSelection && isMobile"
+                [checked]="isAllSelected()"
+                [indeterminate]="isSomeSelected()"
+                (change)="toggleAll($event.checked)">
+                Todos
+            </mat-checkbox>
+            <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" *ngIf="showSelection" (click)="deleteAll()" [disabled]="isNoneSelected()">
                 <span matTooltip="Mover para Lixeira" class="material-symbols-outlined">
                     delete
                 </span>
             </button>
         </div>
 
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="!isMobile">
 
                 <ng-container matColumnDef="select" *ngIf="showSelection">
                     <div>
@@ -53,32 +59,12 @@
                     <td mat-cell *matCellDef="let element"> {{element.description}} </td>
                 </ng-container>
 
-                <!--<ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef> Valor </th>
-                <td mat-cell *matCellDef="let element">
-                    <div class="d-flex align-items-center">
-                        {{element.amount | currency}}
-                        <div class="d-flex ms-auto">
-                            <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="openUpdateDialog(element)">
-                                <span class="material-symbols-outlined">
-                                    edit
-                                </span>
-                            </button>
-                            <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="openDeleteDialog(element)">
-                            <span class="material-symbols-outlined">
-                                delete
-                            </span>
-                        </button>
-                        </div>
-                    </div>
-                </td>
-                </ng-container>-->
                 <ng-container matColumnDef="amount">
                 <th mat-header-cell *matHeaderCellDef> Valor </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="d-flex align-items-center">
                         {{element.amount | currency}}
-                        <div class="d-flex ms-auto">
+                        <div class="d-flex ms-auto" *ngIf="!showSelection">
                             <button type="button" class="btn btn-light d-flex justify-content-center align-items-center m-2 p-2" (click)="openUpdateDialog(element)">
                                 <span matTooltip="Editar" class="material-symbols-outlined">
                                     edit
@@ -93,10 +79,38 @@
                     </div>
                 </td>
                 </ng-container>
-    
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+
+            <mat-selection-list class="mobile-table" *ngIf="isMobile">
+                @for (transaction of dataSource.data; track transaction.id) {
+                    <mat-list-item>
+                        <div matListItemIcon *ngIf="showSelection">
+                            <mat-checkbox class="checkbox"
+                                [checked]="transaction.selected"
+                                (change)="transaction.selected = $event.checked">
+                            </mat-checkbox>
+                        </div>
+                        <div matListItemTitle>{{transaction.description}}</div>
+                        <div matListItemLine>{{transaction.transDate| date: 'dd-MM-yyyy'}}</div>
+                        <div matListItemLine>{{transaction.expenditure.name}}</div>
+                        <div matListItemMeta class="d-flex gap-2 align-items-center m-0 h-100" *ngIf="!showSelection">
+                            <button type="button" class="btn btn-light d-flex justify-content-center align-items-center p-2" (click)="openUpdateDialog(transaction)">
+                                <span matTooltip="Editar" class="material-symbols-outlined">
+                                    edit
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-light d-flex justify-content-center align-items-center p-2" (click)="openDeleteDialog(transaction)">
+                                <span matTooltip="Mover para Lixeira" class="material-symbols-outlined">
+                                    delete
+                                </span>
+                            </button>
+                        </div>
+                    </mat-list-item>
+                }
+            </mat-selection-list>
 
             <mat-paginator #paginator
                 (page)="handlePageEvent($event)"

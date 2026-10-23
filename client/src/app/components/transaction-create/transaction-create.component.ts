@@ -6,6 +6,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { LayoutService } from '../../service/layout.service';
+import { DialogConfirmComponent } from '../dialogs/dialog-confirm/dialog-confirm.component';
+import { firstValueFrom } from 'rxjs';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-transaction-create',
@@ -31,9 +35,15 @@ export class TransactionCreateComponent implements OnInit{
 
   pageEvent: PageEvent;
 
+  get isMobile(): boolean{
+    return this.layoutService.isMobile;
+  }
+
   constructor(
     private readonly transactionService: TransactionService,
     private dialog: MatDialog,
+    private layoutService: LayoutService,
+    private messageService: MessageService
   ){}
 
   ngOnInit(): void {
@@ -73,6 +83,23 @@ export class TransactionCreateComponent implements OnInit{
     });
   }
 
+  async deleteAll() {
+    const confirm = await firstValueFrom(this.dialog.open(DialogConfirmComponent).afterClosed())
+
+    if (confirm != 'true') {
+      return;
+    }
+
+    const ids = this.dataSource.data
+      .filter(t => t.selected)
+      .map(t => t.id);
+
+    await this.transactionService.delete(ids).then(() => {
+      this.messageService.showSuccess('Transação Deletada!')
+      this.load()
+    })
+  }
+
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
@@ -83,6 +110,10 @@ export class TransactionCreateComponent implements OnInit{
   isAllSelected(): boolean {
     return this.dataSource.data.length > 0 &&
     this.dataSource.data.every(transaction => transaction.selected);
+  }
+
+  isNoneSelected(): boolean{
+    return this.dataSource.data.length > 0 && this.dataSource.data.every(transaction => !transaction.selected);
   }
 
   isSomeSelected(): boolean {

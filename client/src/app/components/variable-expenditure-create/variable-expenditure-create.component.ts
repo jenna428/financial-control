@@ -8,6 +8,10 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TransactionTableDto } from '../../dto/transaction-table.dto';
 import { DialogDeleteTransactionComponent } from '../dialogs/dialog-delete-transaction/dialog-delete-transaction.component';
+import { LayoutService } from '../../service/layout.service';
+import { firstValueFrom } from 'rxjs';
+import { DialogConfirmComponent } from '../dialogs/dialog-confirm/dialog-confirm.component';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-variable-expenditure-create',
@@ -33,10 +37,16 @@ export class VariableExpenditureCreateComponent implements OnInit {
   hidePageSize = true;
 
   pageEvent: PageEvent;
+
+  get isMobile(): boolean{
+    return this.layoutService.isMobile;
+  }
   
   constructor(
     private readonly variableExpenditureService: VariableExpenditureService,
     private dialog: MatDialog,
+    private layoutService: LayoutService,
+    private messageService: MessageService
   ){}
 
   ngOnInit(): void {
@@ -64,10 +74,13 @@ export class VariableExpenditureCreateComponent implements OnInit {
     });
   }
 
-  openDeleteDialog(transaction: TransactionTableDto) {
-    transaction.isFixed = false;
+  openDeleteDialog(transaction: VariableExpenditureDto) {
     const dialogRef = this.dialog.open(DialogDeleteTransactionComponent, {
-      data: transaction,
+      data: {
+        id: transaction.id,
+        name: transaction.name,
+        isFixed: false
+      },
       width: '400px',
       height: '180px',
     });
@@ -75,6 +88,23 @@ export class VariableExpenditureCreateComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.load();
     });
+  }
+
+  async deleteAll() {
+    const confirm = await firstValueFrom(this.dialog.open(DialogConfirmComponent).afterClosed())
+
+    if (confirm != 'true') {
+      return;
+    }
+
+    const ids = this.dataSource.data
+      .filter(t => t.selected)
+      .map(t => t.id);
+
+    await this.variableExpenditureService.delete(ids).then(() => {
+      this.messageService.showSuccess('Transação Deletada!')
+      this.load()
+    })
   }
 
   //paginator
@@ -88,6 +118,10 @@ export class VariableExpenditureCreateComponent implements OnInit {
   isAllSelected(): boolean {
     return this.dataSource.data.length > 0 &&
     this.dataSource.data.every(transaction => transaction.selected);
+  }
+
+  isNoneSelected(): boolean{
+    return this.dataSource.data.length > 0 && this.dataSource.data.every(transaction => !transaction.selected);
   }
 
   isSomeSelected(): boolean {

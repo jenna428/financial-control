@@ -90,6 +90,21 @@ mat-list-item{
 
 mat-list{
   padding: 0px !important;
+
+  
+}
+
+.mobile-table {
+  display: flex !important;
+  flex-flow: column;
+  gap: 10px !important;
+
+  mat-list-item {
+    background: #fff;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+    padding: 0px 15px 10px 15px !important;
+  }
 }
 
 

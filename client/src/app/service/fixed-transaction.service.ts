@@ -23,8 +23,10 @@ export class FixedTransactionService{
         await this.http.put(this.baseUrl, fixedTransactionDto)
     }
 
-    async delete(id: number){
-        await this.http.delete(this.baseUrl + id)
+    async delete(ids: number[]){
+        await this.http.delete(this.baseUrl, {
+            data: ids
+        })
     }
 
     async findByCategory(category: Category): Promise <FixedTransactionDto[]> {

@@ -5,6 +5,7 @@ import { VariableExpenditureService } from '../../service/variable-expentidure.s
 import { MatDialogRef } from '@angular/material/dialog';
 import { DialogVariableExpenditureUpdateComponent } from '../dialogs/dialog-variable-expenditure-update/dialog-variable-expenditure-update.component';
 import { MessageService } from '../../service/message.service';
+import { LayoutService } from '../../service/layout.service';
 
 @Component({
   selector: 'app-variable-expenditure-form',
@@ -29,11 +30,16 @@ export class VariableExpenditureFormComponent {
     return this.form.valid;
   }
 
+  get isMobile(): boolean {
+    return this.layoutService.isMobile;
+  }
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly variableExpenditureService: VariableExpenditureService,
     @Optional() private readonly dialogRef: MatDialogRef <DialogVariableExpenditureUpdateComponent>,
-    private readonly messageService: MessageService
+    private readonly messageService: MessageService,
+    private layoutService: LayoutService
   ){}
 
   async ngOnInit(): Promise<void> {

@@ -24,9 +24,9 @@ export class FixedTransactionController {
     }
 
     @UseGuards(JwtGuard)
-    @Delete('/:id')
-    async delete(@Param('id') id: number, @Request() req){
-        await this.fixedTransactionService.delete(id, req.user.id)
+    @Delete('/')
+    async delete(@Body() ids: number[], @Request() req){
+        await this.fixedTransactionService.delete(ids, req.user.id)
     }
 
     @UseGuards(JwtGuard)
