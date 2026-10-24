@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Request, UseGuards } from "@nestjs/common";
 import type { FixedTransactionDto } from "src/dto/fixed-transaction.dto";
+import type { PaginatorRequest, PaginatorResponse } from "src/dto/paginator.dto";
 import { Category } from "src/enums/enums";
 import { JwtGuard } from "src/guards/jwt.guard";
 import { FixedTransactionService } from "src/services/fixed-transaction.service";
@@ -12,9 +13,10 @@ export class FixedTransactionController {
 
     @UseGuards(JwtGuard)
     @Get('/:category')
-    async findByCategory(@Request() req, @Param('category') category: Category): Promise<FixedTransactionDto[]>{
-        const transactions = await this.fixedTransactionService.findByCategory(category, req.user.id);
-        return transactions;
+    async findByCategory(@Request() req, @Param('category') category: Category, @Query() pag: PaginatorRequest): Promise<PaginatorResponse<FixedTransactionDto>>{
+        const response = await this.fixedTransactionService.findByCategory(category, pag, req.user.id);
+
+        return response;
     }
 
     @UseGuards(JwtGuard)

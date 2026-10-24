@@ -38,7 +38,7 @@ export class HttpService {
         });
     }
 
-    get<T>(url: string, config?: any) {
+    get<T>(url: string, config?: AxiosRequestConfig) {
         return this.api.get<T>(url, config);
     }
 

@@ -13,6 +13,7 @@ import { LayoutService } from '../../service/layout.service';
 import { firstValueFrom } from 'rxjs';
 import { DialogConfirmComponent } from '../dialogs/dialog-confirm/dialog-confirm.component';
 import { MessageService } from '../../service/message.service';
+import { PaginatorRequest } from '../../dto/paginator.dto';
 
 @Component({
   selector: 'app-fixed-transaction-create',
@@ -21,8 +22,8 @@ import { MessageService } from '../../service/message.service';
 })
 export class FixedTransactionCreateComponent implements OnInit{
   dataSource = new MatTableDataSource<FixedTransactionDto>();
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+  // @ViewChild(MatPaginator)
+  // paginator!: MatPaginator;
   columns: string[] = ['date', 'name', 'amount'];
   displayedColumns: string[] = this.columns
 
@@ -32,12 +33,9 @@ export class FixedTransactionCreateComponent implements OnInit{
 
   /*paginator*/
   length: number;
-  pageSize = 5;
-  pageIndex = 0;
 
-  hidePageSize = true;
-
-  pageEvent: PageEvent;
+  // pageEvent: PageEvent;
+  pag: PaginatorRequest;
 
   get isMobile(): boolean {
     return this.layoutService.isMobile;
@@ -52,11 +50,14 @@ export class FixedTransactionCreateComponent implements OnInit{
   ){}
 
   async ngOnInit() {
+    this.pag = {
+      pageIndex: 0,
+      pageSize: 5
+    }
+
     this.activatedRoute.paramMap.subscribe(async p => {
       await this.onCategoryChange();
     })
-
-    // this.load()
   }
 
   async onCategoryChange() { // colocar aqui coisas que será carregado na criação do componente
@@ -72,14 +73,14 @@ export class FixedTransactionCreateComponent implements OnInit{
   async load(){
     this.showSelection = false;
     if(this.category){
-      const data = await this.fixedTransactionService.findByCategory(this.category);// TODO: refatorar a chamada na api, pois nao esta usando a paginação.
+      const response = await this.fixedTransactionService.findByCategory(this.category, this.pag);// TODO: refatorar a chamada na api, pois nao esta usando a paginação.
 
-      this.dataSource.data = data;
-      this.length = data.length;
+      this.dataSource.data = response.data;
+      this.length = response.length;
 
-      if (this.paginator) {
-        this.dataSource.paginator = this.paginator;
-      }
+      // if (this.paginator) {
+      //   this.dataSource.paginator = this.paginator;
+      // }
     }
   }
   
@@ -126,11 +127,13 @@ export class FixedTransactionCreateComponent implements OnInit{
     })
   }
 
-  handlePageEvent(e: PageEvent) {
-    this.pageEvent = e;
-    this.length = e.length;
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
+  async handlePageEvent(e: PageEvent) {
+    this.pag = {
+      pageIndex: e.pageIndex,
+      pageSize: e.pageSize,
+    }
+
+    await this.load();  
   }
 
   isAllSelected(): boolean {

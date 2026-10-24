@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FixedTransactionDto } from "src/dto/fixed-transaction.dto";
+import { PaginatorRequest, PaginatorResponse } from "src/dto/paginator.dto";
 import { FixedTransactionEntity } from "src/entity/fixed-transaction.entity";
 import { Category } from "src/enums/enums";
 import { FixedTransactionMapper } from "src/mapper/fixed-transaction.mapper";
@@ -65,17 +66,23 @@ export class FixedTransactionService{
         await this.fixedTransactionRepository.save(transType);
     }
 
-   async findByCategory(category: Category, userId: number): Promise<FixedTransactionDto[]>{
+   async findByCategory(category: Category, pag: PaginatorRequest, userId: number): Promise<PaginatorResponse<FixedTransactionDto>>{
         const option: FindManyOptions = {
             where: {
                 category: category,
                 userId: userId,
-            }
+            },
+            skip: pag.pageIndex * pag.pageSize,
+            take: pag.pageSize
         }
-        const transactions = await this.fixedTransactionRepository.find(option);
+        const [transactions, length ] = await this.fixedTransactionRepository.findAndCount(option);
 
         const transactionsDto: FixedTransactionDto[] = transactions.map(FixedTransactionMapper.toDto);
-        return transactionsDto;
+
+        return {
+            data: transactionsDto,
+            length: length
+        };
     }
 
     async findAllByUserIdAndPeriod(userId: number, beginDate: Date, endDate: Date): Promise<FixedTransactionEntity[]>{

@@ -3,6 +3,7 @@ import { HttpService } from "./http.service";
 import { environment } from "../../environments/environment";
 import { FixedTransactionDto } from "../dto/fixed-transaction.dto";
 import { Category } from "../classes/enums/enums";
+import { PaginatorRequest, PaginatorResponse } from "../dto/paginator.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -29,8 +30,10 @@ export class FixedTransactionService{
         })
     }
 
-    async findByCategory(category: Category): Promise <FixedTransactionDto[]> {
-        const transactions = await this.http.get<FixedTransactionDto[]>(this.baseUrl + category);
-        return transactions.data;
+    async findByCategory(category: Category, pag: PaginatorRequest): Promise <PaginatorResponse<FixedTransactionDto>> {
+        const response = await this.http.get<PaginatorResponse<FixedTransactionDto>>(this.baseUrl + category, {
+            params: pag
+        });
+        return response.data;
     }
 }
