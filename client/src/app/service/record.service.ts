@@ -50,7 +50,6 @@ export class RecordService{
         }
 
         const returner = await this.http.get<TransactionTableDto[]>(`${this.baseUrl}filter`, {params: { category, isFixed, search, year, month }});
-        console.log(returner.data);
         return returner.data;
 
     }

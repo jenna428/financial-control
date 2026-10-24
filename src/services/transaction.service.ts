@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { PaginatorRequest, PaginatorResponse } from "src/dto/paginator.dto";
 import { TransactionDto } from "src/dto/transaction.dto";
 import { TransactionEntity } from "src/entity/transaction.entity";
 import { TransactionMapper } from "src/mapper/transaction.mapper";
 import { TransactionRepository } from "src/repository/transaction.repository";
 import { Transaction2Repository } from "src/repository/transaction2.repository";
-import { Between, In } from "typeorm";
+import { Between, FindManyOptions, In } from "typeorm";
 
 @Injectable()
 export class TransactionService{
@@ -51,19 +52,23 @@ export class TransactionService{
         await this.transactionRepository.save(transaction);
     }
 
-    async findAllByUserId(userId: number): Promise<TransactionDto[]>{
-        const transactions = await this.transactionRepository.find({
+    async findAllByUserId(pag: PaginatorRequest, userId: number): Promise<PaginatorResponse<TransactionDto>>{
+        const option: FindManyOptions = {
             relations: ['expenditure'],
             where: {
-                userId: userId
-            }
-        });
-
-        // const transactions = await this.transactio2nRepository.getTransactionsByUserId(userId);
+                userId: userId,
+            },
+            skip: pag.pageIndex * pag.pageSize,
+            take: pag.pageSize
+        }
+        const [transactions, length ] = await this.transactionRepository.findAndCount(option);
 
         const transactionsDto: TransactionDto[] = transactions.map(TransactionMapper.toDto);
 
-        return transactionsDto;
+        return {
+            data: transactionsDto,
+            length: length
+        };
     }
 
     async findAllByUserIdAndPeriod(userId: number, beginDate: Date, endDate: Date): Promise<TransactionEntity[]>{

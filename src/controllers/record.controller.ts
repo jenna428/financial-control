@@ -40,7 +40,6 @@ export class RecordController {
     @UseGuards(JwtGuard)
     @Get('/filter')
     async filterCategorySearch(@Request() req, @Query() query: any): Promise<TransactionTableDto[]>{
-        console.log("Query", query);
         return await this.recordService.filterSearchByUserId(query.category, query.isFixed, query.search, query.year, query.month, req.user.id)
     }
 }

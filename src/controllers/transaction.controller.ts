@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Request, UseGuards } from "@nestjs/common";
+import type { PaginatorRequest, PaginatorResponse } from "src/dto/paginator.dto";
 import type { TransactionDto } from "src/dto/transaction.dto";
 import { JwtGuard } from "src/guards/jwt.guard";
 import { TransactionService } from "src/services/transaction.service";
@@ -23,8 +24,8 @@ export class TransactionController {
 
     @UseGuards(JwtGuard)
     @Get('/')
-    async findAll(@Request() req): Promise<TransactionDto[]> {
-        return await this.transactionService.findAllByUserId(req.user.id); 
+    async findAll(@Request() req, @Query() pag: PaginatorRequest): Promise<PaginatorResponse<TransactionDto>> {
+        return await this.transactionService.findAllByUserId(pag, req.user.id); 
     }
 
     @UseGuards(JwtGuard)

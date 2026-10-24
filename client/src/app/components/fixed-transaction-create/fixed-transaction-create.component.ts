@@ -22,8 +22,6 @@ import { PaginatorRequest } from '../../dto/paginator.dto';
 })
 export class FixedTransactionCreateComponent implements OnInit{
   dataSource = new MatTableDataSource<FixedTransactionDto>();
-  // @ViewChild(MatPaginator)
-  // paginator!: MatPaginator;
   columns: string[] = ['date', 'name', 'amount'];
   displayedColumns: string[] = this.columns
 
@@ -77,10 +75,6 @@ export class FixedTransactionCreateComponent implements OnInit{
 
       this.dataSource.data = response.data;
       this.length = response.length;
-
-      // if (this.paginator) {
-      //   this.dataSource.paginator = this.paginator;
-      // }
     }
   }
   

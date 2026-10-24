@@ -12,6 +12,7 @@ import { LayoutService } from '../../service/layout.service';
 import { firstValueFrom } from 'rxjs';
 import { DialogConfirmComponent } from '../dialogs/dialog-confirm/dialog-confirm.component';
 import { MessageService } from '../../service/message.service';
+import { PaginatorRequest } from '../../dto/paginator.dto';
 
 @Component({
   selector: 'app-variable-expenditure-create',
@@ -21,8 +22,6 @@ import { MessageService } from '../../service/message.service';
 export class VariableExpenditureCreateComponent implements OnInit {
 
   dataSource = new MatTableDataSource<VariableExpenditureDto>();
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
   columns: string[] = ['name'];
   displayedColumns: string[] = this.columns;
   showSelection = false;
@@ -31,12 +30,9 @@ export class VariableExpenditureCreateComponent implements OnInit {
 
   /*paginator*/
   length: number;
-  pageSize = 25;
-  pageIndex = 0;
 
-  hidePageSize = true;
-
-  pageEvent: PageEvent;
+  // pageEvent: PageEvent;
+  pag: PaginatorRequest;
 
   get isMobile(): boolean{
     return this.layoutService.isMobile;
@@ -50,18 +46,18 @@ export class VariableExpenditureCreateComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    this.pag = {
+      pageIndex: 0,
+      pageSize: 5
+    }
     this.load();
   }
 
   async load() {
-    const data = await this.variableExpenditureService.findAll();
+    const data = await this.variableExpenditureService.findToPaginatior(this.pag);
 
-    this.dataSource.data = data;
+    this.dataSource.data = data.data;
     this.length = data.length;
-
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
   }
 
   async openUpdateDialog(transaction: VariableExpenditureDto){
@@ -108,11 +104,13 @@ export class VariableExpenditureCreateComponent implements OnInit {
   }
 
   //paginator
-  handlePageEvent(e: PageEvent) {
-    this.pageEvent = e;
-    this.length = e.length;
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
+  async handlePageEvent(e: PageEvent) {
+    this.pag = {
+      pageIndex: e.pageIndex,
+      pageSize: e.pageSize,
+    }
+
+    await this.load();  
   }
 
   isAllSelected(): boolean {

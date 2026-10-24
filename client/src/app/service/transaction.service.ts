@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpService } from "./http.service";
 import { environment } from "../../environments/environment";
 import { TransactionDto } from "../dto/transaction.dto";
+import { PaginatorRequest, PaginatorResponse } from "../dto/paginator.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -18,8 +19,10 @@ export class TransactionService{
         await this.http.post(this.baseUrl, transactionDto)
     }
 
-    async findAll(): Promise <TransactionDto[]> {
-        const transactions = await this.http.get<TransactionDto[]>(this.baseUrl);
+    async findAll(pag: PaginatorRequest): Promise <PaginatorResponse<TransactionDto>> {
+        const transactions = await this.http.get<PaginatorResponse<TransactionDto>>(this.baseUrl, {
+            params: pag
+        });
         return transactions.data;
         
     }

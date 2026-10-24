@@ -107,8 +107,6 @@ export class RecordService{
             return transactionResponde;    
         }
 
-        console.log('1', isFixed, typeof isFixed)
-
         const transactionResponde = transactions.filter(transactions =>
         transactions.category === category && transactions.isFixed === isFixed)
         return transactionResponde;

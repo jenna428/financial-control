@@ -10,6 +10,7 @@ import { LayoutService } from '../../service/layout.service';
 import { DialogConfirmComponent } from '../dialogs/dialog-confirm/dialog-confirm.component';
 import { firstValueFrom } from 'rxjs';
 import { MessageService } from '../../service/message.service';
+import { PaginatorRequest } from '../../dto/paginator.dto';
 
 @Component({
   selector: 'app-transaction-create',
@@ -19,8 +20,6 @@ import { MessageService } from '../../service/message.service';
 export class TransactionCreateComponent implements OnInit{
 
   dataSource = new MatTableDataSource<TransactionDto>();
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
   columns: string[] = ['date', 'despesa', 'description', 'amount'];
   displayedColumns: string[] = this.columns;
 
@@ -28,12 +27,9 @@ export class TransactionCreateComponent implements OnInit{
 
   /*paginator*/
   length: number;
-  pageSize = 25;
-  pageIndex = 0;
 
-  hidePageSize = true;
-
-  pageEvent: PageEvent;
+  // pageEvent: PageEvent;
+  pag: PaginatorRequest;
 
   get isMobile(): boolean{
     return this.layoutService.isMobile;
@@ -47,18 +43,19 @@ export class TransactionCreateComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
+    this.pag = {
+      pageIndex: 0,
+      pageSize: 5
+    }
     this.load();
   }
 
   async load(){
-    const data = await this.transactionService.findAll();
 
-    this.dataSource.data = data;
-    this.length = data.length;
+    const response = await this.transactionService.findAll(this.pag);
 
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
+    this.dataSource.data = response.data;
+    this.length = response.length;
   }
 
   async openUpdateDialog(transaction: TransactionDto){
@@ -100,11 +97,13 @@ export class TransactionCreateComponent implements OnInit{
     })
   }
 
-  handlePageEvent(e: PageEvent) {
-    this.pageEvent = e;
-    this.length = e.length;
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
+  async handlePageEvent(e: PageEvent) {
+    this.pag = {
+      pageIndex: e.pageIndex,
+      pageSize: e.pageSize,
+    }
+
+    await this.load();  
   }
 
   isAllSelected(): boolean {

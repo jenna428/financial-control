@@ -109,7 +109,6 @@ export class MonthRecordComponent implements OnInit{
   async loadExpenditures(){
     const search = '';
     this.isFixed = null;
-    console.log(this.isFixed)
     const data = await this.recordService.filterSearch(Category.EXPENDITURE, this.isFixed, search, this.year, this.month)
 
     this.dataSource.data = data;
@@ -122,7 +121,6 @@ export class MonthRecordComponent implements OnInit{
   async filterExpendituresByType(isFixed: boolean){
     const search = ''
     this.isFixed = isFixed;
-    console.log(isFixed)
     const data = await this.recordService.filterSearch(Category.EXPENDITURE, isFixed, search, this.year, this.month)
 
     this.dataSource.data = data;

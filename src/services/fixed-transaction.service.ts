@@ -66,7 +66,7 @@ export class FixedTransactionService{
         await this.fixedTransactionRepository.save(transType);
     }
 
-   async findByCategory(category: Category, pag: PaginatorRequest, userId: number): Promise<PaginatorResponse<FixedTransactionDto>>{
+    async findByCategory(category: Category, pag: PaginatorRequest, userId: number): Promise<PaginatorResponse<FixedTransactionDto>>{
         const option: FindManyOptions = {
             where: {
                 category: category,

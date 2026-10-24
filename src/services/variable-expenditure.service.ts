@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { PaginatorRequest, PaginatorResponse } from "src/dto/paginator.dto";
 import { VariableExpenditureDto } from "src/dto/variable-expenditure.dto";
 import { VariableExpenditureEntity } from "src/entity/variable-expenditure.entity";
 import { VariableExpenditureMapper } from "src/mapper/variable-expenditure.mapper";
@@ -30,6 +31,24 @@ export class VariableExpenditureService{
         const variableExpendituresDto: VariableExpenditureDto[] = variableExpenditures.map(VariableExpenditureMapper.toDto);
 
         return variableExpendituresDto;
+    }
+
+    async findToPaginator(pag: PaginatorRequest, userId:number): Promise<PaginatorResponse<VariableExpenditureDto>>{
+        const option: FindManyOptions = {
+            where: {
+                userId: userId,
+            },
+            skip: pag.pageIndex * pag.pageSize,
+            take: pag.pageSize
+        }
+        const [transactions, length ] = await this.variableExpenditureRepository.findAndCount(option);
+        
+        const transactionsDto: VariableExpenditureDto[] = transactions.map(VariableExpenditureMapper.toDto);
+
+        return {
+            data: transactionsDto,
+            length: length
+        };
     }
 
     async delete(variableTransactionIds: number[], userId: number){

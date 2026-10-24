@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Request, UseGuards } from "@nestjs/common";
+import type { PaginatorRequest, PaginatorResponse } from "src/dto/paginator.dto";
 import type { VariableExpenditureDto } from "src/dto/variable-expenditure.dto";
 import { JwtGuard } from "src/guards/jwt.guard";
 import { VariableExpenditureService } from "src/services/variable-expenditure.service";
@@ -16,9 +17,17 @@ export class VariableExpenditureController {
     }
 
     @UseGuards(JwtGuard)
-    @Get('/')
+    @Get('/all')
     async findAll(@Request() req): Promise<VariableExpenditureDto[]> {
         const variableExpenditure = await this.variableExpenditureService.findAll(req.user.id);
+
+        return variableExpenditure;
+    }
+
+    @UseGuards(JwtGuard)
+    @Get('/')
+    async findToPaginator(@Request() req, @Query() pag: PaginatorRequest): Promise<PaginatorResponse<VariableExpenditureDto>> {
+        const variableExpenditure = await this.variableExpenditureService.findToPaginator(pag, req.user.id);
 
         return variableExpenditure;
     }
