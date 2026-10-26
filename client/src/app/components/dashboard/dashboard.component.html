@@ -3,22 +3,24 @@
         <h1>{{currentMonth | month}} / {{currentYear}}</h1>
     </div>
 
-    <div class="d-flex flex-row justify-content-evenly">
-        <div class="card income p-2">
-            <h1>Receita</h1>
-            <p>{{status?.totalIncome| currency}}</p>
-        </div>
-        <div class="card expenditure p-2">
-            <h1>Despesa</h1>
-            <p>{{status?.totalExpenditure | currency}}</p>
-        </div>
-        <div class="card balance p-2">
-            <h1>Saldo Atual</h1>
-            <p>{{status?.finalBalance | currency}}</p>
-        </div>
+    <div class="w-100 p-3">
+        <mat-list class="mobile-table">
+            <mat-list-item>
+                <div matListItemTitle>Receita</div>
+                <div matListItemLine>{{status.totalIncome | currency}}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <div matListItemTitle>Despesa</div>
+                <div matListItemLine>{{status.totalExpenditure | currency}}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <div matListItemTitle>Saldo</div>
+                <div matListItemLine>{{status.finalBalance | currency}}</div>
+            </mat-list-item>
+        </mat-list>
     </div>
-    <div class="d-flex flex-row">
-        <div echarts [options]="pieOption" class="pieChart m-3"></div>
-        <div echarts [options]="barOption" class="barChart m-3"></div>
+    <div class="d-flex" [ngClass]="{'flex-column': isMobile}">
+        <div echarts [ngStyle]=" isMobile ? {'width': '350px', 'height': '250px'} : {}"  [options]="pieOption" class="pieChart m-3"></div>
+        <div echarts [ngStyle]=" isMobile ? {'width': '350px', 'height': '250px'} : {}" [options]="barOption" class="barChart m-3"></div>
     </div>
 </div>

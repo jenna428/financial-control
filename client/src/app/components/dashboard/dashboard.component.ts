@@ -3,6 +3,7 @@ import { RecordService } from '../../service/record.service';
 import { RecordDto } from '../../dto/record.dto';
 import { EChartsOption } from 'echarts';
 import { CurrencyPipe } from '../../pipes/currency.pipe';
+import { LayoutService } from '../../service/layout.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,14 +19,19 @@ export class DashboardComponent implements OnInit{
   pieOption: EChartsOption;
   barOption: EChartsOption;
   
+  get isMobile(): boolean{
+    return this.layoutService.isMobile;
+  }
 
   constructor(
     private readonly recordService: RecordService,
+    private layoutService: LayoutService
   ){}
 
   ngOnInit(): void {
     this.load();
   }
+
 
   async load(){
     this.data = await this.recordService.findAllByYear(this.currentYear);
@@ -56,7 +62,7 @@ export class DashboardComponent implements OnInit{
             }
           ],
           label: {
-            fontSize: 20,
+            fontSize: this.isMobile ? 11 : 20,
             fontFamily: 'Fredoka',
             formatter: '{b}:\n{d}%',
             fontWeight: 'bold'
