@@ -133,13 +133,26 @@ export class RecordService{
         const fixedTransaction = await this.fixedTransactionService.findAllByUserIdAndPeriod(userId, beginDate, endDate);
         const transactions = await this.transactionService.findAllByUserIdAndPeriod(userId, beginDate, endDate);
 
-        const allTransactions: TransactionTableDto[] = fixedTransaction.map(t => ({
+        const fixedTransactions: TransactionTableDto[] = fixedTransaction.map(t => ({
             name: t.name,
             category: t.category,
             isFixed: true,
             amount: t.amount,
             transactionDate: t.transactionDate
         }));
+
+        const variableTransactions: TransactionTableDto[] = transactions.map(t => ({
+            name: t.expenditure.name,
+            category: Category.EXPENDITURE,
+            isFixed: false,
+            amount: t.amount,
+            transactionDate: t.transactionDate
+        }));
+
+        const allTransactions: TransactionTableDto[] = [
+            ...fixedTransactions,
+            ...variableTransactions
+        ];
 
         return allTransactions;
     }
